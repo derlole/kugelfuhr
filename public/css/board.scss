@@ -1,0 +1,328 @@
+$red: #ff595e;
+$matred: #ffa2a5;
+$darkred: #CB4C51;
+$yellow: #ffca3a;
+$matyellow: #fff07d;
+$darkyellow: #FFB70F;
+$blue: #1982c4;
+$matblue: #78cbff;
+$darkblue: #206895;
+$green: #8ac926;
+$matgreen: #ccf983;
+$darkgreen: #81AD3A;
+$matpurple: #8B7450;
+$purple: #68583E;
+$background: #ffeac9;
+$point: #dfc7a0;
+$border: #9a8a6e;
+$d: 25px;
+
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
+.comfortaa {
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+body {
+  @extend .comfortaa;
+  background-color: #f1d8ae;
+  margin: 0;
+  height: 100vh; /* ganze Bildschirmhöhe */
+  display: flex; /* Flexbox aktivieren */
+  justify-content: center; /* horizontal zentrieren */
+  align-items: center; /* vertikal zentrieren */
+  overflow-y: hidden;
+}
+
+
+.graph {
+  height: 90vh;
+  width: 90vh;
+  position: relative;
+  margin: 20px;
+  rotate: 45deg;
+}
+.plate {
+  position: relative;
+  background: $background;
+}
+.dotBase {
+  position: absolute;
+  width: $d;
+  height: $d;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dot {
+  @extend .dotBase;
+  background: $point;
+  border: 2px solid $border;
+}
+
+.inDot {
+  @extend .dotBase;
+  background: $matpurple;
+  border: 2px solid $purple;
+}
+
+.redDot {
+  @extend .dotBase;
+  background: $matred;
+  border: 2px solid $red;
+}
+
+.yellowDot {
+  @extend .dotBase;
+  background: $matyellow;
+  border: 2px solid $yellow;
+}
+
+.blueDot {
+  @extend .dotBase;
+  background: $matblue;
+  border: 2px solid $blue;
+}
+
+.greenDot {
+  @extend .dotBase;
+  background: $matgreen;
+  border: 2px solid $green;
+}
+
+.home {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  transform: translate(-50%, -50%);
+  width: calc(3 * $d);
+  height: calc(3 * $d);
+  gap: 2px;
+  grid-template-areas:
+    "homeTL homeTR"
+    "homeBL homeBR";
+  place-items: center;
+}
+.greenHomeDot {
+  @extend .greenDot;
+  transform: translate(-50%, -50%);
+}
+.redHomeDot {
+  @extend .redDot;
+  transform: translate(-50%, -50%);
+}
+.blueHomeDot {
+  @extend .blueDot;
+  transform: translate(-50%, -50%);
+}
+.yellowHomeDot {
+  @extend .yellowDot;
+  transform: translate(-50%, -50%);
+}
+#homeGreen {
+  top: 10%;
+  right: -2%;
+  transform: translate(-50%, -50%);
+}
+
+#homeBlue {
+  bottom: -2%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+}
+
+#homeRed {
+  bottom: -2%;
+  right: -2%;
+  transform: translate(-50%, -50%);
+}
+
+#homeYellow {
+  top: 10%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+}
+.center {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.finish {
+  position: absolute;
+  width: calc(2 * $d);
+  height: calc(6 * $d);
+  display: grid;
+  gap: 2px;
+  grid-template-areas:
+    "finLast"
+    "finThird"
+    "finSecond"
+    "finFirst";
+  place-items: center;
+}
+.finLeft {
+  @extend .center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start; 
+  align-items: center;         
+}
+
+.finRight {
+  @extend .center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end; 
+  align-items: center;      
+}
+
+.finMid {
+  @extend .center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;    
+  align-items: center;     
+}
+.finRed{
+  bottom: 13%;
+  right: 12%;
+  transform: translate(50%, -50%);
+}
+.finGreen{
+  top: 10%;
+  right: 26%;
+  transform: translate(0%, 0%);
+}
+
+.finBlue{
+    bottom: 10%;
+    left: 26%;
+    transform: translate(0, 0%);
+}
+
+.finYellow {
+  top: 13%;
+  left: 12%;
+  transform: translate(50%, -50%);
+}
+$sphereFactor: 1.3;
+$pulseScale: 1.05;   // wie stark die Kugel pulsiert
+$pulseDuration: 300s; // Dauer eines Puls-Zyklus
+
+.sphereBase {
+  width: $sphereFactor * $d;
+  height: $sphereFactor * $d;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.04) inset;
+  overflow: visible;
+
+  // Puls-Animation
+  animation: pulse 0.25s ease-in-out 3;
+  transform: scale(1) translate(-50%, -50%);;
+  transform-origin: center center;
+}
+
+// Keyframes definieren
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1) translate(-50%, -50%);
+  }
+  50% {
+    transform: scale(1.2) translate(-50%, -50%);
+  }
+}
+
+
+.sphereBase::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  z-index: 3;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+.sphereRed{
+  @extend .sphereBase;
+  background: $darkred;
+  border: 2px solid $red;
+
+  &::before{
+    background:
+    radial-gradient(circle at 30% 30%,
+      $matred 0%,
+      $matred 32%,
+      $red 32%,
+      $red 60%,
+      $darkred 60%,
+      $darkred 86%,
+      transparent 86%,
+      transparent 100%
+    );
+  }
+}
+
+.sphereGreen{
+  @extend .sphereBase;
+  background: $darkgreen;
+  border: 2px solid $green;
+
+  &::before{
+    background:
+    radial-gradient(circle at 30% 30%,
+      $matgreen 0%,
+      $matgreen 32%,
+      $green 32%,
+      $green 60%,
+      $darkgreen 60%,
+      $darkgreen 86%,
+      transparent 86%,
+      transparent 100%
+    );
+  }
+}
+
+.sphereBlue{
+  @extend .sphereBase;
+  background: $darkblue;
+  border: 2px solid $blue;
+
+  &::before{
+    background:
+    radial-gradient(circle at 30% 30%,
+      $matblue 0%,
+      $matblue 32%,
+      $blue 32%,
+      $blue 60%,
+      $darkblue 60%,
+      $darkblue 86%,
+      transparent 86%,
+      transparent 100%
+    );
+  }
+}
+.sphereYellow{
+  @extend .sphereBase;
+  background: $darkyellow;
+  border: 2px solid $yellow;
+
+  &::before{
+    background:
+    radial-gradient(circle at 30% 30%,
+      $matyellow 0%,
+      $matyellow 32%,
+      $yellow 32%,
+      $yellow 60%,
+      $darkyellow 60%,
+      $darkyellow 86%,
+      transparent 86%,
+      transparent 100%
+    );
+  }
+}

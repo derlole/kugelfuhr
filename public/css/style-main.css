@@ -1,0 +1,138 @@
+/* ======= Global Dark Theme ======= */
+:root {
+  --bg: #0e0f12;
+  --fg: #e8e8ea;
+  --muted: #a5a6ab;
+
+  --red: #e53935;
+  --red-700: #b71c1c;
+
+  --orange: #ff9800;
+  --orange-700: #ef6c00;
+
+  --blue: #3b4bdf;
+  --blue-700: #2e26a3;
+
+  --shadow: 0 10px 30px rgba(0,0,0,.45);
+}
+
+* { box-sizing: border-box; }
+
+
+
+/* ======= Toast Container Styles (top-right) ======= */
+/* Deine drei Elemente (#error-div, #warning-div, #message-div) werden
+   jeweils eigenständig positioniert. Sie stacken mit gap. */
+.error, .warning, .message {
+  position: fixed;
+  right: 16px;
+  top: 16px;
+  z-index: 9999;
+
+  /* Box visuals */
+  display: none;                 /* JS setzt auf block */
+  min-width: 280px;
+  max-width: min(92vw, 420px);
+  padding: 14px 16px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+
+  color: #fff;
+  line-height: 1.35;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  /* Animation beim Einblenden */
+  animation: toast-pop-in 240ms cubic-bezier(.2,.8,.2,1);
+  transform-origin: 100% 0%;    /* oben rechts */
+}
+
+/* Wenn mehrere gleichzeitig sichtbar sind, staffele sie */
+.warning { margin-top: 68px; }   /* unter der ersten Box */
+.message { margin-top: 136px; }  /* unter der zweiten Box */
+
+/* ======= Color Schemes ======= */
+.error {
+  background: color-mix(in oklab, var(--red) 22%, black);
+  border: 1px solid color-mix(in oklab, var(--red-700) 65%, black);
+}
+
+.warning {
+  background: color-mix(in oklab, var(--orange) 20%, black);
+  border: 1px solid color-mix(in oklab, var(--orange-700) 65%, black);
+}
+
+.message {
+  background: color-mix(in oklab, var(--blue) 18%, black);
+  border: 1px solid color-mix(in oklab, var(--blue-700) 65%, black);
+}
+
+/* Optional: Text im Paragraphen etwas dezenter */
+#error-div p, #warning-div p, #message-div p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* ======= Animations ======= */
+@keyframes toast-pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-12px) scale(.96);
+    filter: saturate(.8);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(0) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* (Optional) Klasse für sanftes Ausblenden, falls du statt display='none'
+   kurz .fade-out setzt und nach 200ms aus dem DOM nimmst. */
+.fade-out {
+  animation: toast-fade-out 200ms ease forwards !important;
+}
+@keyframes toast-fade-out {
+  to { opacity: 0; transform: translateY(-8px) scale(.98); }
+}
+
+/* ======= Accessibility: reduzierte Bewegung ======= */
+@media (prefers-reduced-motion: reduce) {
+  .error, .warning, .message {
+    animation: none;
+  }
+}
+
+
+.error.with-progress::after,
+.warning.with-progress::after,
+.message.with-progress::after {
+  animation: var(--progress-anim);
+}
+
+
+/* Fortschrittsbalken für alle Toasts */
+.error::after,
+.warning::after,
+.message::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  width: 100%;
+
+  /* default hidden until JS sets animation */
+  background: rgba(255,255,255,0.6);
+  transform-origin: left center;
+  transform: scaleX(1);
+}
+
+/* Progressbar-Animation */
+@keyframes toast-progress {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}

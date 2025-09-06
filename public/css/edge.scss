@@ -1,0 +1,90 @@
+$red: #ff595e;
+$matred: #ffa2a5;
+$darkred: #cb4c51;
+$yellow: #ffca3a;
+$matyellow: #fff07d;
+$darkyellow: #ffb70f;
+$blue: #1982c4;
+$matblue: #78cbff;
+$darkblue: #206895;
+$green: #8ac926;
+$matgreen: #ccf983;
+$darkgreen: #81ad3a;
+$matpurple: #8b7450;
+$purple: #68583e;
+$background: #ffeac9;
+$point: #dfc7a0;
+$border: #9a8a6e;
+$d: 25px;
+
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap");
+
+.comfortaa {
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+.left {
+  @extend .comfortaa;
+  position: relative;
+  width: calc((100% - 90vh) / 2);
+  height: 95vh;
+  padding: 1em;
+
+  .title {
+    text-decoration: underline;
+    margin: 0;
+    font-size: 2.25em;
+  }
+}
+.right {
+  @extend .comfortaa;
+  position: relative;
+  width: calc((100% - 90vh) / 2);
+  height: 95vh;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#hand {
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+.card{
+  background-color: white;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 5px;
+  width: 4.9cqw;
+  height: calc(4.9cqw * 1.75);
+}
+.cardTop{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+.cardMid{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 0 5px;
+}
+.cardBot{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+.cardCorner{
+  font-size: 0.5em;
+}
+.rotated{
+  transform: rotate(180deg);
+}

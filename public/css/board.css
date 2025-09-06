@@ -1,0 +1,246 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap");
+.comfortaa, body {
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+body {
+  background-color: #f1d8ae;
+  margin: 0;
+  height: 100vh; /* ganze Bildschirmhöhe */
+  display: flex; /* Flexbox aktivieren */
+  justify-content: center; /* horizontal zentrieren */
+  align-items: center; /* vertikal zentrieren */
+  overflow-y: hidden;
+}
+
+.graph {
+  height: 90vh;
+  width: 90vh;
+  position: relative;
+  margin: 20px;
+  rotate: 45deg;
+}
+
+.plate {
+  position: relative;
+  background: #ffeac9;
+}
+
+.dotBase, .greenDot, .greenHomeDot, .blueDot, .blueHomeDot, .yellowDot, .yellowHomeDot, .redDot, .redHomeDot, .inDot, .dot {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dot {
+  background: #dfc7a0;
+  border: 2px solid #9a8a6e;
+}
+
+.inDot {
+  background: #8B7450;
+  border: 2px solid #68583E;
+}
+
+.redDot, .redHomeDot {
+  background: #ffa2a5;
+  border: 2px solid #ff595e;
+}
+
+.yellowDot, .yellowHomeDot {
+  background: #fff07d;
+  border: 2px solid #ffca3a;
+}
+
+.blueDot, .blueHomeDot {
+  background: #78cbff;
+  border: 2px solid #1982c4;
+}
+
+.greenDot, .greenHomeDot {
+  background: #ccf983;
+  border: 2px solid #8ac926;
+}
+
+.home {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  transform: translate(-50%, -50%);
+  width: 75px;
+  height: 75px;
+  gap: 2px;
+  grid-template-areas: "homeTL homeTR" "homeBL homeBR";
+  place-items: center;
+}
+
+.greenHomeDot {
+  transform: translate(-50%, -50%);
+}
+
+.redHomeDot {
+  transform: translate(-50%, -50%);
+}
+
+.blueHomeDot {
+  transform: translate(-50%, -50%);
+}
+
+.yellowHomeDot {
+  transform: translate(-50%, -50%);
+}
+
+#homeGreen {
+  top: 10%;
+  right: -2%;
+  transform: translate(-50%, -50%);
+}
+
+#homeBlue {
+  bottom: -2%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+}
+
+#homeRed {
+  bottom: -2%;
+  right: -2%;
+  transform: translate(-50%, -50%);
+}
+
+#homeYellow {
+  top: 10%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+}
+
+.center, .finMid, .finRight, .finLeft {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.finish {
+  position: absolute;
+  width: 50px;
+  height: 150px;
+  display: grid;
+  gap: 2px;
+  grid-template-areas: "finLast" "finThird" "finSecond" "finFirst";
+  place-items: center;
+}
+
+.finLeft {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.finRight {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.finMid {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.finRed {
+  bottom: 13%;
+  right: 12%;
+  transform: translate(50%, -50%);
+}
+
+.finGreen {
+  top: 10%;
+  right: 26%;
+  transform: translate(0%, 0%);
+}
+
+.finBlue {
+  bottom: 10%;
+  left: 26%;
+  transform: translate(0, 0%);
+}
+
+.finYellow {
+  top: 13%;
+  left: 12%;
+  transform: translate(50%, -50%);
+}
+
+.sphereBase, .sphereYellow, .sphereBlue, .sphereGreen, .sphereRed {
+  width: 32.5px;
+  height: 32.5px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset;
+  overflow: visible;
+  animation: pulse 0.25s ease-in-out 3;
+  transform: scale(1) translate(-50%, -50%);
+  transform-origin: center center;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1) translate(-50%, -50%);
+  }
+  50% {
+    transform: scale(1.2) translate(-50%, -50%);
+  }
+}
+.sphereBase::before, .sphereYellow::before, .sphereBlue::before, .sphereGreen::before, .sphereRed::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  z-index: 3;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+
+.sphereRed {
+  background: #CB4C51;
+  border: 2px solid #ff595e;
+}
+.sphereRed::before {
+  background: radial-gradient(circle at 30% 30%, #ffa2a5 0%, #ffa2a5 32%, #ff595e 32%, #ff595e 60%, #CB4C51 60%, #CB4C51 86%, transparent 86%, transparent 100%);
+}
+
+.sphereGreen {
+  background: #81AD3A;
+  border: 2px solid #8ac926;
+}
+.sphereGreen::before {
+  background: radial-gradient(circle at 30% 30%, #ccf983 0%, #ccf983 32%, #8ac926 32%, #8ac926 60%, #81AD3A 60%, #81AD3A 86%, transparent 86%, transparent 100%);
+}
+
+.sphereBlue {
+  background: #206895;
+  border: 2px solid #1982c4;
+}
+.sphereBlue::before {
+  background: radial-gradient(circle at 30% 30%, #78cbff 0%, #78cbff 32%, #1982c4 32%, #1982c4 60%, #206895 60%, #206895 86%, transparent 86%, transparent 100%);
+}
+
+.sphereYellow {
+  background: #FFB70F;
+  border: 2px solid #ffca3a;
+}
+.sphereYellow::before {
+  background: radial-gradient(circle at 30% 30%, #fff07d 0%, #fff07d 32%, #ffca3a 32%, #ffca3a 60%, #FFB70F 60%, #FFB70F 86%, transparent 86%, transparent 100%);
+}/*# sourceMappingURL=board.css.map */

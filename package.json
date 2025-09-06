@@ -1,0 +1,22 @@
+{
+  "name": "kugelfuhr",
+  "version": "1.0.0",
+  "description": "kugeln mit Rädern BENJAMIIIIIIIIIIIB WO BIST DUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.2",
+    "express-sessions": "^1.0.6",
+    "nodemon": "^3.1.10",
+    "socket.io": "^4.8.1"
+  }
+}

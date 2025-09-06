@@ -1,0 +1,9 @@
+<link rel="stylesheet" href="/css/style-login.css">
+<form method="POST" action="/login" class="login-form">
+  <% if (typeof error !== 'undefined') { %>
+    <p class="form-error"><%= error %></p>
+  <% } %>
+  <input name="username" placeholder="Benutzername" required />
+  <input name="password" type="password" placeholder="Passwort" required />
+  <button type="submit">Login</button>
+</form>
