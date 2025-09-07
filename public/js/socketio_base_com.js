@@ -1,5 +1,7 @@
+let gameInFront
 socket.on('field_baseinit', (msg) => {
     console.log("Field Baseinit empfangen", msg);
+    gameInFront = msg
     document.querySelectorAll('[data-point-id]').forEach(el => {
         el.classList.remove('sphereRed', 'sphereGreen', 'sphereYellow', 'sphereBlue');
         void el.offsetWidth;
@@ -20,8 +22,11 @@ socket.on('sphere_moved', (data) => {
     DGEBQ(`[data-point-id="${data.destinationId}"]`).classList.add(`sphere${data.color}`);
 });
 
-function testMoveSphere(des){
-    socket.emit('move_sphere', { pointId: '11', color: 'Red', destinationId: des, cardId: 'cardId', playerId: 'null_red', sphereId: 1 });
+function testMoveSphere(pid, des, col, sphId){
+    const card = gameInFront.currentPlayer.deck.cards.find(c => Array.isArray(c.gameValue) && c.gameValue.includes(0));
+    const cardId = card ? card.id : null;
+    console.log(card)
+    socket.emit('move_sphere', { pointId: pid, color: col, destinationId: des, cardId: cardId, playerId: `null_${col.toLowerCase()}`, sphereId: sphId });
 }
 // (async () => {
 //     for (let i = 1001; i <= 1100; i++) {

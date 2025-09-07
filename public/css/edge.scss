@@ -42,6 +42,7 @@ $d: 25px;
   @extend .comfortaa;
   position: relative;
   width: calc((100% - 90vh) / 2);
+  max-width: calc((100% - 90vh) / 2);
   height: 95vh;
   padding: 1em;
   display: flex;
@@ -51,40 +52,142 @@ $d: 25px;
 #hand {
   background-color: transparent;
   display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  position: relative;
+  height: calc(8cqw * 1.8); /* genug Höhe für Karten */
+}
+
+.card {
+  background-color: white;
+  border: 2px solid rgb(151, 151, 151);
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
-}
-.card{
-  background-color: white;
-  display:flex;
-  flex-direction: column;
-  justify-content: space-between;
   border-radius: 5px;
-  width: 4.9cqw;
-  height: calc(4.9cqw * 1.75);
+  width: 8cqw;
+  height: calc(8cqw * 1.5);
+  position: absolute;
+  transition: transform 0.5s;
+  box-sizing: border-box;
 }
+.card:hover {
+  transform: translateY(-1em) scale(1.05);
+  z-index: 7 !important; 
+}
+
+.card:not(:hover) {
+  transition: none;
+}
+
 .cardTop{
   display:flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0 5px;
+  padding: 0.1em;
 }
 .cardMid{
-  display:flex;
+  display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  padding: 0 5px;
+  width: 100%;           
+  padding: 0.1em;   
+  box-sizing: border-box;
+  align-items: center;
 }
 .cardBot{
   display:flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0 5px;
+  padding: 0.1em;
 }
 .cardCorner{
-  font-size: 0.5em;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p{
+    font-size: 1.5em;
+    margin: 0.05em;
+    line-height: 1em;
+  }
 }
 .rotated{
   transform: rotate(180deg);
+}
+.red{
+  color: red;
+}
+.black{
+  color: black;
+}
+.ass{
+  font-size: 6em;
+  margin:0;
+}
+.cardFontSize{
+  font-size: 3.4em;
+  margin:0;
+  padding: 0;
+  p{
+    margin: 0;
+  }
+}
+.cardMidBase{
+  height: calc(8cqw * 1.5);
+  margin: 0;
+  padding: 10px 0;
+  width: 100%;
+}
+.two{
+  @extend .cardMidBase;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.three{
+  @extend .two;
+}
+
+.four{
+  @extend .cardMidBase;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  div{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.1em;
+  }
+}
+.five{
+  @extend .four;
+  text-align: center;
+}
+
+.six{
+  @extend .four;
+}
+
+.seven{
+  @extend .four;
+
+  line-height: 0.5;
+  text-align: center;
+}
+
+.eight{
+  @extend .seven;
+}
+.nine{
+  @extend .eight;
+}
+
+.ten{
+  @extend .nine;
 }

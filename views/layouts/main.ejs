@@ -84,7 +84,14 @@
     socket.on('backend_offline', () => {
         showAndAutoHide('warning-div', 'Backend is offline', 2000);
     });
-
+    socket.on('backend_warning', (msg) => {
+        console.warn('[SOCKETIO] Backend-Warnung:', msg);
+        showAndAutoHide('warning-div', `Warnung: ${msg.message}, Code: ${msg.code}, (Backend)`, 5000);
+    });
+    socket.on('backend_info', (msg) => {
+        showAndAutoHide('message-div', `Info: ${msg.message}, Code: ${msg.code}`, 1500);
+        console.log('[SOCKETIO] Backend-Info:', msg);
+    });
     </script>
 
     <div class="error" id="error-div"><p id="current_error"></p></div>

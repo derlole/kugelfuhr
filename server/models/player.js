@@ -23,7 +23,7 @@ class Player {
   drawCard(deck) {
     const card = deck.draw();
     if (card) {
-      this.deck.push(card);
+      this.deck.cards.push(card);
       return card;
     } else {
       console.log(`${this.name} kann keine Karte ziehen – Deck ist leer.`);

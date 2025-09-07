@@ -43,15 +43,28 @@ app.use((req, res, next) => {
 
 app.use('/', require('./server/routes/main')(io));
 
-global.games = []
-global.games[0] = new Game();
-//console.log(global.games[0].field.points.filter(p => p.color == "green"));
+// ================== Globale Variablen ==================
+function initiateDeafultTestGame(){
+  global.games = []
+  global.games[0] = new Game();
+  // Test state
+  global.games[0].currentPlayer = global.games[0].player4green
+  global.games[0].gameStatus = 1
+  //global.games[0].player1red.deck
+  for (let i = 0; i < 52; i++) {
+    global.games[0].player4green.drawCard(global.games[0].deck);
+  }
+}
+initiateDeafultTestGame()
+
 
 // ================== Socket.IO-Logik ==================
 io.on('connection', (socket) => {
     console.log(`[SOCKETIO] Client verbunden: ${socket.id}`);
     io.emit("backend_online", "testmsg")
-    io.emit("field_baseinit", global.games[0])
+    if(!global.games.length == 0){
+      io.emit("field_baseinit", global.games[0])
+    }
     socket.on('reload_request', () => {
       socket.emit('reload_page');
     });

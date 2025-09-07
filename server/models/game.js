@@ -1,7 +1,7 @@
 /*
 gameStatus:
     0 = not started
-    1 = started
+    1 = started and running
     2 = paused
     3 = stoped
     4 = finished
@@ -11,16 +11,16 @@ const { Deck } = require('./deck')
 const { Field } = require('./field');
 class Game {
   constructor() {
-    //probn change player"names" to color
     this.player1red = new Player(null, "red");
     this.player2blue = new Player(null, "blue");
     this.player3yellow = new Player(null, "yellow");
     this.player4green = new Player(null, "green");
+    this.players = [this.player1red, this.player2blue, this.player3yellow, this.player4green];
     this.deck = new Deck(false);
     this.deck.shuffle();
     this.field = new Field();
-
-    this.currentPlayer = 0;
+    
+    this.currentPlayer = null;
     this.startingPlayer = 0;
     this.playedCards = [];
     this.round = 0;

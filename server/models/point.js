@@ -9,6 +9,7 @@ class Point {
         this.nextPointId = null
         this.isFinishPoint = false
         this.isFinishEntryPoint = false
+        this.correspondingFinishPointId = null
         this.isHomeField = false
         this.isHomeExitField = false
         this.isSphereOn = false
@@ -21,9 +22,7 @@ class Point {
             this.isFinishPoint = true
             this.prevPointId = null
             this.nextPointId = pointId + 1
-            if (pointId == 18 || pointId == 28 || pointId == 38 || pointId == 48){
-                this.nextPointId = null
-            }
+
             if (pointId < 20){
                 this.color = "red"
             }else if(pointId < 30){
@@ -36,6 +35,20 @@ class Point {
         }
         if (finishEntryPoints.includes(pointId)){
             this.isFinishEntryPoint = true
+            switch (pointId) {
+                case 1023:
+                    this.correspondingFinishPointId = 25
+                    break;
+                case 1048:
+                    this.correspondingFinishPointId = 35
+                    break;
+                case 1073:
+                    this.correspondingFinishPointId = 45
+                    break;
+                case 1098:
+                    this.correspondingFinishPointId = 15
+                    break;
+            }
         }
         if (homeFields.includes(pointId)){
             this.nextPointId = null
@@ -74,6 +87,13 @@ class Point {
             this.prevPointId = 1099
             this.nextPointId = 1001
         }
+        if (pointId == 18 || pointId == 28 || pointId == 38 || pointId == 48){
+            this.nextPointId = null
+        }
+        if(homeFields.includes(pointId) ){
+            this.nextPointId = null
+            this.prevPointId = null
+        }
     }
     isFree(){
         return !this.isSphereOn
@@ -87,7 +107,7 @@ class Point {
         this.sphereColorOn = null
     }
     isPassable(){
-        if(this.isHomeExitField && this.isSphereOn){
+        if((this.isHomeExitField && this.isSphereOn) || (this.isFinishPoint && this.isSphereOn)){
             return false
         }
         return true
