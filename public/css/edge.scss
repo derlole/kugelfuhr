@@ -71,16 +71,21 @@ $d: 25px;
   position: absolute;
   transition: transform 0.5s;
   box-sizing: border-box;
+  
 }
 .card:hover {
   transform: translateY(-1em) scale(1.05);
   z-index: 7 !important; 
 }
 
-.card:not(:hover) {
+.card:not(:hover):not(.cardActive) {
   transition: none;
 }
 
+.cardActive {
+  transform: translateY(-1em) scale(1.05);
+  z-index: 7 !important; 
+}
 .cardTop{
   display:flex;
   flex-direction: row;

@@ -10,7 +10,6 @@ module.exports = (io, socket) => {
         return player.ownedSpheres[(data.sphereId-1)].checkMove(game, data, player)
     }
     socket.on("move_sphere", (data) => {
-        
         if (!game) {
             io.emit('backend_error', { message: 'Kein Spiel gefunden', code: 1500 });
             return;

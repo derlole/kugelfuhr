@@ -70,13 +70,19 @@ class Deck {
     this.shuffle();
   }
   sort() {
-    const suitOrder = { '♠': 1, '♥': 2, '♦': 3, '♣': 4 };
+    const suitOrder = { '♠': 1, '♣': 2, '♦': 3, '♥': 4 };
     this.cards.sort((a, b) => {
-      if (suitOrder[a.suit.symbol] === suitOrder[b.suit.symbol]) {
-        return a.sortValue - b.sortValue;
+      const suitA = suitOrder[a.suit.symbol];
+      const suitB = suitOrder[b.suit.symbol];
+      if (suitA === suitB) {
+      return a.sortValue - b.sortValue;
       }
-      return suitOrder[a.suit] - suitOrder[b.suit];
+      return suitA - suitB;
     });
+  }
+  removeUnnecessaryDeckInformation() {
+    this.values = null;
+    this.suits = null;
   }
 }
 

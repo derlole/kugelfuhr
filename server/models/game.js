@@ -9,8 +9,10 @@ gameStatus:
 const { Player } = require('./player')
 const { Deck } = require('./deck')
 const { Field } = require('./field');
+
 class Game {
   constructor() {
+    this.gameId = null;
     this.player1red = new Player(null, "red");
     this.player2blue = new Player(null, "blue");
     this.player3yellow = new Player(null, "yellow");
@@ -21,7 +23,8 @@ class Game {
     this.field = new Field();
     
     this.currentPlayer = null;
-    this.startingPlayer = 0;
+    this.startingPlayer = null;
+    this.givingPlayer = null;
     this.playedCards = [];
     this.round = 0;
     this.startableGame = false;

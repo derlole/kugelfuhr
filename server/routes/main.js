@@ -1,3 +1,4 @@
+const { stringify } = require("flatted");
 
 module.exports = (io) => {
   const express = require('express');
@@ -12,7 +13,7 @@ module.exports = (io) => {
     //   if (!req.session.userId) {
     //       return res.redirect('/login');
     //   }
-      res.render('index', { title: 'Home' });
+    res.render('index', { title: 'Home', global: JSON.stringify(global.suits)  }); // index.ejs im views-Ordner
   });
 
   router.get('/login', (req, res) => {

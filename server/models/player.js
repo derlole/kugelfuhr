@@ -47,5 +47,11 @@ class Player {
   handSize() {
     return this.deck.length;
   }
+  regeneratePlayerId(){
+    this.playerid = this.name + "_" + this.color;
+  }
+  playerFree(){
+    return this.name == null
+  }
 }
 module.exports = { Player }

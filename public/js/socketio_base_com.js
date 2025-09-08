@@ -1,6 +1,6 @@
-let gameInFront
+
 socket.on('field_baseinit', (msg) => {
-    console.log("Field Baseinit empfangen", msg);
+    console.log("[SOCKETIO] Field Baseinit empfangen", msg);
     gameInFront = msg
     document.querySelectorAll('[data-point-id]').forEach(el => {
         el.classList.remove('sphereRed', 'sphereGreen', 'sphereYellow', 'sphereBlue');
@@ -13,10 +13,10 @@ socket.on('field_baseinit', (msg) => {
             DGEBQ(`[data-point-id="${pointId}"]`).classList.add(`sphere${colors[colorIdx]}`);
         }
     }
-    
+    playerHandInit(gameInFront);
 });
 socket.on('sphere_moved', (data) => {
-    console.log("Sphere moved empfangen", data);
+    console.log("[SOCKETIO] Sphere moved empfangen", data);
 
     DGEBQ(`[data-point-id="${data.pointId}"]`).classList.remove(`sphere${data.color}`);
     DGEBQ(`[data-point-id="${data.destinationId}"]`).classList.add(`sphere${data.color}`);
@@ -25,7 +25,7 @@ socket.on('sphere_moved', (data) => {
 function testMoveSphere(pid, des, col, sphId){
     const card = gameInFront.currentPlayer.deck.cards.find(c => Array.isArray(c.gameValue) && c.gameValue.includes(0));
     const cardId = card ? card.id : null;
-    console.log(card)
+    console.log('[DEBUG---]', card)
     socket.emit('move_sphere', { pointId: pid, color: col, destinationId: des, cardId: cardId, playerId: `null_${col.toLowerCase()}`, sphereId: sphId });
 }
 // (async () => {

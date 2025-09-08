@@ -1,12 +1,19 @@
+<script src="/js/tmp.js"></script>
+
 <link rel="stylesheet" href="/css/edge.css">
 <link rel="stylesheet" href="/css/board.css">
-
+    <div style="display: none;" id="global_var"><%= global %></div>
+    <script src="/js/genGlobalVarInfo.js"></script>
     <div class="left"><h1 class="title">Kugelfuhr</h1></div>
     <div class="plate">
         <div class="graph" id="graph"></div>
     </div>
     <div class="right">
-        <div>Ablage</div>
+        <div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+        </div>
         <div id="hand"></div>
     </div>
 <script src="/js/fieldGen.js"></script>

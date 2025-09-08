@@ -5,7 +5,10 @@ const session = require('express-session');
 const http = require('http');              
 const { Server } = require('socket.io');    
 const { Game } = require('./server/models/game')
+const { initDefaultGame, initGlobals } = require('./ext/initGame')
 const moveHandler = require('./server/sockets/move');
+const loginHandler = require('./server/sockets/login');
+const login = require('./server/sockets/login');
 
 const app = express();
 const PORT = 3033;
@@ -44,31 +47,23 @@ app.use((req, res, next) => {
 app.use('/', require('./server/routes/main')(io));
 
 // ================== Globale Variablen ==================
-function initiateDeafultTestGame(){
-  global.games = []
-  global.games[0] = new Game();
-  // Test state
-  global.games[0].currentPlayer = global.games[0].player4green
-  global.games[0].gameStatus = 1
-  //global.games[0].player1red.deck
-  for (let i = 0; i < 52; i++) {
-    global.games[0].player4green.drawCard(global.games[0].deck);
-  }
-}
-initiateDeafultTestGame()
+global.games = []
+
+initGlobals()
+initDefaultGame(0)
 
 
 // ================== Socket.IO-Logik ==================
 io.on('connection', (socket) => {
     console.log(`[SOCKETIO] Client verbunden: ${socket.id}`);
     io.emit("backend_online", "testmsg")
+    io.emit("who_are_you", null)
     if(!global.games.length == 0){
       io.emit("field_baseinit", global.games[0])
     }
-    socket.on('reload_request', () => {
-      socket.emit('reload_page');
-    });
     moveHandler(io, socket);
+    loginHandler(io, socket);
+    login
     socket.on('disconnect', () => {
     console.log(`[SOCKETIO] Client getrennt: ${socket.id}`);
     });

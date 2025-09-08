@@ -233,9 +233,9 @@ for (let i = 0; i < 4; i++) {
 
   for (let j = 0; j < 4; j++) {
     let finLast = document.createElement("div");
-    finLast.className = "finRight";
+    finLast.className = "finMid";
     let finThird = document.createElement("div");
-    finThird.className = "finMid";
+    finThird.className = "finLeft";
     let finSecond = document.createElement("div");
     finSecond.className = "finLeft";
     let finFirst = document.createElement("div");

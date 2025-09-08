@@ -65,7 +65,39 @@ class Sphere {
             }
         }
         if(destinationField.isFinishPoint && (destinationField.color.toLowerCase() == this.color.toLowerCase())){ //destination is finish point of same color
-
+            let watchField = destinationField
+            let walkDisctance = 0
+            while (watchField.pointId !== currentPosField.pointId) {
+                console.log(watchField.pointId);
+                if(!watchField.isPassable()){
+                    return false
+                }
+                watchField = gameField.points[findPosInArray(gameField.points, watchField.prevPointId)];
+                walkDisctance++
+                if(watchField == undefined){
+                    return false
+                }
+            }
+            if(card.gameValue && card.gameValue.includes(walkDisctance)){
+                return true
+            }
+        }else{
+            let watchField = destinationField
+            let walkDisctance = 0
+            while (watchField.pointId !== currentPosField.pointId) {
+                //console.log(watchField.pointId);
+                if(!watchField.isPassable()){
+                    return false
+                }
+                watchField = gameField.points[findPosInArray(gameField.points, watchField.prevPointId)];
+                walkDisctance++
+                if(watchField == undefined){
+                    return false
+                }
+            }
+            if(card.gameValue && card.gameValue.includes(walkDisctance)){
+                return true
+            }
         }
         return false
     }
