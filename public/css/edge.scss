@@ -196,3 +196,53 @@ $d: 25px;
 .ten{
   @extend .nine;
 }
+
+
+//ABlage
+.ablage{
+  position:relative;
+  margin: auto;
+}
+.ablageCard {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  border: 2px solid rgb(151, 151, 151);
+  border-radius: 5px;
+  width: 8cqw;
+  height: calc(8cqw * 1.5);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+   transition: none;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+// .ablageCard:hover {
+//   transform: translate(-50%, calc(-50% - 1em)) scale(1.05); 
+//   z-index: 7 !important;
+// }
+
+// .ablageCard:not(:hover) {
+//   transition: none;
+// }
+
+
+.ablageCardSpace:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(-20deg);
+  z-index: 1;
+}
+.ablageCardSpace:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(0deg);
+  z-index: 2;
+}
+.ablageCardSpace:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(25deg);
+  z-index: 3;
+}
+
+.hidden{
+  display: none !important;
+}

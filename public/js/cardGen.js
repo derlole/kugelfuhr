@@ -147,10 +147,10 @@ function genCardContent(value, suit) {
     return content;
 }
 
-function genCard(role, symbol){   
+function genCard(role, symbol, cssClass){   
 
     let card = document.createElement("div");
-    card.classList.add("card");
+    card.classList.add(cssClass);
     card.innerHTML = `
         <div class="cardTop">
             <div class="cardCorner">
@@ -202,7 +202,7 @@ function renderHand(n, handCards) {
         // let valueArray = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
         let value = valueArray[i];
 
-        let card = genCard(value, symbol);
+        let card = genCard(value, symbol, "card");
         const left = (i * cardWidth * (1 - overlap)) / totalWidth * 100;
         
         card.style.left = `${left}%`;
@@ -218,4 +218,44 @@ function playerHandInit(gameInFrontend) {
     const numCards = handRed.length;
 
     renderHand(numCards, handRed);
+    renderAblage(handRed[0]);
+    
+    renderAblage(handRed[2])
+    renderAblage(handRed[3])
+}
+
+//Ablagestapel init
+let cardToLayDown = 1;
+
+function renderAblage(ablageCard) {
+    let symbol = ablageCard.suit.symbol;
+    let value = ablageCard.value;
+    let cardSpace = document.getElementById("ablageCard"+cardToLayDown);
+    cardSpace.classList.remove("hidden");
+
+    let card = genCard(value, symbol, "ablageCard");
+    switch(cardToLayDown){
+        case 1:
+            document.getElementById("ablageCard2").style.zIndex = 1;
+            document.getElementById("ablageCard3").style.zIndex = 2;
+            break;
+        case 2:
+            document.getElementById("ablageCard3").style.zIndex = 1;
+            document.getElementById("ablageCard1").style.zIndex = 2;
+            break;
+        case 3:
+            document.getElementById("ablageCard1").style.zIndex = 1;
+            document.getElementById("ablageCard2").style.zIndex = 2;
+            break;
+    }
+
+    card.style.zIndex = 3;
+
+    cardSpace.appendChild(card);
+    
+    if(cardToLayDown == 3){
+        cardToLayDown = 1;
+    } else {
+        cardToLayDown++;
+    }
 }
