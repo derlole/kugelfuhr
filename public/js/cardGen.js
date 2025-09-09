@@ -146,11 +146,12 @@ function genCardContent(value, suit) {
     }
     return content;
 }
-
-function genCard(role, symbol, cssClass){   
+// ily
+function genCard(role, symbol, cssClass, cardId){   
 
     let card = document.createElement("div");
     card.classList.add(cssClass);
+    card.id = cardId
     card.innerHTML = `
         <div class="cardTop">
             <div class="cardCorner">
@@ -202,7 +203,7 @@ function renderHand(n, handCards) {
         // let valueArray = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
         let value = valueArray[i];
 
-        let card = genCard(value, symbol, "card");
+        let card = genCard(value, symbol, "card", handCards[i].id); //CHECK THIS LATER
         const left = (i * cardWidth * (1 - overlap)) / totalWidth * 100;
         
         card.style.left = `${left}%`;
@@ -222,6 +223,18 @@ function playerHandInit(gameInFrontend) {
     
     renderAblage(handRed[2])
     renderAblage(handRed[3])
+    setTimeout(() => {
+        renderAblage(handRed[4])
+    }, 1500);
+    setTimeout(() => {
+        renderAblage(handRed[3])
+    }, 3000);
+    setTimeout(() => {
+        renderAblage(handRed[1])
+    }, 4500);
+    setTimeout(() => {
+        renderAblage(handRed[0])
+    }, 6000);
 }
 
 //Ablagestapel init
@@ -231,9 +244,10 @@ function renderAblage(ablageCard) {
     let symbol = ablageCard.suit.symbol;
     let value = ablageCard.value;
     let cardSpace = document.getElementById("ablageCard"+cardToLayDown);
+    cardSpace.innerHTML = "";
     cardSpace.classList.remove("hidden");
 
-    let card = genCard(value, symbol, "ablageCard");
+    let card = genCard(value, symbol, "ablageCard", ablageCard.id); //CHECK THIS LATER
     switch(cardToLayDown){
         case 1:
             document.getElementById("ablageCard2").style.zIndex = 1;
@@ -249,13 +263,14 @@ function renderAblage(ablageCard) {
             break;
     }
 
-    card.style.zIndex = 3;
+    cardSpace.style.zIndex = 3;
 
     cardSpace.appendChild(card);
-    
-    if(cardToLayDown == 3){
-        cardToLayDown = 1;
-    } else {
-        cardToLayDown++;
-    }
+
+    cardToLayDown = cardToLayDown % 3 + 1;
+    // if(cardToLayDown == 3){
+    //     cardToLayDown = 1;
+    // } else {
+    //     cardToLayDown++;
+    // }
 }

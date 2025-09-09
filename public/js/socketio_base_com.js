@@ -10,7 +10,7 @@ socket.on('field_baseinit', (msg) => {
     for (let colorIdx = 0; colorIdx < colors.length; colorIdx++) {
         for (let i = 1; i <= 4; i++) {
             const pointId = `${(colorIdx + 1)}${i}`;
-            DGEBQ(`[data-point-id="${pointId}"]`).classList.add(`sphere${colors[colorIdx]}`);
+            dgebq(`[data-point-id="${pointId}"]`).classList.add(`sphere${colors[colorIdx]}`);
         }
     }
     playerHandInit(gameInFront);
@@ -18,8 +18,8 @@ socket.on('field_baseinit', (msg) => {
 socket.on('sphere_moved', (data) => {
     console.log("[SOCKETIO] Sphere moved empfangen", data);
 
-    DGEBQ(`[data-point-id="${data.pointId}"]`).classList.remove(`sphere${data.color}`);
-    DGEBQ(`[data-point-id="${data.destinationId}"]`).classList.add(`sphere${data.color}`);
+    dgebq(`[data-point-id="${data.pointId}"]`).classList.remove(`sphere${data.color}`);
+    dgebq(`[data-point-id="${data.destinationId}"]`).classList.add(`sphere${data.color}`);
 });
 
 function testMoveSphere(pid, des, col, sphId){

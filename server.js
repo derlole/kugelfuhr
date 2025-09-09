@@ -8,7 +8,6 @@ const { Game } = require('./server/models/game')
 const { initDefaultGame, initGlobals } = require('./ext/initGame')
 const moveHandler = require('./server/sockets/move');
 const loginHandler = require('./server/sockets/login');
-const login = require('./server/sockets/login');
 
 const app = express();
 const PORT = 3033;
@@ -63,7 +62,6 @@ io.on('connection', (socket) => {
     }
     moveHandler(io, socket);
     loginHandler(io, socket);
-    login
     socket.on('disconnect', () => {
     console.log(`[SOCKETIO] Client getrennt: ${socket.id}`);
     });

@@ -229,7 +229,9 @@ $d: 25px;
 //   transition: none;
 // }
 
-
+.ablageCardSpace{
+  position: absolute;
+}
 .ablageCardSpace:nth-child(1) {
   transform: translate(-50%, -50%) rotate(-20deg);
   z-index: 1;
