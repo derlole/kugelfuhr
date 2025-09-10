@@ -219,22 +219,20 @@ function playerHandInit(gameInFrontend) {
     const numCards = handRed.length;
 
     renderHand(numCards, handRed);
-    renderAblage(handRed[0]);
+    tmpRendenAblage(handRed)
+
+}
+function tmpRendenAblage(h){
+    renderAblage(h[0]);
     
-    renderAblage(handRed[2])
-    renderAblage(handRed[3])
+    renderAblage(h[1])
+    renderAblage(h[2])
     setTimeout(() => {
-        renderAblage(handRed[4])
+        renderAblage(h[3])
     }, 1500);
     setTimeout(() => {
-        renderAblage(handRed[3])
+        renderAblage(h[4])
     }, 3000);
-    setTimeout(() => {
-        renderAblage(handRed[1])
-    }, 4500);
-    setTimeout(() => {
-        renderAblage(handRed[0])
-    }, 6000);
 }
 
 //Ablagestapel init
@@ -268,9 +266,4 @@ function renderAblage(ablageCard) {
     cardSpace.appendChild(card);
 
     cardToLayDown = cardToLayDown % 3 + 1;
-    // if(cardToLayDown == 3){
-    //     cardToLayDown = 1;
-    // } else {
-    //     cardToLayDown++;
-    // }
 }

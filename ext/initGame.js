@@ -30,6 +30,9 @@ function initGlobals(){
         spades: '♠'
     };
 }
+function initGameWithGameConfig(gameConfig){
+    return;
+}
 
 
-module.exports = { initDefaultGame, initGlobals };
+module.exports = { initDefaultGame, initGlobals, initGameWithGameConfig };

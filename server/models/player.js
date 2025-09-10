@@ -19,7 +19,6 @@ class Player {
     this.playerid = this.name + "_" + this.color;
   }
 
-  // Karte von einem Spielfeld-Deck ziehen
   drawCard(deck) {
     const card = deck.draw();
     if (card) {
@@ -31,7 +30,7 @@ class Player {
     }
   }
 
-  // Eine Karte aus der Hand spielen
+  // REWORK THIS IMPL
   playCard(index = 0) {
     if (this.deck.length === 0) {
       console.log(`${this.name} hat keine Karten zum Spielen.`);

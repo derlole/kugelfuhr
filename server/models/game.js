@@ -37,21 +37,6 @@ class Game {
     return this.currentPlayer;
   }
 
-  // Spieler spielt Karte
-  playCard(playerIndex, cardIndex = 0) {
-    if (playerIndex !== this.currentPlayer) {
-      console.log(`Es ist nicht ${this.players[playerIndex].name}s Zug!`);
-      return null;
-    }
-    const card = this.players[playerIndex].playCard(cardIndex);
-    if (card) {
-      this.playedCards.push({ player: this.players[playerIndex].name, card });
-      console.log(`${this.players[playerIndex].name} spielt ${card.toString()}`);
-      this.nextPlayer();
-    }
-    return card;
-  }
-
   // Runde beenden
   endRound() {
     console.log(`Runde ${this.round} beendet. Gespielte Karten:`);
@@ -76,15 +61,19 @@ class Game {
     switch (color) {
         case "red":
             this.player1red.name = name
+            this.player1red.regeneratePlayerId()
             break;
         case "blue":
             this.player2blue.name = name
+            this.player2blue.regeneratePlayerId()
             break;
         case "yellow":
             this.player3yellow.name = name
+            this.player3yellow.regeneratePlayerId()
             break;
         case "green":
             this.player4green.name = name
+            this.player4green.regeneratePlayerId()
             break;
     }
     this.checkStartable()
