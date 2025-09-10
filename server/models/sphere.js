@@ -56,19 +56,23 @@ class Sphere {
         //console.log(card)
         let currentPosField = gameField.points[findPosInArray(gameField.points, this.position)]
         let destinationField = gameField.points[findPosInArray(gameField.points, destinationId)]
+        if(card.gameValue[0] == 100){
+            return false //Jack is handeld in swapChecking
+        }
         if((!destinationField.isFree() && destinationField.sphereColorOn.toLowerCase() == this.color.toLowerCase())){
             return false //destination occupied by own sphere
         }
         if(currentPosField.isHomeField && destinationField.isHomeExitField && (currentPosField.color.toLowerCase() == destinationField.color.toLowerCase())){ //sphere is in home and destination is home exit field of same color
             if (card.gameValue && card.gameValue.includes(0)) { // card contains exit value
                 return true;
+            }else{
+                return false;
             }
         }
         if(destinationField.isFinishPoint && (destinationField.color.toLowerCase() == this.color.toLowerCase())){ //destination is finish point of same color
             let watchField = destinationField
             let walkDisctance = 0
             while (watchField.pointId !== currentPosField.pointId) {
-                console.log(watchField.pointId);
                 if(!watchField.isPassable()){
                     return false
                 }
@@ -122,6 +126,7 @@ class Sphere {
         if (!(player.deck.cards.some(card => card.id === moveProfile.cardId))) {
             return {test:false, message: "Karte nicht in der Hand des Spielers"};
         }
+        console.log(this.checkPath(game.field, moveProfile.destinationId, player.deck.cards.find(card => card.id === moveProfile.cardId)))
         if(!(this.checkPath(game.field, moveProfile.destinationId, player.deck.cards.find(card => card.id === moveProfile.cardId)))){
             return {test:false, message: "Ungültiger Zielpunkt für diese Karte"}
         }

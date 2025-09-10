@@ -184,7 +184,7 @@ body {
   transform: translate(50%, -50%);
 }
 
-.sphereBase, .sphereYellow, .sphereBlue, .sphereGreen, .sphereRed {
+.sphereBase, .sphereGrey, .sphereYellow, .sphereBlue, .sphereGreen, .sphereRed {
   width: 32.5px;
   height: 32.5px;
   border-radius: 50%;
@@ -203,7 +203,7 @@ body {
     transform: scale(1.2) translate(-50%, -50%);
   }
 }
-.sphereBase::before, .sphereYellow::before, .sphereBlue::before, .sphereGreen::before, .sphereRed::before {
+.sphereBase::before, .sphereGrey::before, .sphereYellow::before, .sphereBlue::before, .sphereGreen::before, .sphereRed::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -243,4 +243,12 @@ body {
 }
 .sphereYellow::before {
   background: radial-gradient(circle at 30% 30%, #fff07d 0%, #fff07d 32%, #ffca3a 32%, #ffca3a 60%, #FFB70F 60%, #FFB70F 86%, transparent 86%, transparent 100%);
+}
+
+.sphereGrey {
+  background: #535353;
+  border: 2px solid #838383;
+}
+.sphereGrey::before {
+  background: radial-gradient(circle at 30% 30%, #b1b1b1 0%, #b1b1b1 32%, #838383 32%, #838383 60%, #535353 60%, #535353 86%, transparent 86%, transparent 100%);
 }/*# sourceMappingURL=board.css.map */

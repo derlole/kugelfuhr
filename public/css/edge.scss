@@ -49,6 +49,9 @@ $d: 25px;
   flex-direction: column;
   justify-content: space-between;
 }
+h2{
+  margin:0;
+}
 #hand {
   background-color: transparent;
   display: flex;
@@ -56,7 +59,7 @@ $d: 25px;
   align-items: flex-end;
   width: 100%;
   position: relative;
-  height: calc(8cqw * 1.8); /* genug Höhe für Karten */
+  height: calc(8cqw * 1.65); /* genug Höhe für Karten */
 }
 
 .card {
@@ -75,7 +78,7 @@ $d: 25px;
 }
 .card:hover {
   transform: translateY(-1em) scale(1.05);
-  z-index: 7 !important; 
+  z-index: 8 !important; 
 }
 
 .card:not(:hover):not(.cardActive) {

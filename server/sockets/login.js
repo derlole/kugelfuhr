@@ -19,7 +19,7 @@ module.exports = (io, socket) => {
         player.name = data.name
         player.regeneratePlayerId()
         game.checkStartable()
-        console.log('Joined Player ', player.name, 'new PlayerId: ', player.playerid)
+        console.log('[PLAYER--] Joined Player ', player.name, 'new PlayerId: ', player.playerid)
         io.emit('new_game_state', { changeString: 'player', changedObject: player, game });
         io.emit('backend_info', { message: `${data.name} dem Spiel beigetreten (Admin)`, code: 9999 });
     });

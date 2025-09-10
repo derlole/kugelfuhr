@@ -10,7 +10,8 @@ module.exports = (io, socket) => {
         return player.ownedSpheres[(data.sphereId-1)].checkMove(game, data, player)
     }
     socket.on("move_sphere", (data) => {
-        game = global.games[data.gameIndex]
+
+        game = global.games[data.gameId]
         if (!game) {
             io.emit('backend_error', { message: 'Kein Spiel gefunden', code: 1500 });
             return;
@@ -18,7 +19,9 @@ module.exports = (io, socket) => {
         const player = game.players.find(
             player => player && player.playerid === data.playerId
         );
+        //console.log("test sub1")
         let test = simulateMove(data, player)
+        //console.log("test sub2", test)
         if(!test.test){
             io.emit('backend_warning', { message: 'Ungültiger Zug ' + 'Grund: ' + test.message, code: 1400 });
             return;

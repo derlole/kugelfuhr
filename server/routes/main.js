@@ -5,7 +5,7 @@ module.exports = (io) => {
   const router = express.Router();
 
   router.get('/', (req, res) => {
-      res.redirect('/dashboard');
+    res.redirect('/dashboard');
   });
 
   router.get('/dashboard', (req, res) => {
@@ -13,11 +13,12 @@ module.exports = (io) => {
     //   if (!req.session.userId) {
     //       return res.redirect('/login');
     //   }
-    res.render('index', { title: 'Home', global: JSON.stringify(global.suits)  }); // index.ejs im views-Ordner
+    res.render('index', { title: 'Kugelfuhr', global: JSON.stringify(global.suits)  }); // index.ejs im views-Ordner
   });
-
+   router.get('/index', (req, res) => {
+    res.render('logonGame', { title: 'Kugelfuhr', globalGames: JSON.stringify(global.games)}); // index.ejs im views-Ordner
+  });
   router.get('/login', (req, res) => {
-    // CHANGE ME
     res.redirect('/dashboard');
     //res.render('login', { title: "Login"}); // login.ejs im views-Ordner
 

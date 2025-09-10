@@ -1,16 +1,15 @@
 let handSpace = document.getElementById("hand");
 //Anzahl Handkarten
-const cards = document.querySelectorAll(".card");
 
 
-cards.forEach(card => {
-  card.addEventListener("click", () => {
-    card.classList.add("cardActive");
-  });
-});
-
-function stopCard() {
-  cards.forEach(card => card.classList.remove("cardActive"));
+function eventListenersInit(){
+    const cards = document.querySelectorAll(".card");
+    cards.forEach(card => {
+        card.addEventListener("click", () => {
+            cards.forEach(innerCard => {innerCard.classList.remove("cardActive")})
+            card.classList.add("cardActive");
+        });
+    });
 }
 
 function genCardContent(value, suit) {
@@ -220,6 +219,7 @@ function playerHandInit(gameInFrontend) {
 
     renderHand(numCards, handRed);
     tmpRendenAblage(handRed)
+    eventListenersInit()
 
 }
 function tmpRendenAblage(h){

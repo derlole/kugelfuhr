@@ -94,6 +94,15 @@ class Point {
             this.nextPointId = null
             this.prevPointId = null
         }
+        if(pointId == 15){
+            this.prevPointId = 1098
+        }else if(pointId == 25){
+            this.prevPointId = 1023
+        }else if(pointId == 35){
+            this.prevPointId = 1048
+        }else if(pointId == 45){
+            this.prevPointId = 1073
+        }
     }
     isFree(){
         return !this.isSphereOn

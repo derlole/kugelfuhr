@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="/css/megalodon.css">
+<link rel="stylesheet" href="/css/board.css">
+
+
+
+<div id="globGames" style="display: none;"><%= globalGames %></div>
+<script>
+    let globalGames = JSON.parse(document.getElementById("globGames").textContent)
+</script>
+
+<div class="logon">
+    <h1 class="title">Kugelfuhr</h1>
+
+    <div class="welcome">
+        <img src="/img/megalodon.svg" alt="MEGALODON"/>
+        <h3>hai das ist der logon :)</h3>
+    </div>
+
+    <div class="color">
+        <h3>Wähle deine Farbe:</h3>
+        <div class="chooseColor">
+            <!-- Wenn eine Sphäre vergeben ist, kannst du ihr die Klasse .sphereGrey geben-->
+             <!-- ILY <3-->
+            <div class="sphereRed chooseSphere"></div>
+            <div class="sphereBlue chooseSphere"></div>
+            <div class="sphereYellow chooseSphere"></div>
+            <div class="sphereGreen chooseSphere"></div>
+        </div>
+    </div>
+
+    <div class="name">
+        <h3>Gib deinen Spielernamen ein:</h3>
+        <input type="text"/>
+    </div>
+
+    <div class="game">
+        <h3>Wähle ein Spiel zum Beitreten aus:</h3>
+        <div>
+            <h4>Game A</h4>
+            <h4>Game B</h4>
+        </div>
+    </div>
+
+    <button>Spiel beitreten</button>
+</div>

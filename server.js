@@ -5,7 +5,7 @@ const session = require('express-session');
 const http = require('http');              
 const { Server } = require('socket.io');    
 const { Game } = require('./server/models/game')
-const { initDefaultGame, initGlobals } = require('./ext/initGame')
+const { initDefaultGame, initGlobals, forcePlayableNoChecks } = require('./ext/initGame')
 const moveHandler = require('./server/sockets/move');
 const loginHandler = require('./server/sockets/login');
 
@@ -50,6 +50,7 @@ global.games = []
 
 initGlobals()
 initDefaultGame(0)
+forcePlayableNoChecks(0)
 
 
 // ================== Socket.IO-Logik ==================
@@ -57,9 +58,11 @@ io.on('connection', (socket) => {
     console.log(`[SOCKETIO] Client verbunden: ${socket.id}`);
     io.emit("backend_online", "testmsg")
     io.emit("who_are_you", null)
+
     if(!global.games.length == 0){
       io.emit("field_baseinit", global.games[0])
     }
+
     moveHandler(io, socket);
     loginHandler(io, socket);
     socket.on('disconnect', () => {

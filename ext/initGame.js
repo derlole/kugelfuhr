@@ -29,10 +29,19 @@ function initGlobals(){
         clubs: '♣',
         spades: '♠'
     };
+    global.homeExitFields =      [1001, 1026, 1051, 1076],
+    global.finishEntryPoints =   [1023, 1048, 1073, 1098],
+    global.finishPoints =        [15,16,17,18,25,26,27,28,35,36,37,38,45,46,47,48],
+    global.homeFields =          [11,12,13,14,21,22,23,24,31,32,33,34,41,42,43,44]
 }
-function initGameWithGameConfig(gameConfig){
+function initGameWithGameConfig(gameConfig, gameId){
     return;
 }
+function forcePlayableNoChecks(gameId){
+    game = global.games[gameId]
+    game.round = 1
+    game.gameStatus = 1
+}
 
 
-module.exports = { initDefaultGame, initGlobals, initGameWithGameConfig };
+module.exports = { initDefaultGame, initGlobals, initGameWithGameConfig, forcePlayableNoChecks };

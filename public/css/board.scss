@@ -326,3 +326,27 @@ $pulseDuration: 300s; // Dauer eines Puls-Zyklus
     );
   }
 }
+
+$darkgrey: #535353;
+$grey: #838383;
+$matgrey: #b1b1b1;
+
+.sphereGrey{
+  @extend .sphereBase;
+  background: $darkgrey;
+  border: 2px solid $grey;
+
+  &::before{
+    background:
+    radial-gradient(circle at 30% 30%,
+      $matgrey 0%,
+      $matgrey 32%,
+      $grey 32%,
+      $grey 60%,
+      $darkgrey 60%,
+      $darkgrey 86%,
+      transparent 86%,
+      transparent 100%
+    );
+  }
+}

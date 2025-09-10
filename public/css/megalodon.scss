@@ -1,0 +1,75 @@
+$red: #ff595e;
+$matred: #ffa2a5;
+$darkred: #cb4c51;
+$yellow: #ffca3a;
+$matyellow: #fff07d;
+$darkyellow: #ffb70f;
+$blue: #1982c4;
+$matblue: #78cbff;
+$darkblue: #206895;
+$green: #8ac926;
+$matgreen: #ccf983;
+$darkgreen: #81ad3a;
+$matpurple: #8b7450;
+$purple: #68583e;
+$background: #ffeac9;
+$point: #dfc7a0;
+$border: #9a8a6e;
+$d: 25px;
+
+@import url("https://fonts.googleapis.com/css2?family=Barrio&family=Comfortaa:wght@700&display=swap");
+
+.comfortaa {
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.barrio-regular {
+  font-family: "Barrio", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  background-color: $background;
+  font-family: "Comfortaa";
+}
+.logon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+}
+.title {
+  text-decoration: underline;
+  margin: 0 0 2em 0;
+  font-size: 2.25em;
+  text-align: center;
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  h3 {
+    font-family: "Barrio";
+    background-color: white;
+    border-radius: 50px;
+    padding: 1em;
+  }
+}
+
+.chooseColor {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chooseSphere{
+    animation: none !important;
+    transform: scale(1) !important;
+}

@@ -21,13 +21,12 @@ socket.on('sphere_moved', (data) => {
     dgebq(`[data-point-id="${data.pointId}"]`).classList.remove(`sphere${data.color}`);
     dgebq(`[data-point-id="${data.destinationId}"]`).classList.add(`sphere${data.color}`);
 });
+socket.on('game_stats_update', (msg) => {
+    console.log("[SOCKETIO] Game State update recived")
+    gameInFront = msg
+})
 
-function testMoveSphere(pid, des, col, sphId){
-    const card = gameInFront.currentPlayer.deck.cards.find(c => Array.isArray(c.gameValue) && c.gameValue.includes(0));
-    const cardId = card ? card.id : null;
-    console.log('[DEBUG---]', card)
-    socket.emit('move_sphere', { pointId: pid, color: col, destinationId: des, cardId: cardId, playerId: `null_${col.toLowerCase()}`, sphereId: sphId });
-}
+
 // (async () => {
 //     for (let i = 1001; i <= 1100; i++) {
 //         testMoveSphere(i.toString());

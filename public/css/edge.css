@@ -30,6 +30,10 @@
   justify-content: space-between;
 }
 
+h2 {
+  margin: 0;
+}
+
 #hand {
   background-color: transparent;
   display: flex;
@@ -37,7 +41,7 @@
   align-items: flex-end;
   width: 100%;
   position: relative;
-  height: 14.4cqw; /* genug Höhe für Karten */
+  height: 13.2cqw; /* genug Höhe für Karten */
 }
 
 .card {
@@ -56,7 +60,7 @@
 
 .card:hover {
   transform: translateY(-1em) scale(1.05);
-  z-index: 7 !important;
+  z-index: 8 !important;
 }
 
 .card:not(:hover):not(.cardActive) {
