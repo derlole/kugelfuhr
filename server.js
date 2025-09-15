@@ -44,6 +44,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/', require('./server/routes/main')(io));
+app.use('/logonGame', require('.server/routes/login')(io))
 
 // ================== Globale Variablen ==================
 global.games = []

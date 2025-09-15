@@ -21,25 +21,26 @@
         <div class="chooseColor">
             <!-- Wenn eine Sphäre vergeben ist, kannst du ihr die Klasse .sphereGrey geben-->
              <!-- ILY <3-->
-            <div class="sphereRed chooseSphere"></div>
-            <div class="sphereBlue chooseSphere"></div>
-            <div class="sphereYellow chooseSphere"></div>
-            <div class="sphereGreen chooseSphere"></div>
+            <div onclick="setWantColor('Red')" class="sphereRed chooseSphere"></div>
+            <div onclick="setWantColor('Blue')" class="sphereBlue chooseSphere"></div>
+            <div onclick="setWantColor('Yellow')" class="sphereYellow chooseSphere"></div>
+            <div onclick="setWantColor('Green')" class="sphereGreen chooseSphere"></div>
         </div>
     </div>
 
     <div class="name">
         <h3>Gib deinen Spielernamen ein:</h3>
-        <input type="text"/>
+        <input id="playerName" type="text"/>
     </div>
 
     <div class="game">
         <h3>Wähle ein Spiel zum Beitreten aus:</h3>
         <div>
-            <h4>Game A</h4>
-            <h4>Game B</h4>
+            <h4 onclick="setWantGame(0)">Game A</h4>
+            <h4 onclick="setWantGame(1)">Game B</h4>
         </div>
     </div>
 
-    <button>Spiel beitreten</button>
+    <button onclick="requestGameJoin()">Spiel beitreten</button>
 </div>
+<script src="/js/logonFunctions.js"></script>

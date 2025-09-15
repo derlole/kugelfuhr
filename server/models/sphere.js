@@ -60,7 +60,7 @@ class Sphere {
             return {test: false, extra: ""} //Jack is handeld in swapChecking
         }
         if((!destinationField.isFree() && destinationField.sphereColorOn.toLowerCase() == this.color.toLowerCase())){
-            return {test: false, extra: ""} //destination occupied by own sphere
+            return {test: false, extra: "destination occupied by own sphere"} //destination occupied by own sphere
         }
         if(currentPosField.isHomeField && destinationField.isHomeExitField && (currentPosField.color.toLowerCase() == destinationField.color.toLowerCase())){ //sphere is in home and destination is home exit field of same color
             if (card.gameValue && card.gameValue.includes(0)) { // card contains exit value
@@ -142,8 +142,8 @@ class Sphere {
         if (!(player.deck.cards.some(card => card.id === moveProfile.cardId))) {
             return {test:false, message: "Karte nicht in der Hand des Spielers"};
         }
-        console.log(this.checkPath(game.field, moveProfile.destinationId, player.deck.cards.find(card => card.id === moveProfile.cardId)))
         var checkedMove = this.checkPath(game.field, moveProfile.destinationId, player.deck.cards.find(card => card.id === moveProfile.cardId))
+        console.log(checkedMove)
         if(!(checkedMove.test)){
             return {test:false, message: "Ungültiger Zielpunkt für diese Karte " + checkedMove.extra}
         }
