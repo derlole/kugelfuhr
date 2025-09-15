@@ -30,7 +30,7 @@ class Deck {
       { value: 'A',description: "walk 1, walk 11, go out", gameValue: [1,11,0], name: 'Ace', sortValue: 14 },
       { value: '2',description: "walk 2", gameValue: [2], name: 'Two', sortValue: 2 },
       { value: '3',description: "walk 3", gameValue: [3], name: 'Three', sortValue: 3 },
-      { value: '4',description: "walk 4 backwards", gameValue: [-4, 96], name: 'Four', sortValue: 4 },
+      { value: '4',description: "walk 4 backwards", gameValue: [-4], name: 'Four', sortValue: 4 },
       { value: '5',description: "walk 5", gameValue: [5], name: 'Five', sortValue: 5 },
       { value: '6',description: "walk 6", gameValue: [6], name: 'Six', sortValue: 6 },
       { value: '7',description: "walk between 1-7 with various balls", gameValue: [1,2,3,4,5,6,7], name: 'Seven', sortValue: 7 },

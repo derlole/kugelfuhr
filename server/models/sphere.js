@@ -57,16 +57,16 @@ class Sphere {
         let currentPosField = gameField.points[findPosInArray(gameField.points, this.position)]
         let destinationField = gameField.points[findPosInArray(gameField.points, destinationId)]
         if(card.gameValue[0] == 100){
-            return false //Jack is handeld in swapChecking
+            return {test: false, extra: ""} //Jack is handeld in swapChecking
         }
         if((!destinationField.isFree() && destinationField.sphereColorOn.toLowerCase() == this.color.toLowerCase())){
-            return false //destination occupied by own sphere
+            return {test: false, extra: ""} //destination occupied by own sphere
         }
         if(currentPosField.isHomeField && destinationField.isHomeExitField && (currentPosField.color.toLowerCase() == destinationField.color.toLowerCase())){ //sphere is in home and destination is home exit field of same color
             if (card.gameValue && card.gameValue.includes(0)) { // card contains exit value
-                return true;
+                return {test: true, extra: ""};
             }else{
-                return false;
+                return {test: false, extra: ""};
             }
         }
         if(destinationField.isFinishPoint && (destinationField.color.toLowerCase() == this.color.toLowerCase())){ //destination is finish point of same color
@@ -74,16 +74,32 @@ class Sphere {
             let walkDisctance = 0
             while (watchField.pointId !== currentPosField.pointId) {
                 if(!watchField.isPassable()){
-                    return false
+                    return {test: false, extra: ""}
                 }
                 watchField = gameField.points[findPosInArray(gameField.points, watchField.prevPointId)];
                 walkDisctance++
                 if(watchField == undefined){
-                    return false
+                    return {test: false, extra: ""}
                 }
             }
             if(card.gameValue && card.gameValue.includes(walkDisctance)){
-                return true
+                return {test: true, extra: ""};
+            }
+        }else if(card.gameValue && card.gameValue.includes(-4)){
+            let watchField = destinationField
+            let walkDisctance = 0
+            while(watchField.pointId !== currentPosField.pointId){
+                if(!watchField.isPassable()){
+                    return {test: false, extra: ""}
+                }
+                watchField = gameField.points[findPosInArray(gameField.points, watchField.nextPointId)]
+                walkDisctance--
+                if(watchField == undefined){
+                    return {test: false, extra: ""}
+                }
+            }
+            if(card.gameValue && card.gameValue.includes(walkDisctance)){
+                return {test: true, extra: ""};
             }
         }else{
             let watchField = destinationField
@@ -91,19 +107,19 @@ class Sphere {
             while (watchField.pointId !== currentPosField.pointId) {
                 //console.log(watchField.pointId);
                 if(!watchField.isPassable()){
-                    return false
+                    return {test: false, extra: ""}
                 }
                 watchField = gameField.points[findPosInArray(gameField.points, watchField.prevPointId)];
                 walkDisctance++
                 if(watchField == undefined){
-                    return false
+                    return {test: false, extra: ""}
                 }
             }
             if(card.gameValue && card.gameValue.includes(walkDisctance)){
-                return true
+                return {test: true, extra: ""};
             }
         }
-        return false
+        return {test: false, extra: ""}
     }
     checkMove(game, moveProfile, player){
         if(!(game.gameStatus == 1)){
@@ -127,8 +143,9 @@ class Sphere {
             return {test:false, message: "Karte nicht in der Hand des Spielers"};
         }
         console.log(this.checkPath(game.field, moveProfile.destinationId, player.deck.cards.find(card => card.id === moveProfile.cardId)))
-        if(!(this.checkPath(game.field, moveProfile.destinationId, player.deck.cards.find(card => card.id === moveProfile.cardId)))){
-            return {test:false, message: "Ungültiger Zielpunkt für diese Karte"}
+        var checkedMove = this.checkPath(game.field, moveProfile.destinationId, player.deck.cards.find(card => card.id === moveProfile.cardId))
+        if(!(checkedMove.test)){
+            return {test:false, message: "Ungültiger Zielpunkt für diese Karte " + checkedMove.extra}
         }
         console.log(this.color, this.sphereId, "moves from", this.position, "to", moveProfile.destinationId, "with", player.deck.cards.find(card => card.id === moveProfile.cardId))
         //some if's
