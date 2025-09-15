@@ -9,11 +9,23 @@ module.exports = (io) => {
   });
 
   router.get('/dashboard', (req, res) => {
-    // CHANGE ME
-    //   if (!req.session.userId) {
-    //       return res.redirect('/login');
-    //   }
-    res.render('index', { title: 'Kugelfuhr', global: JSON.stringify(global.suits)  }); // index.ejs im views-Ordner
+    // Uncomment to require login:
+    // if (!req.session.userId) {
+    //   return res.redirect('/login');
+    // }
+
+    // Extract query parameters
+    const { color, gameIndex, name } = req.query;
+
+    res.render('index', {
+      title: 'Kugelfuhr',
+      global: JSON.stringify(global.suits),
+      data: {
+        color,
+        gameIndex,
+        name
+      }
+    }); 
   });
    router.get('/index', (req, res) => {
     res.render('logonGame', { title: 'Kugelfuhr', globalGames: JSON.stringify(global.games)}); // index.ejs im views-Ordner
