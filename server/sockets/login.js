@@ -24,6 +24,7 @@ module.exports = (io, socket) => {
         io.emit('backend_info', { message: `${data.name} dem Spiel beigetreten (Admin)`, code: 9999 });
     });
     socket.on('join_game', (data) => {
+
         let game = global.games[data.gameIndex];
         if (!game) {
             io.emit('backend_error', { message: 'Kein Spiel gefunden', code: 1500 });
@@ -33,9 +34,15 @@ module.exports = (io, socket) => {
             io.emit('backend_error', { message: 'Ungültige Daten', code: 1502 });
             return;
         }
-        if(!(game.addPlayer(data.name, data.color.toLowerCase()))){
+        var targetPlayer = game.addPlayer(data.name, data.color.toLowerCase())
+        
+        if(!targetPlayer){
+            // request rejoin
             io.emit('backend_warning', { message: 'Farbe bereits vergeben', code: 1400 });
             return;
+        }
+        if(!global.games.length == 0){
+            io.emit("field_baseinit", global.games[0])
         }
         io.emit('new_game_state', { changeString: 'player', changedObject: targetPlayer, game });
         io.emit('backend_info', { message: `${data.name} dem Spiel beigetreten`, code: 9999 });

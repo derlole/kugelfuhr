@@ -20,11 +20,11 @@ module.exports = (io) => {
     res.render('index', {
       title: 'Kugelfuhr',
       global: JSON.stringify(global.suits),
-      data: {
+      data: JSON.stringify({
         color,
         gameIndex,
         name
-      }
+      })
     }); 
   });
    router.get('/index', (req, res) => {

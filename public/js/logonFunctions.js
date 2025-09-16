@@ -2,7 +2,6 @@
 let wantCol = null
 let wantGameNr = null
 let wantedName
-
 function setWantColor(col){
     wantCol = col
 }
@@ -17,8 +16,7 @@ function devLogon(){
 function requestGameJoin(){
     //uncomment in real application
     devLogon()
-
-    if(!(wantCol) || !(wantGameNr)){
+    if(!(wantCol) || wantGameNr == null){
         return
     }
     if(!wantedName){
@@ -33,19 +31,26 @@ function requestGameJoin(){
         body: JSON.stringify(data)
     })
     .then(response => {
-        if (response.status === 200) {
+        if (response.ok) {
+            // 200–299
             const params = new URLSearchParams({
-                color: wantCol,
-                gameIndex: wantGameNr,
-                name: wantedName
+            color: wantCol,
+            gameIndex: wantGameNr,
+            name: wantedName
             });
             window.location.href = `/dashboard?${params.toString()}`;
-            return;
+            return; 
+        } else {
+            return response.json(); 
         }
     })
     .then(result => {
-        if(result && result.message){
-            alert(result.message);
+        if (result) {
+            console.log("testpre");
+            showAndAutoHide('error-div', `Error-Message: ${result.message}, Error-code: ${result.code}, Thrown by backend`, 7000);
+            console.log(result);
+            console.log("testafter");
+            return
         }
     })
     .catch(error => {

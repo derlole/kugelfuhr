@@ -44,7 +44,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/', require('./server/routes/main')(io));
-app.use('/logonGame', require('.server/routes/login')(io))
+app.use('/logonGame', require('./server/routes/login')(io))
 
 // ================== Globale Variablen ==================
 global.games = []
@@ -58,11 +58,7 @@ forcePlayableNoChecks(0)
 io.on('connection', (socket) => {
     console.log(`[SOCKETIO] Client verbunden: ${socket.id}`);
     io.emit("backend_online", "testmsg")
-    io.emit("who_are_you", null)
-
-    if(!global.games.length == 0){
-      io.emit("field_baseinit", global.games[0])
-    }
+    //io.emit("who_are_you", null)
 
     moveHandler(io, socket);
     loginHandler(io, socket);
