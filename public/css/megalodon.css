@@ -54,4 +54,100 @@ body {
 .chooseSphere {
   animation: none !important;
   transform: scale(1) !important;
+}
+
+.game {
+  height: 20vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.chooseGame {
+  max-height: 70%;
+  overflow-y: auto;
+  justify-items: center;
+  scrollbar-width: thin;
+  scrollbar-color: #9a8a6e transparent;
+}
+
+.gameOption {
+  border-radius: 10px;
+  background-color: #dfc7a0;
+  padding: 0.5em;
+  margin: 0.25em;
+  width: 75%;
+}
+
+.gameOption:hover {
+  background-color: #9a8a6e;
+}
+
+.chosenGame {
+  background-color: #9a8a6e;
+}
+
+.chooseGame::-webkit-scrollbar {
+  width: 1em;
+}
+
+.chooseGame::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.chooseGame::-webkit-scrollbar-thumb {
+  background: #9a8a6e;
+  border-radius: 10px;
+}
+
+.chooseGame::-webkit-scrollbar-thumb:hover {
+  background: #68583e;
+}
+
+.colorChoosen {
+  outline: 6px solid #dfc7a0;
+  box-shadow: 0 0 0 12px #ffeac9 !important;
+}
+
+.inpPlayerName {
+  background-color: #dfc7a0;
+  border-radius: 10px;
+  border: 2px solid #9a8a6e;
+  color: #68583e;
+  padding: 0.25em;
+  font-family: Comfortaa;
+  margin: 1em;
+  margin-top: 0;
+}
+
+.inpPlayerName:focus {
+  border: 2px solid #9a8a6e;
+  outline: 3px solid #dfc7a0;
+  box-shadow: 0 0 0 6px #ffeac9 !important;
+}
+
+.inpPlayerName::-moz-placeholder {
+  color: #ffeac9;
+  font-family: Comfortaa;
+}
+
+.inpPlayerName::placeholder {
+  color: #ffeac9;
+  font-family: Comfortaa;
+}
+
+.joinBtn {
+  background-color: #dfc7a0;
+  border-radius: 7.5px;
+  border: 3px solid #9a8a6e;
+  color: #68583e;
+  padding: 0.25em;
+  font-family: Comfortaa;
+  margin: 1em;
+  transition: border 0.2s ease, box-shadow 0.2s ease 0.2s;
+}
+
+.joinBtn:hover {
+  border: 3px solid #ff595e;
+  box-shadow: 0 0 0 3px #1982c4, 0 0 0 6px #ffca3a, 0 0 0 9px #8ac926;
 }/*# sourceMappingURL=megalodon.css.map */

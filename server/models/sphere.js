@@ -56,17 +56,20 @@ class Sphere {
         //console.log(card)
         let currentPosField = gameField.points[findPosInArray(gameField.points, this.position)]
         let destinationField = gameField.points[findPosInArray(gameField.points, destinationId)]
+        if(!currentPosField || !destinationField){
+            return {test: false, extra: "Ungueltige Feld-ID."}
+        }
         if(card.gameValue[0] == 100){
-            return {test: false, extra: ""} //Jack is handeld in swapChecking
+            return {test: false, extra: "Interner Routing error, bitte kontaktiere das DEV-Team!"} //Jack is handeld in swapChecking
         }
         if((!destinationField.isFree() && destinationField.sphereColorOn.toLowerCase() == this.color.toLowerCase())){
-            return {test: false, extra: "destination occupied by own sphere"} //destination occupied by own sphere
+            return {test: false, extra: "Das Zielfeld wird durch die eigene Kugel belegt."} //destination occupied by own sphere
         }
         if(currentPosField.isHomeField && destinationField.isHomeExitField && (currentPosField.color.toLowerCase() == destinationField.color.toLowerCase())){ //sphere is in home and destination is home exit field of same color
             if (card.gameValue && card.gameValue.includes(0)) { // card contains exit value
                 return {test: true, extra: ""};
             }else{
-                return {test: false, extra: ""};
+                return {test: false, extra: "Du kannst mit dieser Karte nicht aus dem Haus gehen."};
             }
         }
         if(destinationField.isFinishPoint && (destinationField.color.toLowerCase() == this.color.toLowerCase())){ //destination is finish point of same color
@@ -74,12 +77,12 @@ class Sphere {
             let walkDisctance = 0
             while (watchField.pointId !== currentPosField.pointId) {
                 if(!watchField.isPassable()){
-                    return {test: false, extra: ""}
+                    return {test: false, extra: "Der angestrebte Pfad kann nicht bestritten werden."}
                 }
                 watchField = gameField.points[findPosInArray(gameField.points, watchField.prevPointId)];
                 walkDisctance++
                 if(watchField == undefined){
-                    return {test: false, extra: ""}
+                    return {test: false, extra: "eigentlich ist dieser Fehler nicht moeglich."}
                 }
             }
             if(card.gameValue && card.gameValue.includes(walkDisctance)){
@@ -90,12 +93,12 @@ class Sphere {
             let walkDisctance = 0
             while(watchField.pointId !== currentPosField.pointId){
                 if(!watchField.isPassable()){
-                    return {test: false, extra: ""}
+                    return {test: false, extra: "Der angestrebte Pfad kann nicht bestritten werden."}
                 }
                 watchField = gameField.points[findPosInArray(gameField.points, watchField.nextPointId)]
                 walkDisctance--
                 if(watchField == undefined){
-                    return {test: false, extra: ""}
+                    return {test: false, extra: "eigentlich ist dieser Fehler nicht moeglich."}
                 }
             }
             if(card.gameValue && card.gameValue.includes(walkDisctance)){
@@ -107,19 +110,19 @@ class Sphere {
             while (watchField.pointId !== currentPosField.pointId) {
                 //console.log(watchField.pointId);
                 if(!watchField.isPassable()){
-                    return {test: false, extra: ""}
+                    return {test: false, extra: "Der angestrebte Pfad kann nicht bestritten werden."}
                 }
                 watchField = gameField.points[findPosInArray(gameField.points, watchField.prevPointId)];
                 walkDisctance++
                 if(watchField == undefined){
-                    return {test: false, extra: ""}
+                    return {test: false, extra: "eigentlich ist dieser Fehler nicht moeglich."}
                 }
             }
             if(card.gameValue && card.gameValue.includes(walkDisctance)){
                 return {test: true, extra: ""};
             }
         }
-        return {test: false, extra: ""}
+        return {test: false, extra: "unberuecksichtigter Extremfall"}
     }
     checkMove(game, moveProfile, player){
         if(!(game.gameStatus == 1)){
@@ -145,7 +148,7 @@ class Sphere {
         var checkedMove = this.checkPath(game.field, moveProfile.destinationId, player.deck.cards.find(card => card.id === moveProfile.cardId))
         console.log(checkedMove)
         if(!(checkedMove.test)){
-            return {test:false, message: "Ungültiger Zielpunkt für diese Karte " + checkedMove.extra}
+            return {test:false, message: "Ungültiger Zielpunkt für diese Karte, " + checkedMove.extra}
         }
         console.log(this.color, this.sphereId, "moves from", this.position, "to", moveProfile.destinationId, "with", player.deck.cards.find(card => card.id === moveProfile.cardId))
         //some if's

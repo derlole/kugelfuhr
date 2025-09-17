@@ -2,11 +2,22 @@
 let wantCol = null
 let wantGameNr = null
 let wantedName
-function setWantColor(col){
+function setWantColor(col, element){
     wantCol = col
+    const options = element.parentElement.querySelectorAll('div')
+    options.forEach(div => {
+        div.classList.remove('colorChoosen');
+    });
+    element.classList.add("colorChoosen")
 }
-function setWantGame(gameNr){
+function setWantGame(gameNr, element){
     wantGameNr = gameNr 
+
+    const options = element.parentElement.querySelectorAll('h4')
+    options.forEach(div => {
+        div.classList.remove('chosenGame');
+    });
+    element.classList.add("chosenGame")
 }
 function devLogon(){
     wantCol = 'Red'
@@ -17,10 +28,15 @@ function requestGameJoin(){
     //uncomment in real application
     devLogon()
     if(!(wantCol) || wantGameNr == null){
+        showAndAutoHide('warning-div', `Bitte geben sie das Spiel und die Farbe an, die sie spielen wollen`, 7000);
         return
     }
     if(!wantedName){
         wantedName = document.getElementById('playerName').value
+    }
+    if(!wantedName){
+        showAndAutoHide('warning-div', `Bitte geben sie einen Nicknamen fuer das Spiel an`, 7000);
+        return
     }
     const data = {name: wantedName, color: wantCol, gameIndex: wantGameNr}
     fetch('/logonGame/join', {
@@ -30,9 +46,14 @@ function requestGameJoin(){
         },
         body: JSON.stringify(data)
     })
-    .then(response => {
+    .then(async response => {
+        let json;
+        try {
+            json = await response.json();
+        } catch (e) {
+            json = null; // falls gar kein Body kommt
+        }
         if (response.ok) {
-            // 200–299
             const params = new URLSearchParams({
             color: wantCol,
             gameIndex: wantGameNr,
@@ -41,16 +62,15 @@ function requestGameJoin(){
             window.location.href = `/dashboard?${params.toString()}`;
             return; 
         } else {
-            return response.json(); 
+            return json
         }
     })
     .then(result => {
-        if (result) {
-            console.log("testpre");
+        if(result.code == 1500 || result.code == 1502){
             showAndAutoHide('error-div', `Error-Message: ${result.message}, Error-code: ${result.code}, Thrown by backend`, 7000);
-            console.log(result);
-            console.log("testafter");
             return
+        }else{
+            return window.location.href = '/index'
         }
     })
     .catch(error => {

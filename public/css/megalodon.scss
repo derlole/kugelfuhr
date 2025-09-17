@@ -17,6 +17,7 @@ $point: #dfc7a0;
 $border: #9a8a6e;
 $d: 25px;
 
+
 @import url("https://fonts.googleapis.com/css2?family=Barrio&family=Comfortaa:wght@700&display=swap");
 
 .comfortaa {
@@ -72,4 +73,91 @@ body {
 .chooseSphere{
     animation: none !important;
     transform: scale(1) !important;
+}
+.game{
+  height: 20vh;
+  display: flex;
+  flex-direction: column;
+}
+.chooseGame{
+  max-height: 70%;
+  overflow-y: auto;
+  justify-items: center;
+  scrollbar-width: thin;     
+  scrollbar-color: $border transparent; 
+}
+.gameOption{
+  border-radius: 10px;
+  background-color: $point;
+  padding: 0.5em;
+  margin: 0.25em;
+  width: 75%;
+}
+.gameOption:hover{
+  background-color: $border;
+}
+.chosenGame{
+  background-color: $border
+}
+
+.chooseGame::-webkit-scrollbar {
+  width: 1em;             
+}
+
+.chooseGame::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.chooseGame::-webkit-scrollbar-thumb {
+  background: $border;
+  border-radius: 10px;
+}
+
+.chooseGame::-webkit-scrollbar-thumb:hover {
+  background: $purple;
+}
+
+.colorChoosen{
+  outline: 6px solid $point;
+  box-shadow: 0 0 0 12px $background !important;
+}
+
+.inpPlayerName{
+  background-color: $point;
+  border-radius: 10px;
+  border: 2px solid $border;
+  color: $purple;
+  padding: 0.25em;
+  font-family: Comfortaa;
+  margin: 1em;
+  margin-top: 0;
+}
+.inpPlayerName:focus{
+  border: 2px solid $border;
+  outline: 3px solid $point;
+  box-shadow: 0 0 0 6px $background !important;
+}
+.inpPlayerName::placeholder{
+  color: $background;
+  font-family: Comfortaa;
+}
+.joinBtn{
+  background-color: $point;
+  border-radius: 7.5px;
+  border: 3px solid $border;
+  color: $purple;
+  padding: 0.25em;
+  font-family: Comfortaa;
+  margin: 1em;
+  transition: 
+    border 0.2s ease, 
+    box-shadow 0.2s ease 0.2s;
+}
+.joinBtn:hover{
+  border: 3px solid $red;
+  box-shadow:
+    0 0 0 3px $blue,
+    0 0 0 6px $yellow, 
+    0 0 0 9px $green;
 }

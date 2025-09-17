@@ -20,7 +20,7 @@ module.exports = (io, socket) => {
         player.regeneratePlayerId()
         game.checkStartable()
         console.log('[PLAYER--] Joined Player ', player.name, 'new PlayerId: ', player.playerid)
-        io.emit('new_game_state', { changeString: 'player', changedObject: player, game });
+        //io.emit('new_game_state', { changeString: 'player', changedObject: player, newGame: game, init: 'none' });
         io.emit('backend_info', { message: `${data.name} dem Spiel beigetreten (Admin)`, code: 9999 });
     });
     socket.on('join_game', (data) => {
@@ -44,7 +44,7 @@ module.exports = (io, socket) => {
         if(!global.games.length == 0){
             io.emit("field_baseinit", global.games[0])
         }
-        io.emit('new_game_state', { changeString: 'player', changedObject: targetPlayer, game });
+        io.emit('new_game_state', { changeString: 'player', changedObject: targetPlayer, newGame: game, init: 'none' });
         io.emit('backend_info', { message: `${data.name} dem Spiel beigetreten`, code: 9999 });
     });
 

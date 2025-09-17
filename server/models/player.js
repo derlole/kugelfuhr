@@ -30,7 +30,6 @@ class Player {
     }
   }
 
-  // REWORK THIS IMPL
   playCard(index = 0) {
     if (this.deck.length === 0) {
       console.log(`${this.name} hat keine Karten zum Spielen.`);

@@ -45,23 +45,26 @@ app.use((req, res, next) => {
 
 app.use('/', require('./server/routes/main')(io));
 app.use('/logonGame', require('./server/routes/login')(io))
+app.use('/requestData', require('./server/routes/requestData')(io))
 
 // ================== Globale Variablen ==================
 global.games = []
+global.lifecycle = Math.random().toString(36).substr(2, 9);
 
 initGlobals()
-initDefaultGame(0)
+initDefaultGame(0, global.lifecycle)
 forcePlayableNoChecks(0)
-
 
 // ================== Socket.IO-Logik ==================
 io.on('connection', (socket) => {
     console.log(`[SOCKETIO] Client verbunden: ${socket.id}`);
-    io.emit("backend_online", "testmsg")
+    //io.emit("backend_online", "testmsg")
     //io.emit("who_are_you", null)
-
+    
+    //console.log(global.lifecycle, global.games[0].lifecycleId)
     moveHandler(io, socket);
     loginHandler(io, socket);
+    io.emit("lifecycle", {lfc: global.lifecycle})
     socket.on('disconnect', () => {
     console.log(`[SOCKETIO] Client getrennt: ${socket.id}`);
     });

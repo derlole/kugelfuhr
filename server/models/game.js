@@ -11,7 +11,9 @@ const { Deck } = require('./deck')
 const { Field } = require('./field');
 
 class Game {
-    constructor() {
+    constructor(lifecycleId) {
+        this.name = null
+        this.lifecycleId = lifecycleId
         this.gameId = null;
         this.player1red = new Player(null, "red");
         this.player2blue = new Player(null, "blue");

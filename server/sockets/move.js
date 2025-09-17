@@ -5,7 +5,7 @@ module.exports = (io, socket) => {
         const playerExists = !!player;
         if (!playerExists) {
             io.emit('backend_error', { message: 'Spieler nicht gefunden', code: 1501 });
-            return false;
+            return {test: false, message: "Spieler nicht gefunden"};
         }
         return player.ownedSpheres[(data.sphereId-1)].checkMove(game, data, player)
     }
@@ -23,15 +23,16 @@ module.exports = (io, socket) => {
         let test = simulateMove(data, player)
         //console.log("test sub2", test)
         if(!test.test){
-            io.emit('backend_warning', { message: 'Ungültiger Zug ' + 'Grund: ' + test.message, code: 1400 });
+            io.emit('backend_warning', { message: 'Ungültiger Zug ' + 'Grund: ' + test.message, code: 1600 });
             return;
         }
-        if(!player.ownedSpheres[0].moveSphere(game, data)){
+        if(!player.ownedSpheres[(data.sphereId-1)].moveSphere(game, data)){ 
             io.emit('backend_warning', { message: 'Zug konnte nicht ausgeführt werden', code: 1401 });
             return;
         }
         io.emit('backend_info', { message: 'Zug ausgeführt', code: 9999 });
-        io.emit("sphere_moved", data);
+        io.emit("sphere_moved", {data: data, dataInfo: {gameIndex: data.gameId}});
+        io.emit('new_game_state', {changeString: 'player', changedObject: player.ownedSpheres[(data.sphereId-1)], newGame: game, init: 'none'})
     });
 };
 

@@ -214,38 +214,35 @@ function renderHand(n, handCards) {
 
 
 function playerHandInit(gameInFrontend) {
-    const handRed = gameInFrontend.player1red.deck.cards;
-    const numCards = handRed.length;
+    //console.log(gameInFrontend, wantedColor)
+    var playertoRender = getPlayerFromGameAndColor(gameInFrontend, wantedColor) //wantedColor is from gamePagePlayervarInit.js and is more or less the global idetifier of the PlayerColor in the Frontend
+    const handPlayer = playertoRender.deck.cards;
+    const numCards = handPlayer.length;
 
-    renderHand(numCards, handRed);
-    tmpRendenAblage(handRed)
+    renderHand(numCards, handPlayer);
+    renderAblage(gameInFrontend.playedCards)
     eventListenersInit()
 
 }
-function tmpRendenAblage(h){
-    renderAblage(h[0]);
-    
-    renderAblage(h[1])
-    renderAblage(h[2])
-    setTimeout(() => {
-        renderAblage(h[3])
-    }, 1500);
-    setTimeout(() => {
-        renderAblage(h[4])
-    }, 3000);
+function renderAblage(cardsLayed){
+    var len = cardsLayed.length
+    renderAblage(cardsLayed[(len-1)]);
+    renderAblage(cardsLayed[(len-2)])
+    renderAblage(cardsLayed[(len-3)])
 }
 
 //Ablagestapel init
 let cardToLayDown = 1;
 
 function renderAblage(ablageCard) {
+    if(ablageCard.length == 0) return
     let symbol = ablageCard.suit.symbol;
     let value = ablageCard.value;
     let cardSpace = document.getElementById("ablageCard"+cardToLayDown);
     cardSpace.innerHTML = "";
     cardSpace.classList.remove("hidden");
 
-    let card = genCard(value, symbol, "ablageCard", ablageCard.id); //CHECK THIS LATER
+    let card = genCard(value, symbol, "ablageCard", ablageCard.id);
     switch(cardToLayDown){
         case 1:
             document.getElementById("ablageCard2").style.zIndex = 1;

@@ -16,31 +16,32 @@
         <h3>hai das ist der logon :)</h3>
     </div>
 
+    <div class="game">
+        <h3>Wähle ein Spiel zum Beitreten aus:</h3>
+        <div class="chooseGame">
+            <h4 onclick="setWantGame(0, this)" class="gameOption">Game A</h4>
+            <h4 onclick="setWantGame(1, this)" class="gameOption">Game B</h4>
+        </div>
+    </div>
+
     <div class="color">
         <h3>Wähle deine Farbe:</h3>
         <div class="chooseColor">
             <!-- Wenn eine Sphäre vergeben ist, kannst du ihr die Klasse .sphereGrey geben-->
              <!-- ILY <3-->
-            <div onclick="setWantColor('Red')" class="sphereRed chooseSphere"></div>
-            <div onclick="setWantColor('Blue')" class="sphereBlue chooseSphere"></div>
-            <div onclick="setWantColor('Yellow')" class="sphereYellow chooseSphere"></div>
-            <div onclick="setWantColor('Green')" class="sphereGreen chooseSphere"></div>
+            <div onclick="setWantColor('Red', this)" class="sphereRed chooseSphere"></div>
+            <div onclick="setWantColor('Blue', this)" class="sphereBlue chooseSphere"></div>
+            <div onclick="setWantColor('Yellow', this)" class="sphereYellow chooseSphere"></div>
+            <div onclick="setWantColor('Green', this)" class="sphereGreen chooseSphere"></div>
         </div>
     </div>
 
     <div class="name">
         <h3>Gib deinen Spielernamen ein:</h3>
-        <input id="playerName" type="text"/>
+        <input id="playerName" type="text" class="inpPlayerName" placeholder="Käpt'n Sharky"/>
     </div>
 
-    <div class="game">
-        <h3>Wähle ein Spiel zum Beitreten aus:</h3>
-        <div>
-            <h4 onclick="setWantGame(0)">Game A</h4>
-            <h4 onclick="setWantGame(1)">Game B</h4>
-        </div>
-    </div>
-
-    <button onclick="requestGameJoin()">Spiel beitreten</button>
+    <button onclick="requestGameJoin()" class="joinBtn">Spiel beitreten</button>
 </div>
 <script src="/js/logonFunctions.js"></script>
+<!-- <script src="/js/gameNameGen.js"></script> -->

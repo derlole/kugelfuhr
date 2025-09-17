@@ -7,16 +7,16 @@ module.exports = (io) => {
     })
     router.post('/join', (req, res) => { //display errors properly
         var data = req.body
-        let game = global.games[data.gameIndex];
+        let game = global.games[data.gameIndex]; 
         if (!game) {
             return res.status(400).json({ message: 'Kein Spiel gefunden', code: 1500})
         }
         if (!data.name || !data.color) {
             return res.status(400).json({ message: 'Ungültige Daten', code: 1502})
         }
-        if(!(game.checkColorFree(data.color.toLowerCase()))){
-            return res.status(400).json({ message: 'Farbe bereits vergeben', code: 1400 });
-        }
+        // if(!(game.checkColorFree(data.color.toLowerCase()))){
+        //     return res.status(400).json({ message: data, code: 1200 });
+        // }
         return res.sendStatus(200)
     })
 

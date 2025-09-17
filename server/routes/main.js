@@ -3,7 +3,21 @@ const { stringify } = require("flatted");
 module.exports = (io) => {
   const express = require('express');
   const router = express.Router();
-
+  function getPlayerFromColor(color, gameIndex){
+    var game = global.games[gameIndex]
+    switch (color.toLowerCase()) {
+      case 'red':
+        return game.player1red
+      case 'blue':
+        return game.player2blue;
+      case 'green':
+        return game.player3yellow;
+      case 'yellow':
+        return game.player4green;
+      default:
+        return null;
+    }
+  }
   router.get('/', (req, res) => {
     res.redirect('/dashboard');
   });
@@ -16,6 +30,19 @@ module.exports = (io) => {
 
     // Extract query parameters
     const { color, gameIndex, name } = req.query;
+    var joinMethod
+    if((!color)||(!gameIndex)||(!name)){
+      return res.redirect('/index')
+    }
+    var rejoinablePlayerName = getPlayerFromColor(color, gameIndex).name
+    if(rejoinablePlayerName){
+      if(rejoinablePlayerName !== name){
+        return res.redirect('/index')
+      }
+      joinMethod = 'rejoin'
+    }else{
+      joinMethod = 'join'
+    }
 
     res.render('index', {
       title: 'Kugelfuhr',
@@ -23,7 +50,8 @@ module.exports = (io) => {
       data: JSON.stringify({
         color,
         gameIndex,
-        name
+        name,
+        mehtod: joinMethod
       })
     }); 
   });
@@ -57,7 +85,9 @@ module.exports = (io) => {
       res.redirect('/login');
     });
   });
+  router.get('/serverRestartError', (req, res) => {
+    return res.render('restartError', {title: "sorry about that"})
+  })
 
-  
   return router;
 }

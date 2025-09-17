@@ -16,20 +16,26 @@ socket.on('field_baseinit', (msg) => {
     playerHandInit(gameInFront);
 });
 socket.on('sphere_moved', (data) => {
-    console.log("[SOCKETIO] Sphere moved empfangen", data);
+    if(gameInFront.gameId !== data.dataInfo.gameIndex) return
+    var sphData = data.data
+    console.log("[SOCKETIO] Sphere moved empfangen", sphData);
 
-    dgebq(`[data-point-id="${data.pointId}"]`).classList.remove(`sphere${data.color}`);
-    dgebq(`[data-point-id="${data.destinationId}"]`).classList.add(`sphere${data.color}`);
+    dgebq(`[data-point-id="${sphData.pointId}"]`).classList.remove(`sphere${sphData.color}`);
+    dgebq(`[data-point-id="${sphData.destinationId}"]`).classList.add(`sphere${sphData.color}`);
 });
-socket.on('game_stats_update', (msg) => {
-    console.log("[SOCKETIO] Game State update recived")
-    gameInFront = msg
+// socket.on('game_stats_update', (msg) => {
+//     console.log("[SOCKETIO] Game State update recived")
+//     gameInFront = msg
+// })
+socket.on('lifecycle', (data) =>{
+    if(gameInFront == undefined) return
+    if(gameInFront.lifecycleId !== data.lfc){
+        window.location.href = '/serverRestartError'
+    }
 })
-
-
-// (async () => {
-//     for (let i = 1001; i <= 1100; i++) {
-//         testMoveSphere(i.toString());
-//         await new Promise(resolve => setTimeout(resolve, 1000));
-//     }
-// })();
+socket.on('new_game_state', (data) => {
+    console.log('newGameState', data)
+    if(!(data.newGame && ( data.newGame.gameId == gameInFront.gameId))) return
+    gameInFront = data.newGame
+    reInit(data.init, gameInFront)
+})
