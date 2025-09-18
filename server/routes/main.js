@@ -5,6 +5,7 @@ module.exports = (io) => {
   const router = express.Router();
   function getPlayerFromColor(color, gameIndex){
     var game = global.games[gameIndex]
+    if(!game) return null
     switch (color.toLowerCase()) {
       case 'red':
         return game.player1red
@@ -34,7 +35,11 @@ module.exports = (io) => {
     if((!color)||(!gameIndex)||(!name)){
       return res.redirect('/index')
     }
-    var rejoinablePlayerName = getPlayerFromColor(color, gameIndex).name
+    var rejoinablePlayer = getPlayerFromColor(color, gameIndex)
+    if(!rejoinablePlayer){
+      return res.redirect('/index')
+    }
+    var rejoinablePlayerName = rejoinablePlayer.name
     if(rejoinablePlayerName){
       if(rejoinablePlayerName !== name){
         return res.redirect('/index')

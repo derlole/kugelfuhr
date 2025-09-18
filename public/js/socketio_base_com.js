@@ -1,5 +1,13 @@
 
 socket.on('field_baseinit', (msg) => {
+    console.log((gameInFront !== undefined && gameInFront !== null))
+    console.log(gameInFront)
+    if(!(gameInFront == undefined)){
+        if(( gameInFront.gameId !== msg.gameId)){
+            console.log("field baseinit for wrong game, returning")
+            return
+        }
+    }
     console.log("[SOCKETIO] Field Baseinit empfangen", msg);
     gameInFront = msg
     document.querySelectorAll('[data-point-id]').forEach(el => {
