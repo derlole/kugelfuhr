@@ -4,12 +4,28 @@
 
 <link rel="stylesheet" href="/css/edge.css">
 <link rel="stylesheet" href="/css/board.css">
+
+    <div class="indicatorRed"></div>
+
+
     <div style="display: none;" id="global_var"><%= global %></div>
     <script src="/js/genGlobalVarInfo.js"></script>
-    <div class="left"><h1 class="title">Kugelfuhr</h1></div>
+    <div class="left">
+        <h1 class="title">Kugelfuhr</h1>
+        <!--Hier muss noch ein Richtiger Spielname rein, aber idk ob der schon generiert wird...-->
+        <p>Spielbezeichnung: Lüppende Lachse</p>
+        <div id="playerList" class="playerList">
+            <p>Spieler:</p>
+            <div id="playerNames"></div>
+        </div>
+    </div>
+
     <div class="plate">
         <div class="graph" id="graph"></div>
+        <!-- Spielername <= 12 Buchstaben wäre gut, glaub Zeilenumbruch würde doof aussehen-->
+        <div class="playerTurn"><p id="playerTurn">LangerNameAB</p>ist am Zug</div>
     </div>
+
     <div class="right">
         <h2>Ablagestapel</h2>
         <div class="ablage">
@@ -28,3 +44,4 @@
 <script src="/js/pointOrderFromRed.js"></script>
 <script src="/js/testFunctions.js"></script>
 <script src="/js/socketio_base_com.js"></script>
+<script src="/js/infoGen.js"></script>

@@ -350,3 +350,32 @@ $matgrey: #b1b1b1;
     );
   }
 }
+
+.indicatorBase{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+
+
+  animation: pulseIndicator 0.5s ease-in-out 3;
+  transform-origin: center center;
+}
+
+// nicht fertig, der kramsch xD
+@keyframes pulseIndicator {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+}
+
+.indicatorRed {
+  @extend .indicatorBase;
+  box-shadow:
+    0 0 0 4px $darkred inset,
+    0 0 0 8px $red inset,
+    0 0 0 12px $matred inset;
+}

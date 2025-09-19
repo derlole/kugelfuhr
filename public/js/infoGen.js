@@ -1,0 +1,58 @@
+function capitalizeFirst(str) {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+function displayPlayerNames(red, blue, yellow, green, playercolor){
+    let content = document.getElementById("playerNames");
+
+    let partner, opp1, opp2, playername, partnername, opp1Name, opp2Name;
+    switch(playercolor){
+        case "red":
+            partner = "yellow";
+            partnername = yellow;
+            opp1 = "blue";
+            opp1Name = blue;
+            opp2 = "green";
+            opp2Name = green;
+            playername = red;
+            break;
+        case "yellow":
+            partner = "red";
+            partnername = red;
+            opp1 = "blue";
+            opp1Name = blue;
+            opp2 = "green";
+            opp2Name = green;
+            playername = yellow;
+            break;
+        case "blue":
+            partner="green";
+            partnername = green;
+            opp1 = "red";
+            opp1Name = red;
+            opp2 = "yellow";
+            opp2Name = yellow;
+            playername = blue;
+            break;
+        case "green":
+            partner="blue";
+            partnername = blue;
+            opp1 = "red";
+            opp1Name = red;
+            opp2 = "yellow";
+            opp2Name = yellow;
+            playername = green;
+    }
+    
+    content.innerHTML=`
+        <p id="playerName${capitalizeFirst(playercolor)}">${playername} (Du)</p>
+        <p id="playerName${capitalizeFirst(partner)}">${partnername} (Dein Partner)</p>
+        <p id="playerName${capitalizeFirst(opp1)}">${opp1Name} (Gegnerteam)</p>
+        <p id="playerName${capitalizeFirst(opp2)}">${opp2Name} (Gegnerteam)</p>`;
+}
+
+
+// Name des Roten Spielers, Name des Blauen, Gelben, Grünen Spielers (in der Reihenfolge auch), 
+// Farbe des Spielers, auf dessen Bildscirm das Spiel ausgegeben wird
+displayPlayerNames("roter Spieler", "Blauling", "Yellowsubmar", "greenie", "red")

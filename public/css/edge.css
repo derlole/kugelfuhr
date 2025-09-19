@@ -212,4 +212,44 @@ h2 {
 
 .hidden {
   display: none !important;
+}
+
+.playerTurn {
+  margin: 0;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+#playerTurn {
+  font-size: 1.5em;
+  margin: 0;
+  margin-bottom: 0.25em;
+}
+
+.playerList {
+  margin: 2em 0;
+}
+
+#playerNames {
+  padding: 0 1em;
+}
+
+#playerNameRed {
+  color: #cb4c51;
+}
+
+#playerNameBlue {
+  color: #206895;
+}
+
+#playerNameYellow {
+  color: #ffb70f;
+}
+
+#playerNameGreen {
+  color: #81ad3a;
 }/*# sourceMappingURL=edge.css.map */

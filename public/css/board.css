@@ -251,4 +251,25 @@ body {
 }
 .sphereGrey::before {
   background: radial-gradient(circle at 30% 30%, #b1b1b1 0%, #b1b1b1 32%, #838383 32%, #838383 60%, #535353 60%, #535353 86%, transparent 86%, transparent 100%);
+}
+
+.indicatorBase, .indicatorRed {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  animation: pulseIndicator 0.5s ease-in-out 3;
+  transform-origin: center center;
+}
+
+@keyframes pulseIndicator {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+}
+.indicatorRed {
+  box-shadow: 0 0 0 4px #CB4C51 inset, 0 0 0 8px #ff595e inset, 0 0 0 12px #ffa2a5 inset;
 }/*# sourceMappingURL=board.css.map */
