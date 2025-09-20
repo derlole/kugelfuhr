@@ -44,7 +44,7 @@ module.exports = (io, socket) => {
         if(!global.games.length == 0){
             io.emit("field_baseinit", game)
         }
-        io.emit('new_game_state', { changeString: 'player', changedObject: targetPlayer, newGame: game, init: 'none' });
+        io.emit('new_game_state', { changeString: 'player', changedObject: targetPlayer, newGame: game, init: 'other' });
         io.emit('backend_info', { message: `${data.name} dem Spiel beigetreten`, code: 9999 });
     });
 

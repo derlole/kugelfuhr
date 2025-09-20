@@ -52,7 +52,16 @@ function displayPlayerNames(red, blue, yellow, green, playercolor){
         <p id="playerName${capitalizeFirst(opp2)}">${opp2Name} (Gegnerteam)</p>`;
 }
 
-
-// Name des Roten Spielers, Name des Blauen, Gelben, Grünen Spielers (in der Reihenfolge auch), 
-// Farbe des Spielers, auf dessen Bildscirm das Spiel ausgegeben wird
-displayPlayerNames("roter Spieler", "Blauling", "Yellowsubmar", "greenie", "red")
+function frameInit(game){
+    let frame = document.getElementById("frame");
+    frame.removeAttribute('class');
+    let currentPlayerColor = game.currentPlayer.color.toLowerCase();
+    let screenPlayerColor = wantedColor.toLowerCase();
+    if(currentPlayerColor === screenPlayerColor){
+        frame.classList.add(`indicator${capitalizeFirst(currentPlayerColor)}`);
+    } else {
+        frame.classList.add(`colorInfo${capitalizeFirst(currentPlayerColor)}`);
+    }
+    let currentPlayerName = document.getElementById("playerTurn");
+    currentPlayerName.innerText = game.currentPlayer.name; 
+}

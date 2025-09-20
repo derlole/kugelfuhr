@@ -154,5 +154,11 @@ class Sphere {
         //some if's
         return {test: true, sphere: this, move: {from: this.position, to: moveProfile.destinationId}}
     }
+    checkSwap(data, ownPlayer, foreignPlayer, game){
+
+    }
+    swapSphere(foreignSphere, game, moveProfile){
+
+    }
 }
 module.exports = { Sphere }

@@ -350,32 +350,81 @@ $matgrey: #b1b1b1;
     );
   }
 }
-
-.indicatorBase{
+// Basisklasse
+.indicatorBase {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-
-
-  animation: pulseIndicator 0.5s ease-in-out 3;
-  transform-origin: center center;
 }
 
-// nicht fertig, der kramsch xD
-@keyframes pulseIndicator {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(0.8);
-  }
-}
+// Mixin für Animation mit drei Farben
+@mixin pulse-indicator($name, $c1, $c2, $c3,
+                       $start1: 2px, $end1: 4px,
+                       $start2: 4px, $end2: 8px,
+                       $start3: 6px, $end3: 12px) {
 
-.indicatorRed {
+  // Keyframes generieren (Name dynamisch)
+  @keyframes #{$name} {
+    0%, 100% {
+      box-shadow:
+        0 0 0 $start1 $c1 inset,
+        0 0 0 $start2 $c2 inset,
+        0 0 0 $start3 $c3 inset;
+    }
+    50% {
+      box-shadow:
+        0 0 0 $end1 $c1 inset,
+        0 0 0 $end2 $c2 inset,
+        0 0 0 $end3 $c3 inset;
+    }
+  }
+
   @extend .indicatorBase;
-  box-shadow:
-    0 0 0 4px $darkred inset,
-    0 0 0 8px $red inset,
-    0 0 0 12px $matred inset;
+  animation: #{$name} 1s ease-in-out infinite;
+}
+
+// jetzt definierst du nur noch die Varianten:
+.indicatorRed {
+  @include pulse-indicator(pulseIndicatorRed, $darkred, $red, $matred);
+}
+.indicatorYellow {
+  @include pulse-indicator(pulseIndicatorYellow, $darkyellow, $yellow, $matyellow);
+}
+.indicatorBlue {
+  @include pulse-indicator(pulseIndicatorBlue, $darkblue, $blue, $matblue);
+}
+.indicatorGreen {
+  @include pulse-indicator(pulseIndicatorGreen, $darkgreen, $green, $matgreen);
+}
+
+@mixin colorInfo($c1, $c2, $c3, $start1: 2px, $start2: 4px, $start3: 6px){
+  @extend .indicatorBase;
+  box-shadow: 
+    0 0 0 $start1 $c1 inset,
+    0 0 0 $start2 $c2 inset,
+    0 0 0 $start3 $c3 inset;
+}
+.colorInfoRed {
+  @include colorInfo($darkred, $red, $matred);
+}
+.colorInfoYellow {
+  @include colorInfo($darkyellow, $yellow, $matyellow);
+}
+.colorInfoBlue {
+  @include colorInfo($darkblue, $blue, $matblue);
+}
+.colorInfoGreen {
+  @include colorInfo($darkgreen, $green, $matgreen);
+}
+
+.card-info {
+  position: absolute; /* wird per JS platziert */
+  background: white;
+  color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  white-space: nowrap;
+  z-index: 9999;
 }

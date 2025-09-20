@@ -1,4 +1,5 @@
 
+
 let wantCol = null
 let wantGameNr = null
 let wantedName
@@ -11,6 +12,7 @@ function setWantColor(col, element){
     element.classList.add("colorChoosen")
 }
 function setWantGame(gameNr, element){
+    console.log(element)
     wantGameNr = gameNr 
 
     const options = element.parentElement.querySelectorAll('h4')
@@ -25,17 +27,18 @@ function devLogon(){
     wantedName = 'MyName'
 }
 function requestGameJoin(){
+    //console.log("station1",wantCol,wantGameNr, wantedName )
     //uncomment in real application
-    devLogon()
+    //devLogon()
     if(!(wantCol) || wantGameNr == null){
-        showAndAutoHide('warning-div', `Bitte geben sie das Spiel und die Farbe an, die sie spielen wollen`, 7000);
+        showAndAutoHide('warning-div', `Wähle ein Spiel und die Farbe an, die du spielen willst`, 7000);
         return
     }
     if(!wantedName){
         wantedName = document.getElementById('playerName').value
     }
     if(!wantedName){
-        showAndAutoHide('warning-div', `Bitte geben sie einen Nicknamen fuer das Spiel an`, 7000);
+        showAndAutoHide('warning-div', `Du benötigst einen Namen, um dem Spiel beizutreten`, 7000);
         return
     }
     const data = {name: wantedName, color: wantCol, gameIndex: wantGameNr}
@@ -66,6 +69,7 @@ function requestGameJoin(){
         }
     })
     .then(result => {
+        if(!result) return
         if(result.code == 1500 || result.code == 1502){
             showAndAutoHide('error-div', `Error-Message: ${result.message}, Error-code: ${result.code}, Thrown by backend`, 7000);
             return

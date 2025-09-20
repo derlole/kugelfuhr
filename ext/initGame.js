@@ -1,4 +1,5 @@
 const { Game } = require('../server/models/game');
+
 class Nom{
     constructor(name, art, end){
         this.name = name;
@@ -74,7 +75,7 @@ const noms = [
   new Nom("Sardine", "die", "n"),
   new Nom("Squid", "der", "s"),
 
-  new Nom("Tintenfisch", "der", ""),
+  new Nom("Tintenfisch", "der", "e"),
   new Nom("Tarpun", "der", "e"),
 
   new Nom("Urzeitkrebs", "der", "e"),
@@ -117,6 +118,7 @@ const adj = [
     ["yummie"],
     ["zahm","zielstrebig","zart","zauberhaft","zeitlos"]
 ]
+
 function capitalizeFirst(str) {
     if (!str) return "";
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();

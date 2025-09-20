@@ -5,7 +5,24 @@
 
 <div id="globGames" style="display: none;"><%= globalGames %></div>
 <script>
+    function genGames(globalGames) {
+        const container = document.getElementById('chooseGameDiv')
+        container.innerHTML = ''; // vorherigen Inhalt löschen
+
+        globalGames.forEach((game, index) => {
+            const h4 = document.createElement('h4');
+            h4.className = 'gameOption';
+            h4.textContent = game.name;
+            // Click-Handler setzen
+            h4.onclick = function () {
+                setWantGame(index, this);
+            };
+            container.appendChild(h4);
+        });
+    }
+
     let globalGames = JSON.parse(document.getElementById("globGames").textContent)
+    console.log(globalGames)
 </script>
 
 <div class="logon">
@@ -18,7 +35,7 @@
 
     <div class="game">
         <h3>Wähle ein Spiel zum Beitreten aus:</h3>
-        <div class="chooseGame">
+        <div class="chooseGame" id="chooseGameDiv">
             <h4 onclick="setWantGame(0, this)" class="gameOption">Game A</h4>
             <h4 onclick="setWantGame(1, this)" class="gameOption">Game B</h4>
         </div>
@@ -38,10 +55,13 @@
 
     <div class="name">
         <h3>Gib deinen Spielernamen ein:</h3>
-        <input id="playerName" type="text" class="inpPlayerName" placeholder="Käpt'n Sharky"/>
+        <input id="playerName" type="text" class="inpPlayerName" placeholder="Käpt'n Sharky" maxlength="12"/>
     </div>
 
     <button onclick="requestGameJoin()" class="joinBtn">Spiel beitreten</button>
 </div>
 <script src="/js/logonFunctions.js"></script>
+<script>
+    genGames(globalGames)
+</script>
 <!-- <script src="/js/gameNameGen.js"></script> -->

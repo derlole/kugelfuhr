@@ -19,10 +19,22 @@ function getPlayerFromGameAndColor(game, color){
 }
 // normal Move also go out of home full check and result to any conncted client
 function wantMoveSphere(pid, des, col, sphId, cardIndex){
-    //const card = gameInFront.currentPlayer.deck.cards.find(c => Array.isArray(c.gameValue) && c.gameValue.includes(0));
-    //console.log(gameInFront.currentPlayer.deck.cards)
+    if(!(col.toLowerCase !== gameInFront.currentPlayer.color.toLowerCase())){
+        showAndAutoHide('warning-div', 'Du bist nicht dran!', 3000);
+        return
+    }
     const card = gameInFront.currentPlayer.deck.cards[cardIndex];
     const cardId = card ? card.id : null;
-    //console.log('[DEBUG---]', card)
+
     socket.emit('move_sphere', { pointId: pid, color: col, destinationId: des, cardId: cardId, playerId: gameInFront.currentPlayer.playerid, sphereId: sphId, gameId: gameInFront.gameId });
+}
+function wantSwapSphere(pidY, pidF, colY, colF, sphIdY, sphIdF, cardIndex){
+    if(!(colY.toLowerCase !== gameInFront.currentPlayer.color.toLowerCase())){
+        showAndAutoHide('warning-div', 'Du bist nicht dran!', 3000);
+        return
+    } 
+    const card = gameInFront.currentPlayer.deck.cards[cardIndex];
+    const cardId = card ? card.id : null;
+
+    socket.emit('swap_sphere', { ownPointId: pidY, foreignPointId: pidF, ownColor: colY, foreignColor: colF, ownSphereId: sphIdY, foreignSphereId: sphIdF, cardId: cardId, playerId: gameInFront.currentPlayer.playerid, gameId: gameInFront.gameId }) // eigentlich foriegn <3
 }

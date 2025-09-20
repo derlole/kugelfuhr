@@ -253,23 +253,84 @@ body {
   background: radial-gradient(circle at 30% 30%, #b1b1b1 0%, #b1b1b1 32%, #838383 32%, #838383 60%, #535353 60%, #535353 86%, transparent 86%, transparent 100%);
 }
 
-.indicatorBase, .indicatorRed {
+.indicatorBase, .colorInfoGreen, .colorInfoBlue, .colorInfoYellow, .colorInfoRed, .indicatorGreen, .indicatorBlue, .indicatorYellow, .indicatorRed {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  animation: pulseIndicator 0.5s ease-in-out 3;
-  transform-origin: center center;
 }
 
-@keyframes pulseIndicator {
+.indicatorRed {
+  animation: pulseIndicatorRed 1s ease-in-out infinite;
+}
+@keyframes pulseIndicatorRed {
   0%, 100% {
-    transform: scale(1);
+    box-shadow: 0 0 0 2px #CB4C51 inset, 0 0 0 4px #ff595e inset, 0 0 0 6px #ffa2a5 inset;
   }
   50% {
-    transform: scale(0.8);
+    box-shadow: 0 0 0 4px #CB4C51 inset, 0 0 0 8px #ff595e inset, 0 0 0 12px #ffa2a5 inset;
   }
 }
-.indicatorRed {
-  box-shadow: 0 0 0 4px #CB4C51 inset, 0 0 0 8px #ff595e inset, 0 0 0 12px #ffa2a5 inset;
+
+.indicatorYellow {
+  animation: pulseIndicatorYellow 1s ease-in-out infinite;
+}
+@keyframes pulseIndicatorYellow {
+  0%, 100% {
+    box-shadow: 0 0 0 2px #FFB70F inset, 0 0 0 4px #ffca3a inset, 0 0 0 6px #fff07d inset;
+  }
+  50% {
+    box-shadow: 0 0 0 4px #FFB70F inset, 0 0 0 8px #ffca3a inset, 0 0 0 12px #fff07d inset;
+  }
+}
+
+.indicatorBlue {
+  animation: pulseIndicatorBlue 1s ease-in-out infinite;
+}
+@keyframes pulseIndicatorBlue {
+  0%, 100% {
+    box-shadow: 0 0 0 2px #206895 inset, 0 0 0 4px #1982c4 inset, 0 0 0 6px #78cbff inset;
+  }
+  50% {
+    box-shadow: 0 0 0 4px #206895 inset, 0 0 0 8px #1982c4 inset, 0 0 0 12px #78cbff inset;
+  }
+}
+
+.indicatorGreen {
+  animation: pulseIndicatorGreen 1s ease-in-out infinite;
+}
+@keyframes pulseIndicatorGreen {
+  0%, 100% {
+    box-shadow: 0 0 0 2px #81AD3A inset, 0 0 0 4px #8ac926 inset, 0 0 0 6px #ccf983 inset;
+  }
+  50% {
+    box-shadow: 0 0 0 4px #81AD3A inset, 0 0 0 8px #8ac926 inset, 0 0 0 12px #ccf983 inset;
+  }
+}
+
+.colorInfoRed {
+  box-shadow: 0 0 0 2px #CB4C51 inset, 0 0 0 4px #ff595e inset, 0 0 0 6px #ffa2a5 inset;
+}
+
+.colorInfoYellow {
+  box-shadow: 0 0 0 2px #FFB70F inset, 0 0 0 4px #ffca3a inset, 0 0 0 6px #fff07d inset;
+}
+
+.colorInfoBlue {
+  box-shadow: 0 0 0 2px #206895 inset, 0 0 0 4px #1982c4 inset, 0 0 0 6px #78cbff inset;
+}
+
+.colorInfoGreen {
+  box-shadow: 0 0 0 2px #81AD3A inset, 0 0 0 4px #8ac926 inset, 0 0 0 6px #ccf983 inset;
+}
+
+.card-info {
+  position: absolute; /* wird per JS platziert */
+  background: white;
+  color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  z-index: 9999;
 }/*# sourceMappingURL=board.css.map */

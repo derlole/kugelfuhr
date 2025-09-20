@@ -22,6 +22,8 @@ socket.on('field_baseinit', (msg) => {
         }
     }
     playerHandInit(gameInFront);
+    displayPlayerNames(gameInFront.player1red.name, gameInFront.player2blue.name, gameInFront.player3yellow.name, gameInFront.player4green.name, wantedColor.toLowerCase())
+    frameInit(gameInFront);
 });
 socket.on('sphere_moved', (data) => {
     if(gameInFront.gameId !== data.dataInfo.gameIndex) return

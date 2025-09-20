@@ -8,6 +8,10 @@ function cleanUpCards(){
     playerHand = document.getElementById('hand')
     playerHand.innerHTML = ''
 }
+function cleanUpOther(){
+
+    return
+}
 
 function reInitField(newGame){
     cleanUpField()
@@ -21,9 +25,16 @@ function reInitCards(newGame){
     cleanUpCards()
     playerHandInit(newGame)
 }
+function reInitOther(newGame){
+    cleanUpOther()
+    displayPlayerNames(newGame.player1red.name, newGame.player2blue.name, newGame.player3yellow.name, newGame.player4green.name, wantedColor.toLowerCase())
+    frameInit(newGame);
+
+}
 function reInitAll(newGame){
     reInitField(newGame)
     reInitCards(newGame)
+    reInitOther(newGame)
 }
 
 
@@ -40,6 +51,9 @@ function reInit(string, newGame){
             break;
         case 'player':
             reInitCards(newGame);
+            break;
+        case 'other':
+            reInitOther(newGame);
             break;
         default:
             // Unknown option

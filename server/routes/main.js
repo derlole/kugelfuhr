@@ -11,9 +11,9 @@ module.exports = (io) => {
         return game.player1red
       case 'blue':
         return game.player2blue;
-      case 'green':
-        return game.player3yellow;
       case 'yellow':
+        return game.player3yellow;
+      case 'green':
         return game.player4green;
       default:
         return null;
@@ -57,7 +57,8 @@ module.exports = (io) => {
         gameIndex,
         name,
         mehtod: joinMethod
-      })
+      }),
+      gameName: global.games[gameIndex].name
     }); 
   });
    router.get('/index', (req, res) => {
