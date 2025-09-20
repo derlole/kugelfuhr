@@ -51,6 +51,7 @@ app.use('/requestData', require('./server/routes/requestData')(io))
 global.games = []
 global.lifecycle = Math.random().toString(36).substr(2, 9);
 
+// =================== Init of Testgame ===================
 initGlobals()
 initDefaultGame(0, global.lifecycle)
 forcePlayableNoChecks(0)
@@ -58,13 +59,11 @@ forcePlayableNoChecks(0)
 // ================== Socket.IO-Logik ==================
 io.on('connection', (socket) => {
     console.log(`[SOCKETIO] Client verbunden: ${socket.id}`);
-    //io.emit("backend_online", "testmsg")
-    //io.emit("who_are_you", null)
     
-    //console.log(global.lifecycle, global.games[0].lifecycleId)
     moveHandler(io, socket);
     loginHandler(io, socket);
-    io.emit("lifecycle", {lfc: global.lifecycle})
+
+    io.emit("lifecycle", {lfc: global.lifecycle}) // global for every game no differetial betwen gamIndex or Player, because the lfc is the same in every restartcycle of the server
     socket.on('disconnect', () => {
     console.log(`[SOCKETIO] Client getrennt: ${socket.id}`);
     });

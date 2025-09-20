@@ -30,7 +30,7 @@ class Sphere {
         if(this.position < 100){ // home or finish fields
             return false
         }
-        if(extended){
+        if(extended){ // is foreignSphere check for homeExitfieldPosition
             if(this.color == "red" && this.position == 1001){
                 return false
             }else if(this.color == "red" && this.position == 1026){
@@ -168,17 +168,10 @@ class Sphere {
             return {test:false, message: "Ungültiger Zielpunkt für diese Karte, " + checkedMove.extra}
         }
         console.log(this.color, this.sphereId, "moves from", this.position, "to", moveProfile.destinationId, "with", player.deck.cards.find(card => card.id === moveProfile.cardId))
-        //DELETE ME!!!!!!!!!!!!!!!!!
-        //DELETE ME!!!!!!!!!!!!!!!!!
-        //DELETE ME!!!!!!!!!!!!!!!!!
-        if(game.currentPlayer == game.player1red){
-            game.currentPlayer = game.player3yellow
-        }else{
-            game.currentPlayer = game.player1red
+        if(!game.nextPlayer()){
+            return {test:false, message: "Naechster Spieler konnte nicht ermittelt werden. " + checkedMove.extra}
         }
-        //DELETE ME!!!!!!!!!!!!!!!!!
-        //DELETE ME!!!!!!!!!!!!!!!!!
-        //DELETE ME!!!!!!!!!!!!!!!!!
+
         return {test: true, sphere: this, move: {from: this.position, to: moveProfile.destinationId}}
     }
     checkSwap(moveProfile, ownPlayer, foreignPlayer, game){
@@ -220,6 +213,9 @@ class Sphere {
 
         if (game.roundSwapLog.includes(possibleSwapEntry1) || game.roundSwapLog.includes(possibleSwapEntry2)) {
             return {test: false, message: "Dieser Kugeln wurde in dieser Runde bereits durchgeführt"};
+        }
+        if(!game.nextPlayer()){
+            return {test:false, message: "Naechster Spieler konnte nicht ermittelt werden. " + checkedMove.extra}
         }
         return {test: true, message: ""}
     }

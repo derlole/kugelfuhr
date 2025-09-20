@@ -131,5 +131,22 @@ class Game {
         }
         return null
     }
+    nextPlayer(){
+        if(this.currentPlayer == this.player1red){
+            this.currentPlayer = this.player2blue
+            return true
+        }else if(this.currentPlayer == this.player2blue){
+            this.currentPlayer = this.player3yellow
+            return true
+        }else if(this.currentPlayer == this.player3yellow){
+            this.currentPlayer = this.player4green
+            return true
+        }else if(this.currentPlayer == this.player4green){
+            this.currentPlayer = this.player1red
+            return true
+        }else{
+            return false
+        }
+    }
 }
 module.exports = { Game };

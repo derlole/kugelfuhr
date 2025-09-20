@@ -70,7 +70,7 @@ module.exports = (io, socket) => {
             io.emit('backend_warning', { message: 'Zug konnte nicht ausgeführt werden', code: 1701 });
             return;
         }
-        io.emit('backend_info', { message: 'Zug ausgeführt, Kugeln Getauscht', code: 9999 });
+        io.emit('backend_info', { message: 'Zug ausgeführt, Kugeln Getauscht', code: 9999, gameIndex: data.gameId });
         io.emit("spheres_swapped", {data: data, dataInfo: {gameIndex: data.gameId}});
         io.emit('new_game_state', {changeString: 'player', changedObject: [ownPlayer.ownedSpheres[(data.ownSphereId - 1)], foreignPlayer.ownedSpheres[(data.foreignSphereId - 1 )] ], newGame: game, init: 'other'})
     })
