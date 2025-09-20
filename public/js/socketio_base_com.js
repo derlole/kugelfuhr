@@ -1,10 +1,10 @@
 
 socket.on('field_baseinit', (msg) => {
-    console.log((gameInFront !== undefined && gameInFront !== null))
-    console.log(gameInFront)
+    //console.log((gameInFront !== undefined && gameInFront !== null))
+    console.log('[BASEINIT]', gameInFront)
     if(!(gameInFront == undefined)){
         if(( gameInFront.gameId !== msg.gameId)){
-            console.log("field baseinit for wrong game, returning")
+            console.log('[BASEINIT]', "field baseinit for wrong game, returning")
             return
         }
     }
@@ -44,7 +44,7 @@ socket.on('lifecycle', (data) =>{
     }
 })
 socket.on('new_game_state', (data) => {
-    console.log('newGameState', data)
+    console.log('[newGS---]', data)
     if(!(data.newGame && ( data.newGame.gameId == gameInFront.gameId))) return
     gameInFront = data.newGame
     reInit(data.init, gameInFront)

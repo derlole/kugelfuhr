@@ -25,18 +25,18 @@ class Player {
       this.deck.cards.push(card);
       return card;
     } else {
-      console.log(`${this.name} kann keine Karte ziehen – Deck ist leer.`);
+      //console.log(`${this.name} kann keine Karte ziehen – Deck ist leer.`);
       return null;
     }
   }
 
   playCard(index = 0) {
     if (this.deck.length === 0) {
-      console.log(`${this.name} hat keine Karten zum Spielen.`);
+      //console.log(`${this.name} hat keine Karten zum Spielen.`);
       return null;
     }
     if (index < 0 || index >= this.deck.length) {
-      console.log(`Ungültiger Index: ${index}`);
+      //console.log(`Ungültiger Index: ${index}`);
       return null;
     }
     return this.deck.splice(index, 1)[0];

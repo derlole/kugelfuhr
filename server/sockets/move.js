@@ -15,7 +15,7 @@ module.exports = (io, socket) => {
             io.emit('backend_error', { message: 'Spieler nicht gefunden', code: 1501 });
             return {test: false, message: "Spieler nicht gefunden"};
         }
-        return ownPlayer.ownedSpheres[(data.sphereId-1)].checkSwap(data, ownPlayer, foreignPlayer, game)
+        return ownPlayer.ownedSpheres[(data.ownSphereId-1)].checkSwap(data, ownPlayer, foreignPlayer, game)
 
     }
     socket.on("move_sphere", (data) => {
@@ -50,14 +50,20 @@ module.exports = (io, socket) => {
             return;
         }
         const ownPlayer = game.players.find(
-            player => player && player.playerid === data.ownPlayerId
+            player => player && player.color === data.ownColor.toLowerCase()
         );
         const foreignPlayer = game.players.find(
-            player => player && player.playerid === data.foreignPlayerId
+            player => player && player.color === data.foreignColor.toLowerCase()
         )
+
+        if(!(ownPlayer.color.toLowerCase() == data.ownColor.toLowerCase()) || !(foreignPlayer.color.toLowerCase() == data.foreignColor.toLowerCase())){
+            io.emit('backend_warning', { message: 'Ungültiger Zug' + 'Grund: Spieler Farben stimmen nicht mit der bewegungsanfrage überein' , code: 2100 })
+            return
+        }
+
         let test = simulateSwapSpheres(data, ownPlayer, foreignPlayer, game)
         if(!test.test){
-            io.emit('backend_warning', { message: 'Ungültiger Zug' + 'Grund' + test.message, code: 1700 })
+            io.emit('backend_warning', { message: 'Ungültiger Zug' + ' Grund: ' + test.message, code: 1700 })
             return
         }
         if(!(ownPlayer.ownedSpheres[(data.ownSphereId - 1)].swapSphere(foreignPlayer.ownedSpheres[(data.foreignSphereId - 1)], game, data))){

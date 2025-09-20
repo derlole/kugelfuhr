@@ -12,7 +12,7 @@ function setWantColor(col, element){
     element.classList.add("colorChoosen")
 }
 function setWantGame(gameNr, element){
-    console.log(element)
+    //console.log(element)
     wantGameNr = gameNr 
 
     const options = element.parentElement.querySelectorAll('h4')

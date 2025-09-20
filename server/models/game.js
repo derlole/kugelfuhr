@@ -5,6 +5,7 @@ gameStatus:
     2 = paused
     3 = stoped
     4 = finished
+    5 = swappingCards
 */
 const { Player } = require('./player')
 const { Deck } = require('./deck')
@@ -23,7 +24,7 @@ class Game {
         this.deck = new Deck(false);
         this.deck.shuffle();
         this.field = new Field();
-        
+        this.roundSwapLog = [];
         this.currentPlayer = null;
         this.startingPlayer = null;
         this.givingPlayer = null;

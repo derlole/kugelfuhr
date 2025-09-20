@@ -26,6 +26,23 @@ class Sphere {
             this.position = 40 + sphereId
         }
     }
+    isSwappable(extended){
+        if(this.position < 100){ // home or finish fields
+            return false
+        }
+        if(extended){
+            if(this.color == "red" && this.position == 1001){
+                return false
+            }else if(this.color == "red" && this.position == 1026){
+                return false
+            }else if(this.color == "red" && this.position == 1051){
+                return false
+            }else if(this.color == "red" && this.position == 1076){
+                return false
+            }
+        }
+        return true
+    }
     moveSphere(game, moveProfile){
         //change sphere state
         this.position = moveProfile.destinationId
@@ -49,7 +66,7 @@ class Sphere {
         let destinationField = game.field.points[findPosInArray(game.field.points, moveProfile.destinationId)]
         currentPosField.removeSphere()
         destinationField.placeSphere(this.color)
-        //some if's
+
         return true
     } 
     checkPath(gameField, destinationId, card){
@@ -146,19 +163,81 @@ class Sphere {
             return {test:false, message: "Karte nicht in der Hand des Spielers"};
         }
         var checkedMove = this.checkPath(game.field, moveProfile.destinationId, player.deck.cards.find(card => card.id === moveProfile.cardId))
-        console.log(checkedMove)
+        //console.log(checkedMove)
         if(!(checkedMove.test)){
             return {test:false, message: "Ungültiger Zielpunkt für diese Karte, " + checkedMove.extra}
         }
         console.log(this.color, this.sphereId, "moves from", this.position, "to", moveProfile.destinationId, "with", player.deck.cards.find(card => card.id === moveProfile.cardId))
-        //some if's
+        //DELETE ME!!!!!!!!!!!!!!!!!
+        //DELETE ME!!!!!!!!!!!!!!!!!
+        //DELETE ME!!!!!!!!!!!!!!!!!
+        if(game.currentPlayer == game.player1red){
+            game.currentPlayer = game.player3yellow
+        }else{
+            game.currentPlayer = game.player1red
+        }
+        //DELETE ME!!!!!!!!!!!!!!!!!
+        //DELETE ME!!!!!!!!!!!!!!!!!
+        //DELETE ME!!!!!!!!!!!!!!!!!
         return {test: true, sphere: this, move: {from: this.position, to: moveProfile.destinationId}}
     }
-    checkSwap(data, ownPlayer, foreignPlayer, game){
+    checkSwap(moveProfile, ownPlayer, foreignPlayer, game){
+        var foreignSphere = foreignPlayer.ownedSpheres[(moveProfile.foreignSphereId - 1)]
+        var ownSphere = ownPlayer.ownedSpheres[(moveProfile.ownSphereId - 1)]
+        if(!(game.gameStatus == 1)){
+            return {test: false, message: "Spiel nicht im Spielmodus"}
+        }
+        if(!(game.currentPlayer == ownPlayer)){
+            return {test: false, message: "Nicht am Zug"}
+        }
+        if(!(moveProfile.ownColor.toLowerCase() == this.color) || !(moveProfile.foreignColor !== foreignPlayer.color)){
+            return {test:false, message: "Falsche Kugelfarbe (n)"} //theoretically not possible
+        }
+        if(!(moveProfile.ownSphereId == this.sphereId) || !(moveProfile.foreignSphereId == foreignSphere.sphereId)){
+            return {test:false, message: "Falsche Kugel ID"} //theoretically not possible
+        }
+        if(!(moveProfile.ownPointId == this.position)){
+            return {test:false, message: "Kugel des Tauschenden nicht an angegebener Position"}
+        }
+        if(!(moveProfile.foreignPointId ==  foreignSphere.position)){
+            return {test:false, message: "Kugel des Getauschten nicht an angegebener Position"}
+        }
+        if (!(ownPlayer.deck.cards.some(card => card.id === moveProfile.cardId))) {
+            return {test:false, message: "Karte nicht in der Hand des Spielers"};
+        }
+        var card = ownPlayer.deck.cards.find(card => card.id === moveProfile.cardId)
+        if(card.gameValue[0] !== 100){
+            return {test:false, message: "Karte kann keine Kugeln tauschen"};
+        }
+        if(!foreignSphere.isSwappable(true)){
+            return {test:false, message: "Deine Kugel kann nicht getauscht werden"};
+        }
+        if(!ownSphere.isSwappable(false)){
+            return {test:false, message: "Diese Kugel kannst du nicht tauschen"};
+        }
+        var possibleSwapEntry1 = "" + ownSphere.color + ownSphere.sphereId + "to" + foreignSphere.color + foreignSphere.sphereId
+        var possibleSwapEntry2 = "" + foreignSphere.color + foreignSphere.sphereId + "to" + ownSphere.color + ownSphere.sphereId
 
+        if (game.roundSwapLog.includes(possibleSwapEntry1) || game.roundSwapLog.includes(possibleSwapEntry2)) {
+            return {test: false, message: "Dieser Kugeln wurde in dieser Runde bereits durchgeführt"};
+        }
+        return {test: true, message: ""}
     }
     swapSphere(foreignSphere, game, moveProfile){
+        let ownPosField = game.field.points[findPosInArray(game.field.points, moveProfile.ownPointId)]
+        let foreignPosField = game.field.points[findPosInArray(game.field.points, moveProfile.foreignPointId)]
 
+        ownPosField.removeSphere()
+        foreignPosField.removeSphere()
+        ownPosField.placeSphere(foreignSphere.color)
+        foreignPosField.placeSphere(this.color)
+
+        this.position = foreignPosField.pointId
+        foreignSphere.position = ownPosField.pointId
+
+        game.roundSwapLog.push("" + this.color + this.sphereId + "to" + foreignSphere.color + foreignSphere.sphereId)
+
+        return true
     }
 }
 module.exports = { Sphere }
