@@ -62,13 +62,27 @@ io.on('connection', (socket) => {
     
     moveHandler(io, socket);
     loginHandler(io, socket);
-
     io.emit("lifecycle", {lfc: global.lifecycle}) // global for every game no differetial betwen gamIndex or Player, because the lfc is the same in every restartcycle of the server
     socket.on('disconnect', () => {
     console.log(`[SOCKETIO] Client getrennt: ${socket.id}`);
     });
 });
 
+function notifyShutdown() {
+  io.emit("server_shutdown", { message: "Server is shutting down." });
+  console.log("[STATUS--] Shutdown notification sent to clients.");
+}
+
+// Listen for termination signals
+process.on('SIGINT', () => {
+  notifyShutdown();
+  setTimeout(() => process.exit(0), 500); // Wait 500ms before exiting
+});
+
+process.on('SIGTERM', () => {
+  notifyShutdown();
+  setTimeout(() => process.exit(0), 500); // Wait 500ms before exiting
+});
 // ================== Start ==================
 server.listen(PORT, () => {
   console.log(`[STATUS--] Frontend server running at http://localhost:${PORT}`);
