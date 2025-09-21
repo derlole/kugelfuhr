@@ -1,7 +1,6 @@
 function cleanUpField(){
     document.querySelectorAll('[data-point-id]').forEach(el => {
         el.classList.remove('sphereRed', 'sphereGreen', 'sphereYellow', 'sphereBlue');
-        void el.offsetWidth;
     });
 }
 function cleanUpCards(){

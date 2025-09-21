@@ -37,14 +37,13 @@ module.exports = (io, socket) => {
         var targetPlayer = game.addPlayer(data.name, data.color.toLowerCase())
         
         if(!targetPlayer){
-            // request rejoin (done)
             io.emit('backend_warning', { message: 'Farbe bereits vergeben', code: 1400, gameIndex: data.gameIndex });
             return;
         }
         if(!global.games.length == 0){
             io.emit("field_baseinit", game)
         }
-        io.emit('new_game_state', { changeString: 'player', changedObject: targetPlayer, newGame: game, init: 'other' });
+        io.emit('new_game_state', { changeString: 'player', changedObject: targetPlayer, newGame: game, init: 'all' });
         io.emit('backend_info', { message: `${data.name} dem Spiel beigetreten`, code: 9999, gameIndex: data.gameIndex });
     });
 

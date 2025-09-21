@@ -87,14 +87,14 @@ class Game {
         this.checkStartable()
         return returnPlayer
     }
-    checkColorFree(color){
-        if (color == "red" && this.player1red.name !== null) {
+    checkColorFree(color, wantName){
+        if (color == "red" && this.player1red.name !== null && this.player1red.name !== wantName) {
             return false
-        }else if (color == "blue" && this.player2blue.name !== null) {
+        }else if (color == "blue" && this.player2blue.name !== null && this.player2blue.name !== wantName) {
             return false
-        }else if (color == "yellow" && this.player3yellow.name !== null) {
+        }else if (color == "yellow" && this.player3yellow.name !== null && this.player3yellow.name !== wantName) {
             return false
-        }else if (color == "green" && this.player4green.name !== null) {
+        }else if (color == "green" && this.player4green.name !== null && this.player4green.name !== wantName) {
             return false
         }
         return true
@@ -147,6 +147,16 @@ class Game {
         }else{
             return false
         }
+    }
+    executeKillBumpDestroySendHomeTurnLightOffKnockOffMurderAssasinateSlaughterSlaySphere(desFieldId){
+        const point = this.field.points.find(p => p.pointId === desFieldId);
+        if(!point.isSphereOn) return {exec: true, message: ''}
+        const playerOn = this.gameId.players.find(pl => pl.color.toLowerCase() === point.sphereColorOn.toLowerCase())
+        const sphereOn = playerOn.ownedSpheres.find(s => s.position === desFieldId)
+        if(!sphereOn) return {exec: false, message: 'Internal Server Error'}
+        sphereOn.sendHome()
+        point.removeSphere()
+        return {exec: true, message: ''}
     }
 }
 module.exports = { Game };

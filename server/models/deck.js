@@ -27,19 +27,19 @@ class Deck {
       { symbol: '♣', name: 'clubs' }
     ];
     this.values = [
-      { value: 'A',description: "walk 1, walk 11, go out", gameValue: [1,11,0], name: 'Ace', sortValue: 14 },
-      { value: '2',description: "walk 2", gameValue: [2], name: 'Two', sortValue: 2 },
-      { value: '3',description: "walk 3", gameValue: [3], name: 'Three', sortValue: 3 },
-      { value: '4',description: "walk 4 backwards", gameValue: [-4], name: 'Four', sortValue: 4 },
-      { value: '5',description: "walk 5", gameValue: [5], name: 'Five', sortValue: 5 },
-      { value: '6',description: "walk 6", gameValue: [6], name: 'Six', sortValue: 6 },
-      { value: '7',description: "walk between 1-7 with various balls", gameValue: [1,2,3,4,5,6,7], name: 'Seven', sortValue: 7 },
-      { value: '8',description: "walk 8", gameValue: [8], name: 'Eight', sortValue: 8 },
-      { value: '9',description: "walk 9", gameValue: [9], name: 'Nine', sortValue: 9 },
-      { value: '10',description: "walk 10", gameValue: [10], name: 'Ten', sortValue: 10 },
-      { value: 'J',description: "swap the position from one of your ball with another ball", gameValue: [100], name: 'Jack', sortValue: 11 },
-      { value: 'Q',description: "walk 12", gameValue: [12], name: 'Queen', sortValue: 12 },
-      { value: 'K',description: "walk 13 or go out", gameValue: [13,0], name: 'King', sortValue: 13 }
+      { value: 'A',description: "Ziehe eine Kugel ein Feld oder elf Felder vor, oder verlasse das Haus.", gameValue: [1,11,0], name: 'Ace', sortValue: 14 },
+      { value: '2',description: "Ziehe eine Kugel zwei Felder vor.", gameValue: [2], name: 'Two', sortValue: 2 },
+      { value: '3',description: "Ziehe eine Kugel drei Felder vor.", gameValue: [3], name: 'Three', sortValue: 3 },
+      { value: '4',description: "Ziehe eine Kugel vier Felder zurück.", gameValue: [-4], name: 'Four', sortValue: 4 },
+      { value: '5',description: "Ziehe eine Kugel fünf Felder vor.", gameValue: [5], name: 'Five', sortValue: 5 },
+      { value: '6',description: "Ziehe eine Kugel sechs Felder vor.", gameValue: [6], name: 'Six', sortValue: 6 },
+      { value: '7',description: "Du kannst sieben Schritte auf verschiedene Kugeln verteilen. Kugeln, an denen vorbei gestept wird, werden zurück nach Hause geschickt.", gameValue: [7,6,5,4,3,2,1], name: 'Seven', sortValue: 7 },
+      { value: '8',description: "Ziehe eine Kugel acht Felder vor.", gameValue: [8], name: 'Eight', sortValue: 8 },
+      { value: '9',description: "Ziehe eine Kugel neun Felder vor.", gameValue: [9], name: 'Nine', sortValue: 9 },
+      { value: '10',description:"Ziehe eine Kugel zehn Felder vor.",gameValue: [10],name: 'Ten', sortValue: 10 },
+      { value: 'J',description: "Eine eigene mit einer anderen Kugel vertauschen. Fremde Kugeln, die auf ihrem Rausgehpunkt platziert sind, sind ausgeschlossen.", gameValue: [100], name: 'Jack', sortValue: 11 },
+      { value: 'Q',description: "Ziehe eine Kugel zwölf Felder vor.", gameValue: [12], name: 'Queen', sortValue: 12 },
+      { value: 'K',description: "Ziehe eine Kugel dreizehn Felder vor, oder verlasse das Haus.", gameValue: [13,0], name: 'King', sortValue: 13 }
     ];
     this.cards = [];
     if (!emptyDeck) this._createDeck();

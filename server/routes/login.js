@@ -14,9 +14,9 @@ module.exports = (io) => {
         if (!data.name || !data.color) {
             return res.status(400).json({ message: 'Ungültige Daten', code: 1502})
         }
-        // if(!(game.checkColorFree(data.color.toLowerCase()))){
-        //     return res.status(400).json({ message: data, code: 1200 });
-        // }
+        if(!(game.checkColorFree(data.color.toLowerCase(), data.name))){
+            return res.status(400).json({ message: 'Die Farbe ist schon vergeben', code: 1503 });
+        }
         return res.sendStatus(200)
     })
 

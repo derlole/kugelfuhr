@@ -29,7 +29,7 @@ function devLogon(){
 function requestGameJoin(){
     //console.log("station1",wantCol,wantGameNr, wantedName )
     //uncomment in real application
-    //devLogon()
+    devLogon()
     if(!(wantCol) || wantGameNr == null){
         showAndAutoHide('warning-div', `Wähle ein Spiel und die Farbe an, die du spielen willst`, 7000);
         return
@@ -70,7 +70,7 @@ function requestGameJoin(){
     })
     .then(result => {
         if(!result) return
-        if(result.code == 1500 || result.code == 1502){
+        if(result.code == 1500 || result.code == 1502 || result.code == 1503){
             showAndAutoHide('error-div', `Error-Message: ${result.message}, Error-code: ${result.code}, Thrown by backend`, 7000);
             return
         }else{

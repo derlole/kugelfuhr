@@ -1,0 +1,77 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Barrio&family=Comfortaa:wght@700&display=swap");
+.comfortaa, body {
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.barrio-regular {
+  font-family: "Barrio", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  background-color: #68583e;
+  color: white;
+  margin: 0;
+  height: 100vh; /* ganze Bildschirmhöhe */
+  display: flex; /* Flexbox aktivieren */
+  flex-direction: column;
+  text-align: center;
+  justify-content: center; /* horizontal zentrieren */
+  align-items: center; /* vertikal zentrieren */
+  overflow-y: hidden;
+  transform: translateX(0%) translateY(10%);
+}
+
+.eh {
+  font-family: Barrio;
+  font-size: 5em;
+  background-color: #9a8a6e;
+  padding: 0.15em 1.15em;
+  border-radius: 75px;
+  margin: 0.25em;
+  position: relative;
+  z-index: 1;
+}
+
+.redirectStartscreen {
+  background-color: #9a8a6e;
+  font-size: 1.5em;
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 10px;
+  font-family: Comfortaa;
+  transition: transform 0.5s ease, background-color 0.5s ease, border 0.5s ease;
+}
+
+.redirectStartscreen:hover {
+  background-color: #dfc7a0;
+  transform: scale(1.5);
+}
+
+.shark-wrapper {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.sadShark, .sadSharkFlossi {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(-58%);
+  z-index: -1;
+  height: 40vh;
+}
+
+.sadSharkFlossi {
+  z-index: 2;
+}
+
+.errorText {
+  margin: 4em 0;
+}/*# sourceMappingURL=gameDied.css.map */

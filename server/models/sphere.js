@@ -235,5 +235,9 @@ class Sphere {
 
         return true
     }
+    sendHome(){
+        this.home = true
+        this._initPos(this.color, this.sphereId)
+    }
 }
 module.exports = { Sphere }

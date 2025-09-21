@@ -325,12 +325,22 @@ body {
 }
 
 .card-info {
-  position: absolute; /* wird per JS platziert */
+  position: absolute;
   background: white;
   color: black;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  white-space: nowrap;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   z-index: 9999;
+  max-width: 8vw;
+}
+
+.cardInfoBox {
+  height: 3.5em;
+}
+.cardInfoBox > p {
+  margin: 0;
 }/*# sourceMappingURL=board.css.map */

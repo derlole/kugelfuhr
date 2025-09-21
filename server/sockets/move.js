@@ -16,7 +16,14 @@ module.exports = (io, socket) => {
             return {test: false, message: "Spieler nicht gefunden"};
         }
         return ownPlayer.ownedSpheres[(data.ownSphereId-1)].checkSwap(data, ownPlayer, foreignPlayer, game)
-
+    }
+    function simulateMoveSeven(data, player, game){
+        const playerExists = !!player;
+        if (!playerExists) {
+            io.emit('backend_error', { message: 'Spieler nicht gefunden', code: 1501, gameIndex: game.gameId });
+            return {test: false, message: "Spieler nicht gefunden"};
+        }
+        return player.checkMoveSpheresSeven(game, data)
     }
     socket.on("move_sphere", (data) => {
 
@@ -38,9 +45,13 @@ module.exports = (io, socket) => {
             io.emit('backend_error', { message: 'Zug konnte nicht ausgeführt werden', code: 1601, gameIndex: game.gameId });
             return;
         }
+        var execution = game.executeKillBumpDestroySendHomeTurnLightOffKnockOffMurderAssasinateSlaughterSlaySphere(data.destinationId)
+        if(!execution.exec){
+            io.emit('backend_error', { message: (execution.message + 'Folgefehler sind wahrscheinlich'), code: 1602, gameIndex: data.gameId });
+        }
         io.emit('backend_info', { message: 'Zug ausgeführt, Kugel bewegt', code: 9999, gameIndex: data.gameId });
         io.emit("sphere_moved", {data: data, dataInfo: {gameIndex: data.gameId}});
-        io.emit('new_game_state', {changeString: 'player', changedObject: player.ownedSpheres[(data.sphereId-1)], newGame: game, init: 'other'})
+        io.emit('new_game_state', {changeString: 'sphere', changedObject: player.ownedSpheres[(data.sphereId-1)], newGame: game, init: 'all'})
     });
     socket.on("swap_sphere", (data) => {
         console.log(data)
@@ -72,7 +83,29 @@ module.exports = (io, socket) => {
         }
         io.emit('backend_info', { message: 'Zug ausgeführt, Kugeln Getauscht', code: 9999, gameIndex: data.gameId });
         io.emit("spheres_swapped", {data: data, dataInfo: {gameIndex: data.gameId}});
-        io.emit('new_game_state', {changeString: 'spheres', changedObject: [ownPlayer.ownedSpheres[(data.ownSphereId - 1)], foreignPlayer.ownedSpheres[(data.foreignSphereId - 1 )] ], newGame: game, init: 'other'})
+        io.emit('new_game_state', {changeString: 'spheres', changedObject: [ownPlayer.ownedSpheres[(data.ownSphereId - 1)], foreignPlayer.ownedSpheres[(data.foreignSphereId - 1 )] ], newGame: game, init: 'all'})
+    })
+    socket.on("move_spheres_seven", (data) => {
+        var game = global.games[data.gameId]
+        if (!game) {
+            io.emit('backend_error', { message: 'Kein Spiel gefunden', code: 1500});
+            return;
+        }
+        const player = game.players.find(
+            player => player && player.playerid === data.playerId
+        );
+        let test = simulateMoveSeven(data, player, game)
+
+        if(!test.test){
+            io.emit('backend_warning', { message: 'Ungültiger Zug ' + 'Grund: ' + test.message, code: 1600, gameIndex: game.gameId });
+            return;
+        }
+        //move spheres
+        //execute spheres
+
+        io.emit('backend_info', { message: 'Zug ausgeführt, Kugel bewegt', code: 9999, gameIndex: data.gameId });
+        io.emit("sphere_moved", {data: data, dataInfo: {gameIndex: data.gameId}});
+        io.emit('new_game_state', {changeString: 'sphere', changedObject: null, newGame: game, init: 'all'})
     })
 };
 

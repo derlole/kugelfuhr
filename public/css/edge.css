@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Barrio&family=Comfortaa:wght@700&display=swap");
 .comfortaa, .right, .left {
   font-family: "Comfortaa", sans-serif;
   font-optical-sizing: auto;
@@ -12,6 +12,8 @@
   width: calc((100% - 90vh) / 2);
   height: 95vh;
   padding: 1em;
+  display: flex;
+  flex-direction: column;
 }
 .left .title {
   text-decoration: underline;
@@ -32,6 +34,7 @@
 
 h2 {
   margin: 0;
+  margin-bottom: 0.5em;
 }
 
 #hand {
@@ -231,7 +234,7 @@ h2 {
 }
 
 .playerList {
-  margin: 2em 0;
+  margin: 0.75em 0;
 }
 
 #playerNames {
@@ -252,4 +255,195 @@ h2 {
 
 #playerNameGreen {
   color: #81ad3a;
+}
+
+.flowStep, .flowStepDone, .flowStepActiveGreen, .flowStepActiveYellow, .flowStepActiveBlue, .flowStepActiveRed {
+  margin: 0.5em 0;
+  padding: 0.75em;
+  border: 2px solid #9a8a6e;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  align-items: center;
+}
+
+.stepNr {
+  font-size: 3em;
+  margin: 0;
+  margin-right: 0.5em;
+  font-family: "Barrio", system-ui;
+  color: #9a8a6e;
+}
+
+.flowcontrol {
+  margin-top: auto;
+}
+
+.stepInformation {
+  width: 50%;
+  border-left: 2px solid #dfc7a0;
+  margin-left: auto;
+  padding: 1em 0.5em;
+  text-align: left;
+}
+
+.stepButton {
+  background-color: #dfc7a0;
+  border: 2px solid #9a8a6e;
+  padding: 0.5em 1em;
+  border-radius: 10px;
+  font-family: Comfortaa;
+}
+
+.flowStepActiveRed {
+  border: 2px solid #ff595e;
+  background-color: #ffa2a5;
+  transform: scale(1.02);
+}
+.flowStepActiveRed .stepInformation {
+  width: 50%;
+  border-left: 2px solid #ff595e;
+  margin-left: auto;
+  padding: 1em 0.5em;
+  text-align: left;
+}
+.flowStepActiveRed .stepNr {
+  font-size: 3em;
+  margin: 0;
+  margin-right: 0.5em;
+  font-family: "Barrio", system-ui;
+  color: #cb4c51;
+}
+.flowStepActiveRed .stepButton {
+  background-color: #ff595e;
+  border: 2px solid #cb4c51;
+  padding: 0.5em 1em;
+  border-radius: 10px;
+  font-family: Comfortaa;
+  transition: transform 0.5s ease, background-color 0.5s ease, border 0.5s ease;
+}
+.flowStepActiveRed .stepButton:hover {
+  background-color: #ff595e;
+  border: 2px solid #cb4c51;
+  transform: scale(1.1);
+}
+
+.flowStepActiveBlue {
+  border: 2px solid #1982c4;
+  background-color: #78cbff;
+  transform: scale(1.02);
+}
+.flowStepActiveBlue .stepInformation {
+  width: 50%;
+  border-left: 2px solid #1982c4;
+  margin-left: auto;
+  padding: 1em 0.5em;
+  text-align: left;
+}
+.flowStepActiveBlue .stepNr {
+  font-size: 3em;
+  margin: 0;
+  margin-right: 0.5em;
+  font-family: "Barrio", system-ui;
+  color: #206895;
+}
+.flowStepActiveBlue .stepButton {
+  background-color: #1982c4;
+  border: 2px solid #206895;
+  padding: 0.5em 1em;
+  border-radius: 10px;
+  font-family: Comfortaa;
+  transition: transform 0.5s ease, background-color 0.5s ease, border 0.5s ease;
+}
+.flowStepActiveBlue .stepButton:hover {
+  background-color: #1982c4;
+  border: 2px solid #206895;
+  transform: scale(1.1);
+}
+
+.flowStepActiveYellow {
+  border: 2px solid #ffca3a;
+  background-color: #fff07d;
+  transform: scale(1.02);
+}
+.flowStepActiveYellow .stepInformation {
+  width: 50%;
+  border-left: 2px solid #ffca3a;
+  margin-left: auto;
+  padding: 1em 0.5em;
+  text-align: left;
+}
+.flowStepActiveYellow .stepNr {
+  font-size: 3em;
+  margin: 0;
+  margin-right: 0.5em;
+  font-family: "Barrio", system-ui;
+  color: #ffb70f;
+}
+.flowStepActiveYellow .stepButton {
+  background-color: #ffca3a;
+  border: 2px solid #ffb70f;
+  padding: 0.5em 1em;
+  border-radius: 10px;
+  font-family: Comfortaa;
+  transition: transform 0.5s ease, background-color 0.5s ease, border 0.5s ease;
+}
+.flowStepActiveYellow .stepButton:hover {
+  background-color: #ffca3a;
+  border: 2px solid #ffb70f;
+  transform: scale(1.1);
+}
+
+.flowStepActiveGreen {
+  border: 2px solid #8ac926;
+  background-color: #ccf983;
+  transform: scale(1.02);
+}
+.flowStepActiveGreen .stepInformation {
+  width: 50%;
+  border-left: 2px solid #8ac926;
+  margin-left: auto;
+  padding: 1em 0.5em;
+  text-align: left;
+}
+.flowStepActiveGreen .stepNr {
+  font-size: 3em;
+  margin: 0;
+  margin-right: 0.5em;
+  font-family: "Barrio", system-ui;
+  color: #81ad3a;
+}
+.flowStepActiveGreen .stepButton {
+  background-color: #8ac926;
+  border: 2px solid #81ad3a;
+  padding: 0.5em 1em;
+  border-radius: 10px;
+  font-family: Comfortaa;
+  transition: transform 0.5s ease, background-color 0.5s ease, border 0.5s ease;
+}
+.flowStepActiveGreen .stepButton:hover {
+  background-color: #8ac926;
+  border: 2px solid #81ad3a;
+  transform: scale(1.1);
+}
+
+.flowStepDone {
+  color: #9a8a6e;
+  text-decoration: line-through;
+  transform: scale(0.98);
+}
+.flowStepDone .stepInformation {
+  width: 50%;
+  border-left: 2px solid #dfc7a0;
+  margin-left: auto;
+  padding: 1em 0.5em;
+  text-align: left;
+}
+.flowStepDone .stepNr {
+  font-size: 3em;
+  margin: 0;
+  margin-right: 0.5em;
+  font-family: "Barrio", system-ui;
+  color: #9a8a6e;
 }/*# sourceMappingURL=edge.css.map */

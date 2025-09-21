@@ -66,6 +66,7 @@ const noms = [
 
   new Nom("Quappe", "die", "n"),
   new Nom("Qualle", "die", "n"),
+  new Nom("Quastenflosser", "der", ""),
 
   new Nom("Rochen", "der", ""),
   new Nom("Riesenhai", "der", "e"),
@@ -108,7 +109,7 @@ const adj = [
     ["neugierig","nett","neu","niedlich","nachhaltig","nussig"],
     ["offen","ordentlich","originell","optimistisch","opulent","objektiv"],
     ["peinlich","praktisch","positiv","planvoll"],
-    ["quirlig","qualitativ","quaderförmig"],
+    ["quirlig","qualitativ","quaderförmig", "quakend"],
     ["ruhig","respektvoll","rein","robust","reichhaltig","raffiniert"],
     ["saftig","schnell","sensationell","sicher","sympathisch","spielerisch"],
     ["tanzend","tapfer","temperamentvoll","treu","tot","tolerant"],

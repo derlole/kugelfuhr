@@ -1,0 +1,94 @@
+$red: #ff595e;
+$matred: #ffa2a5;
+$darkred: #cb4c51;
+$yellow: #ffca3a;
+$matyellow: #fff07d;
+$darkyellow: #ffb70f;
+$blue: #1982c4;
+$matblue: #78cbff;
+$darkblue: #206895;
+$green: #8ac926;
+$matgreen: #ccf983;
+$darkgreen: #81ad3a;
+$matpurple: #8b7450;
+$purple: #68583e;
+$background: #ffeac9;
+$point: #dfc7a0;
+$border: #9a8a6e;
+$d: 25px;
+
+
+@import url("https://fonts.googleapis.com/css2?family=Barrio&family=Comfortaa:wght@700&display=swap");
+
+.comfortaa {
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.barrio-regular {
+  font-family: "Barrio", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  @extend .comfortaa;
+  background-color: $purple;
+  color: white;
+  margin: 0;
+  height: 100vh; /* ganze Bildschirmhöhe */
+  display: flex; /* Flexbox aktivieren */
+  flex-direction: column;
+  text-align: center;
+  justify-content: center; /* horizontal zentrieren */
+  align-items: center; /* vertikal zentrieren */
+  overflow-y: hidden;
+
+  transform: translateX(0%) translateY(10%);
+}
+.eh{
+    font-family: Barrio;
+    font-size: 5em;
+    background-color: $border;
+    padding: 0.15em 1.15em;
+    border-radius: 75px;
+    margin: 0.25em;
+    position: relative;  
+    z-index: 1;   
+}
+.redirectStartscreen{
+    background-color: $border;
+    font-size: 1.5em;
+    color: white;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 10px;
+    font-family: Comfortaa;
+    transition: transform 0.5s ease, background-color 0.5s ease, border 0.5s ease;
+}
+.redirectStartscreen:hover{
+    background-color: $point;
+    transform: scale(1.5);
+}
+.shark-wrapper {
+  position: relative;           
+  display: inline-block;       
+  text-align: center;         
+}
+
+.sadShark {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(-58%);
+  z-index: -1;
+  height:40vh;               
+}
+.sadSharkFlossi {
+  @extend .sadShark;
+  z-index: 2;             
+}
+.errorText{
+    margin: 4em 0;
+}

@@ -1,4 +1,5 @@
 let handSpace = document.getElementById("hand");
+let avCards;
 //Anzahl Handkarten
 
 function eventListenersInit() {
@@ -9,27 +10,33 @@ function eventListenersInit() {
   infoBox.className = "card-info";
   infoBox.style.display = "none";
   document.body.appendChild(infoBox);
+  let info = document.getElementById("cardInfoBox");
 
   cards.forEach(card => {
     card.addEventListener("click", () => {
       if (card.classList.contains("cardActive")) {
         card.classList.remove("cardActive");
         infoBox.style.display = "none";
+        info.innerHTML= "";
         return;
       }
       cards.forEach(innerCard => innerCard.classList.remove("cardActive"));
       card.classList.add("cardActive");
 
-
-      infoBox.textContent = "Infos zu " + (card.dataset.info || card.id);
-
+      avCards.forEach(avCard => {
+        if(avCard.id === card.id){
+            //infoBox.textContent = avCard.description;
+            info.innerHTML= `<p>${avCard.description}</p>`
+        }
+      })
       //Infofeld
-      const rect = card.getBoundingClientRect();
-      infoBox.style.display = "block";
-      infoBox.style.position = "absolute";
-      infoBox.style.top = (window.scrollY + rect.top - infoBox.offsetHeight - 8) + "px";
-      infoBox.style.left = (window.scrollX + rect.left + rect.width / 2) + "px";
-      infoBox.style.transform = "translateX(-50%)";
+    //   const rect = card.getBoundingClientRect();
+    //   infoBox.style.display = "block";
+    //   infoBox.style.fontSize = "0.8em";
+    //   infoBox.style.position = "absolute";
+    //   infoBox.style.top = (window.scrollY + rect.top - infoBox.offsetHeight - 8) + "px";
+    //   infoBox.style.left = (window.scrollX + rect.left + rect.width / 2) + "px";
+    //   infoBox.style.transform = "translateX(-50%)";
     });
   });
 }
@@ -169,9 +176,7 @@ function genCardContent(value, suit) {
     return content;
 }
 // ily
-function genCard(role, symbol, cssClass, cardData){   
-
-    let cardId = cardData.id;
+function genCard(role, symbol, cssClass, cardId){   
     let card = document.createElement("div");
     card.classList.add(cssClass);
     card.id = cardId
@@ -195,12 +200,13 @@ function genCard(role, symbol, cssClass, cardData){
     symbol === "♥" || symbol === "♦" ? card.classList.add("red") : card.classList.add("black");
     let cardMid = card.getElementsByClassName("cardMid")[0];
     cardMid.innerHTML = ""; // vorher leeren
-    cardMid.appendChild(genCardContent(role, symbol, card));
+    cardMid.appendChild(genCardContent(role, symbol));
     return card;
 }
 
 
 function renderHand(n, handCards) {
+    avCards = handCards;
     let symbolArray =[];
     handCards.forEach(card => {
         symbolArray.push(card.suit.symbol);
@@ -226,7 +232,7 @@ function renderHand(n, handCards) {
         // let valueArray = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
         let value = valueArray[i];
 
-        let card = genCard(value, symbol, "card", handCards[i]); //CHECK THIS LATER
+        let card = genCard(value, symbol, "card", handCards[i].id); //CHECK THIS LATER
         const left = (i * cardWidth * (1 - overlap)) / totalWidth * 100;
         
         card.style.left = `${left}%`;
@@ -242,13 +248,13 @@ function playerHandInit(gameInFrontend) {
     var playertoRender = getPlayerFromGameAndColor(gameInFrontend, wantedColor) //wantedColor is from gamePagePlayervarInit.js and is more or less the global idetifier of the PlayerColor in the Frontend
     const handPlayer = playertoRender.deck.cards;
     const numCards = handPlayer.length;
-
     renderHand(numCards, handPlayer);
     renderAblage(gameInFrontend.playedCards)
     eventListenersInit()
 
 }
 function renderAblage(cardsLayed){
+
     var len = cardsLayed.length
     renderAblage(cardsLayed[(len-1)]);
     renderAblage(cardsLayed[(len-2)])
