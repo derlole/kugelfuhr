@@ -33,10 +33,20 @@ socket.on('sphere_moved', (data) => {
     dgebq(`[data-point-id="${sphData.pointId}"]`).classList.remove(`sphere${sphData.color}`);
     dgebq(`[data-point-id="${sphData.destinationId}"]`).classList.add(`sphere${sphData.color}`);
 });
-// socket.on('game_stats_update', (msg) => {
-//     console.log("[SOCKETIO] Game State update recived")
-//     gameInFront = msg
-// })
+socket.on('spheres_swapped', (data) => {
+    if(gameInFront.gameId !== data.dataInfo.gameIndex) return
+    console.log(data.data)
+
+    ownPoint = dgebq(`[data-point-id="${data.data.ownPointId}"]`)
+    foreignPoint = dgebq(`[data-point-id="${data.data.foreignPointId}"]`)
+    
+    ownPoint.classList.remove(`sphere${data.data.ownColor}`)
+    foreignPoint.classList.remove(`sphere${data.data.foreignColor}`)
+    void ownPoint.offsetWidth;
+    void foreignPoint.offsetWidth;
+    ownPoint.classList.add(`sphere${data.data.foreignColor}`)
+    foreignPoint.classList.add(`sphere${data.data.ownColor}`)
+})
 socket.on('lifecycle', (data) =>{
     if(gameInFront == undefined) return
     if(gameInFront.lifecycleId !== data.lfc){
