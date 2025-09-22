@@ -4,9 +4,7 @@
 <script src="/js/infoGen.js"></script>
 <link rel="stylesheet" href="/css/edge.css">
 <link rel="stylesheet" href="/css/board.css">
-
     <div id ="frame" class="colorInfoBlue"></div>
-
 
     <div style="display: none;" id="global_var"><%= global %></div>
     <script src="/js/genGlobalVarInfo.js"></script>
@@ -19,6 +17,14 @@
             <div id="playerNames"></div>
         </div>
         <div class="flowcontrol" id="flowcontrol">
+            <h2>Spielzug:</h2>
+            <% for(var i = 0; i < 5; i++) { %>
+                <div id="step<%= i + 1 %>" class="flowStep">
+                    <p class="stepNr"><%= i+1%></p>
+                    <p id="desc<%= i + 1 %>"></p>
+                    <div class="stepInformation" id="content<%= i + 1 %>"></div>
+                </div>
+            <% } %>
         </div>
     </div>
 
@@ -42,8 +48,19 @@
             <div id="hand"></div>
         </div>
     </div>
+    <div class="hidden" style="position: absolute; width: 100vw; height: 100vh;">
+        <canvas id="aquarium" class="inactiveBody"></canvas>
+            <img id="sharkGif" class="hidden" src="/img/schnappishark.gif" style="position:absolute; height:auto;">
+            <div class="inactiveCenter">
+                <h1>
+                    Es sind nicht alle Spieler anwesend.<br>
+                    Keine Interaktion möglich.
+                </h1>
+                <p>Nimm dir stattdessen einen Moment, dieses harmonische Aquarium zu betrachten.</p>
+            </div>
+    </div>
 <script src="/js/fieldGen.js"></script>
 <script src="/js/cardGen.js"></script>
 <script src="/js/pointOrderFromRed.js"></script>
 <script src="/js/socketio_base_com.js"></script>
-<script>initFlow("a");initFlow("b");resetFlow();initFlow("c"); initFlow("d")</script>
+<script src="/js/fishGen.js"></script>

@@ -28,7 +28,7 @@ function reInitOther(newGame){
     cleanUpOther()
     displayPlayerNames(newGame.player1red.name, newGame.player2blue.name, newGame.player3yellow.name, newGame.player4green.name, wantedColor.toLowerCase())
     frameInit(newGame);
-
+    initFlow();
 }
 function reInitAll(newGame){
     reInitField(newGame)

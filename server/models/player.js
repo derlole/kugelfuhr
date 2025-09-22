@@ -63,6 +63,7 @@ class Player {
     }
     let anyError
     let walkDisctance
+    let killFields = []
     moveProfiles.spheres.forEach(sp => {
       var sphere = this.ownedSpheres[(sp.sphereId - 1)]
       if(!(sp.sphereId == sphere.sphereId)){
@@ -91,6 +92,7 @@ class Player {
           }
           watchField = game.field.points[findPosInArray(game.field.points, watchField.prevPointId)]
           walkDisctance++
+          killFields.push(watchField)
           if(watchField == undefined){
             return anyError = {test: false, extra: "eigentlich ist dieser Fehler nicht moeglich."}
           }
@@ -103,6 +105,7 @@ class Player {
           }
           watchField = game.field.points[findPosInArray(game.field.points, watchField.prevPointId)]
           walkDisctance++
+          killFields.push(watchField)
           if(watchField == undefined){
             return anyError = {test: false, extra: "eigentlich ist dieser Fehler nicht moeglich."}
           }
@@ -121,7 +124,7 @@ class Player {
     if(!game.nextPlayer()){
       return {test:false, message: "Naechster Spieler konnte nicht ermittelt werden. " + checkedMove.extra}
     }
-    return {test: true, extra: ""};
+    return {test: true, extra: "", killFields: killFields};
   }
   checkSevenExpirable(moveProfiles){
     var result = true

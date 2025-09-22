@@ -61,7 +61,7 @@ function showAndAutoHide(id, text, ms) {
 }
 
 socket.on('backend_error', (msg) => {
-    if(!msg.gameIndex) return 
+    //if(!msg.gameIndex) return 
     if (Number(msg.gameIndex) !== Number(gameInFront.gameId)) return;
     console.error('[SOCKETIO] Backend-Fehler:', msg);
     showAndAutoHide('error-div', `Error-Message: ${msg.message}, Error-code: ${msg.code}, Thrown by backend`, 7000);
@@ -73,13 +73,14 @@ socket.on('backend_offline', () => {
     showAndAutoHide('warning-div', 'Backend is offline', 2000);
 });
 socket.on('backend_warning', (msg) => {
-    if(!msg.gameIndex) return 
+    console.log(msg.gameIndex)
+    //if(!msg.gameIndex) return 
     if (Number(msg.gameIndex) !== Number(gameInFront.gameId)) return;
     console.warn('[SOCKETIO] Backend-Warnung:', msg);
     showAndAutoHide('warning-div', `Warnung: ${msg.message}, Code: ${msg.code}, (Backend)`, 5000);
 });
 socket.on('backend_info', (msg) => {
-    if(!msg.gameIndex) return 
+    //if(!msg.gameIndex) return 
     if (Number(msg.gameIndex) !== Number(gameInFront.gameId)) return;
     showAndAutoHide('message-div', `Info: ${msg.message}, Code: ${msg.code}`, 1500);
     console.log('[SOCKETIO] Backend-Info:', msg);

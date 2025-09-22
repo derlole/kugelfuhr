@@ -137,6 +137,10 @@ function genName() {
 
 function initDefaultGame(gameId, lifecycleId){
     let game = new Game(lifecycleId);
+    //
+    // game.flowControl.state2.state = 1
+    // game.flowControl.state3.state = 2
+    //
     game.name = genName()
     game = (global.games[gameId] = game)
     game.gameId = gameId

@@ -24,6 +24,7 @@ socket.on('field_baseinit', (msg) => {
     playerHandInit(gameInFront);
     displayPlayerNames(gameInFront.player1red.name, gameInFront.player2blue.name, gameInFront.player3yellow.name, gameInFront.player4green.name, wantedColor.toLowerCase())
     frameInit(gameInFront);
+    initFlow();
 });
 socket.on('sphere_moved', (data) => {
     if(gameInFront.gameId !== data.dataInfo.gameIndex) return
@@ -57,5 +58,6 @@ socket.on('new_game_state', (data) => {
     console.log('[newGS---]', data)
     if(!(data.newGame && ( data.newGame.gameId == gameInFront.gameId))) return
     gameInFront = data.newGame
+    console.log(data.newGame)
     reInit(data.init, gameInFront)
 })

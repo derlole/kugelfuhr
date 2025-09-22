@@ -33,9 +33,36 @@ body {
   display: flex; /* Flexbox aktivieren */
   justify-content: center; /* horizontal zentrieren */
   align-items: center; /* vertikal zentrieren */
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
+.inactiveBody{
+  position:absolute;
+  background-color: rgba(19, 81, 110, 0.75);
+  z-index: 10000;
+  width: 100vw;
+  height: 100vh;
+}
+.inactiveBody::-webkit-scrollbar{
+  display: none;
+}
+.inactiveCenter{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  justify-content: center;      /* horizontal zentrieren */
+  align-items: center;  
+  text-align: center;
+  color:white;
+  z-index: 10001;
+}
+#sharkGif {
+  z-index: 10000;
+  width: 320px;
+  height: auto;
+  transform: scaleX(-1); 
+}
 
 .graph {
   height: 90vh;
@@ -436,4 +463,7 @@ $matgrey: #b1b1b1;
   &>p{
     margin: 0;
   }
+}
+.hidden{
+  display: none !important;
 }

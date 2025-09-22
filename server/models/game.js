@@ -10,6 +10,7 @@ gameStatus:
 const { Player } = require('./player')
 const { Deck } = require('./deck')
 const { Field } = require('./field');
+const { FlowControl } = require('./flow')
 
 class Game {
     constructor(lifecycleId) {
@@ -20,6 +21,7 @@ class Game {
         this.player2blue = new Player(null, "blue");
         this.player3yellow = new Player(null, "yellow");
         this.player4green = new Player(null, "green");
+        this.flowControl = new FlowControl();
         this.players = [this.player1red, this.player2blue, this.player3yellow, this.player4green];
         this.deck = new Deck(false);
         this.deck.shuffle();
@@ -151,7 +153,7 @@ class Game {
     executeKillBumpDestroySendHomeTurnLightOffKnockOffMurderAssasinateSlaughterSlaySphere(desFieldId){
         const point = this.field.points.find(p => p.pointId === desFieldId);
         if(!point.isSphereOn) return {exec: true, message: ''}
-        const playerOn = this.gameId.players.find(pl => pl.color.toLowerCase() === point.sphereColorOn.toLowerCase())
+        const playerOn = this.players.find(pl => pl.color.toLowerCase() === point.sphereColorOn.toLowerCase())
         const sphereOn = playerOn.ownedSpheres.find(s => s.position === desFieldId)
         if(!sphereOn) return {exec: false, message: 'Internal Server Error'}
         sphereOn.sendHome()
