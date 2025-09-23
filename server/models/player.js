@@ -4,6 +4,7 @@ const { Sphere } = require('./sphere')
 class Player {
   constructor(name, color) {
     this.name = name;
+    this.finallyNotMovable = false;
     this.color = color;
     this.deck = new Deck(true);
     this.ownedSpheres = [new Sphere(color, 1),new Sphere(color, 2),new Sphere(color, 3),new Sphere(color, 4)]
@@ -18,7 +19,15 @@ class Player {
     }
     this.playerid = this.name + "_" + this.color;
   }
-
+  getSpheresNotInHome(){
+    return [this.ownedSpheres]
+  }
+  getSpheresNotInFinish(){
+    return [this.ownedSpheres]
+  }
+  getSpheresOnlyInField(){
+    return [this.ownedSpheres]
+  }
   drawCard(deck) {
     const card = deck.draw();
     if (card) {
@@ -90,9 +99,10 @@ class Player {
           if(!watchField.isPassable()){
             return anyError = {test: false, extra: "Der angestrebte Pfad kann nicht bestritten werden."}
           }
+          killFields.push(watchField)
           watchField = game.field.points[findPosInArray(game.field.points, watchField.prevPointId)]
           walkDisctance++
-          killFields.push(watchField)
+
           if(watchField == undefined){
             return anyError = {test: false, extra: "eigentlich ist dieser Fehler nicht moeglich."}
           }
@@ -103,9 +113,9 @@ class Player {
           if(!watchField.isPassable()){
             return anyError = {test: false, extra: "Der angestrebte Pfad kann nicht bestritten werden."}
           }
+          killFields.push(watchField)
           watchField = game.field.points[findPosInArray(game.field.points, watchField.prevPointId)]
           walkDisctance++
-          killFields.push(watchField)
           if(watchField == undefined){
             return anyError = {test: false, extra: "eigentlich ist dieser Fehler nicht moeglich."}
           }

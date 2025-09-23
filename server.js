@@ -8,6 +8,7 @@ const { Game } = require('./server/models/game')
 const { initDefaultGame, initGlobals, forcePlayableNoChecks } = require('./ext/initGame')
 const moveHandler = require('./server/sockets/move');
 const loginHandler = require('./server/sockets/login');
+const otherHandler = require('./server/sockets/other')
 
 const app = express();
 const PORT = 3033;
@@ -62,6 +63,7 @@ io.on('connection', (socket) => {
     
     moveHandler(io, socket);
     loginHandler(io, socket);
+    otherHandler(io, socket);
     io.emit("lifecycle", {lfc: global.lifecycle}) // global for every game no differetial betwen gamIndex or Player, because the lfc is the same in every restartcycle of the server
     socket.on('disconnect', () => {
     console.log(`[SOCKETIO] Client getrennt: ${socket.id}`);

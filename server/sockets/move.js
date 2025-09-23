@@ -104,6 +104,13 @@ module.exports = (io, socket) => {
             io.emit('backend_warning', { message: 'Ungültiger Zug ' + 'Grund: ' + test.message, code: 1600, gameIndex: game.gameId });
             return;
         }
+        test.killFields.forEach(f => {
+            var execution = game.executeKillBumpDestroySendHomeTurnLightOffKnockOffMurderAssasinateSlaughterSlaySphere(f)
+            if(!execution.exec){
+                io.emit('backend_error', { message: (execution.message + 'Folgefehler sind wahrscheinlich'), code: 1603, gameIndex: data.gameId });
+            }
+        });
+        //safe moved spheres
         data.spheres.forEach(sph => {
             var rSph =  player.ownedSpheres[sph.sphereId - 1]
             var m = rSph.moveSphere(game, {destinationId: sph.destinationId})
@@ -114,12 +121,7 @@ module.exports = (io, socket) => {
             
         });
 
-        test.killFields.forEach(f => {
-            var execution = game.executeKillBumpDestroySendHomeTurnLightOffKnockOffMurderAssasinateSlaughterSlaySphere(f)
-            if(!execution.exec){
-                io.emit('backend_error', { message: (execution.message + 'Folgefehler sind wahrscheinlich'), code: 1603, gameIndex: data.gameId });
-            }
-        });
+
 
         io.emit('backend_info', { message: 'Zug ausgeführt, Kugel bewegt', code: 9999, gameIndex: data.gameId });
         //io.emit("sphere_moved", {data: data, dataInfo: {gameIndex: data.gameId}});
