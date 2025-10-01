@@ -13,6 +13,7 @@ class Sphere {
         this.home = true
         this.finish = false
         this.position = 0
+        this.finallyNotMovable = false;
         this._initPos(color, sphereId)
     }
     _initPos(color, sphereId){
@@ -33,15 +34,49 @@ class Sphere {
         if(extended){ // is foreignSphere check for homeExitfieldPosition
             if(this.color == "red" && this.position == 1001){
                 return false
-            }else if(this.color == "red" && this.position == 1026){
+            }else if(this.color == "blue" && this.position == 1026){
                 return false
-            }else if(this.color == "red" && this.position == 1051){
+            }else if(this.color == "yellow" && this.position == 1051){
                 return false
-            }else if(this.color == "red" && this.position == 1076){
+            }else if(this.color == "green" && this.position == 1076){
                 return false
             }
         }
         return true
+    }
+    isFinalyNotMovable(game){
+        // Finish-Felder je nach Farbe
+        const finishFieldsByColor = {
+            red:   [15, 16, 17, 18],
+            blue:  [25, 26, 27, 28],
+            yellow:[35, 36, 37, 38],
+            green: [45, 46, 47, 48]
+        };
+        const finishFields = finishFieldsByColor[this.color.toLowerCase()];
+        if (!finishFields || !finishFields.includes(this.position)) {
+            return false;
+        }
+
+        // Belegte Finish-Felder für die eigene Farbe
+        let occupied = finishFields.filter(f =>
+            game.field.points[findPosInArray(game.field.points, f)].sphereColorOn &&
+            game.field.points[findPosInArray(game.field.points, f)].sphereColorOn.toLowerCase() === this.color.toLowerCase()
+        );
+
+        // Prüfe die Bedingungen
+        if (this.position === finishFields[3]) {
+            return true;
+        }
+        if (this.position === finishFields[2] && occupied.includes(finishFields[3])) {
+            return true;
+        }
+        if (this.position === finishFields[1] && occupied.includes(finishFields[2]) && occupied.includes(finishFields[3])) {
+            return true;
+        }
+        if (this.position === finishFields[0] && occupied.includes(finishFields[1]) && occupied.includes(finishFields[2]) && occupied.includes(finishFields[3])) {
+            return true;
+        }
+        return false;
     }
     moveSphere(game, moveProfile){
         //change sphere state
@@ -61,6 +96,7 @@ class Sphere {
             this.home = false
             this.finish = false
         }
+        this.finallyNotMovable = this.isFinalyNotMovable(game)
         //change fields states
         let currentPosField = game.field.points[findPosInArray(game.field.points, this.position)]
         let destinationField = game.field.points[findPosInArray(game.field.points, moveProfile.destinationId)]
@@ -157,13 +193,14 @@ class Sphere {
         if(!(moveProfile.pointId == this.position)){
             return {test:false, message: "Kugel nicht an angegebener Position"}
         }
-        //console.log(moveProfile.cardId)
-        //console.log(player.deck.cards)
-        if (!(player.deck.cards.some(card => card.id === moveProfile.cardId))) {
-            return {test:false, message: "Karte nicht in der Hand des Spielers"};
+        // if (!(player.deck.cards.some(card => card.id === moveProfile.cardId))) {
+        //     return {test:false, message: "Karte nicht in der Hand des Spielers"};
+        // }
+        if(!(player.playedCard == moveProfile.cardId)){
+            return {test:false, message: "Diese Karte wurde gerade nicht gespielt"};
         }
-        var checkedMove = this.checkPath(game.field, moveProfile.destinationId, player.deck.cards.find(card => card.id === moveProfile.cardId))
-        //console.log(checkedMove)
+        var checkedMove = this.checkPath(game.field, moveProfile.destinationId, game.playedCards.find(card => card.id === moveProfile.cardId))
+
         if(!(checkedMove.test)){
             return {test:false, message: "Ungültiger Zielpunkt für diese Karte, " + checkedMove.extra}
         }
@@ -195,10 +232,13 @@ class Sphere {
         if(!(moveProfile.foreignPointId ==  foreignSphere.position)){
             return {test:false, message: "Kugel des Getauschten nicht an angegebener Position"}
         }
-        if (!(ownPlayer.deck.cards.some(card => card.id === moveProfile.cardId))) {
-            return {test:false, message: "Karte nicht in der Hand des Spielers"};
+        // if (!(ownPlayer.deck.cards.some(card => card.id === moveProfile.cardId))) {
+        //     return {test:false, message: "Karte nicht in der Hand des Spielers"};
+        // }
+        if(!(ownPlayer.playedCard == moveProfile.cardId)){
+            return {test:false, message: "Diese Karte wurde gerade nicht gespielt"};
         }
-        var card = ownPlayer.deck.cards.find(card => card.id === moveProfile.cardId)
+        var card = game.playedCards.find(card => card.id === moveProfile.cardId)
         if(card.gameValue[0] !== 100){
             return {test:false, message: "Karte kann keine Kugeln tauschen"};
         }

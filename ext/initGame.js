@@ -177,9 +177,10 @@ function initGameWithGameConfig(gameConfig, gameId){
     return;
 }
 function forcePlayableNoChecks(gameId){
-    game = global.games[gameId]
+    var game = global.games[gameId]
     game.round = 1
     game.gameStatus = 1
+    game.flowControl.state1.state = 1
 }
 
 

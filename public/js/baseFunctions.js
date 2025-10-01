@@ -55,3 +55,21 @@ function wantMoveSpheresSeven(cardIndex, col, spheresMoveProfiles){
     const cardId = card ? card.id : null;
     socket.emit('move_spheres_seven', {spheres: spheresMoveProfiles, gameId: gameInFront.gameId, playerId: gameInFront.currentPlayer.playerid, color: gameInFront.currentPlayer.color, cardId: cardId})
 }
+function wantLayCard(cardIndex, col){
+    if((col.toLowerCase() !== gameInFront.currentPlayer.color.toLowerCase())){
+        showAndAutoHide('warning-div', 'Du bist nicht dran!', 3000);
+        return
+    }
+    const card = gameInFront.currentPlayer.deck.cards[cardIndex];
+    const cardId = card ? card.id : null;
+    socket.emit('play_card', {gameId: gameInFront.gameId, cardId: cardId, cardIndex: cardIndex, playerId: gameInFront.currentPlayer.playerid})
+}
+function wantThrowCard(cardIndex, col){
+    if((col.toLowerCase() !== gameInFront.currentPlayer.color.toLowerCase())){
+        showAndAutoHide('warning-div', 'Du bist nicht dran!', 3000);
+        return
+    }
+    const card = gameInFront.currentPlayer.deck.cards[cardIndex];
+    const cardId = card ? card.id : null;
+    socket.emit('throw_card', {gameId: gameInFront.gameId, cardId: cardId, cardIndex: cardIndex, playerId: gameInFront.currentPlayer.playerid})
+}

@@ -29,7 +29,7 @@ function devLogon(){
 function requestGameJoin(){
     //console.log("station1",wantCol,wantGameNr, wantedName )
     //uncomment in real application
-    devLogon()
+    //devLogon()
     if(!(wantCol) || wantGameNr == null){
         showAndAutoHide('warning-div', `Wähle ein Spiel und die Farbe an, die du spielen willst`, 7000);
         return

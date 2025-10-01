@@ -66,14 +66,14 @@ function frameInit(game){
     currentPlayerName.innerText = game.currentPlayer.name; 
 }
 
-function initFlow(){
+function initFlow(game){
     for(let i = 0; i < 5; i++){
-        let currentStepData = gameInFront.flowControl.states[i]
+        let currentStepData = game.flowControl.states[i]
         let outerDiv = document.getElementById("step"+ (i + 1));
         outerDiv.classList = '';
 
         if(currentStepData.state == 1){
-            outerDiv.classList.add("flowStepActive" + capitalizeFirst(wantedColor))
+            outerDiv.classList.add("flowStepActive" + capitalizeFirst(game.currentPlayer.color))
         } else if (currentStepData.state == 0){
             outerDiv.classList.add("flowStep")
         } else {

@@ -4,7 +4,7 @@ const { Sphere } = require('./sphere')
 class Player {
   constructor(name, color) {
     this.name = name;
-    this.finallyNotMovable = false;
+    this.playedCard = null;
     this.color = color;
     this.deck = new Deck(true);
     this.ownedSpheres = [new Sphere(color, 1),new Sphere(color, 2),new Sphere(color, 3),new Sphere(color, 4)]
@@ -20,13 +20,17 @@ class Player {
     this.playerid = this.name + "_" + this.color;
   }
   getSpheresNotInHome(){
-    return [this.ownedSpheres]
+    return this.ownedSpheres.filter(sphere => sphere.home !== true);
   }
   getSpheresNotInFinish(){
-    return [this.ownedSpheres]
+    return this.ownedSpheres.filter(sphere => sphere.finish !== true);
   }
   getSpheresOnlyInField(){
-    return [this.ownedSpheres]
+    var ret = this.ownedSpheres.filter(sphere => sphere.home !== true);
+    return ret.filter(sphere => sphere.finish !== true);
+  }
+  getSpheresGeneralMovable(){
+    return this.ownedSpheres.filter(sphere => sphere.finallyNotMovable !== true);
   }
   drawCard(deck) {
     const card = deck.draw();
@@ -38,14 +42,32 @@ class Player {
     }
   }
 
-  playCard(index = 0) {
+  playCard(index = 0, destination) {
     if (this.deck.length === 0) {
       return null;
     }
     if (index < 0 || index >= this.deck.length) {
       return null;
     }
-    return this.deck.splice(index, 1)[0];
+    var card = this.deck.cards.splice(index, 1)[0];
+    this.playedCard = card.id
+    destination.push(card)
+  }
+  throwCard(index, destination){
+    if (this.deck.length === 0) {
+      return null;
+    }
+    if (index < 0 || index >= this.deck.length) {
+      return null;
+    }
+    var card = this.deck.cards.splice(index, 1)[0]
+    destination.push(card)
+  }
+  checkCardThrowable(cardId, cardIndex){ // implement
+    return true
+  }
+  checkCardPlayable(cardId, cardIndex){ // implement
+    return true
   }
 
   // handSize() {

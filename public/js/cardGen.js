@@ -14,14 +14,26 @@ function eventListenersInit() {
 
   cards.forEach(card => {
     card.addEventListener("click", () => {
-      if (card.classList.contains("cardActive")) {
-        card.classList.remove("cardActive");
-        infoBox.style.display = "none";
-        info.innerHTML= "";
-        return;
-      }
-      cards.forEach(innerCard => innerCard.classList.remove("cardActive"));
-      card.classList.add("cardActive");
+        if (card.classList.contains("cardActive")) {
+            card.classList.remove("cardActive");
+            infoBox.style.display = "none";
+            info.innerHTML= "";
+            if(gameInFront.currentPlayer.color.toLowerCase() == wantedColor.toLowerCase() && gameInFront.flowControl.states[1].state == 1){
+                gameInFront.flowControl.states[0].state = 1
+                gameInFront.flowControl.states[1].state = 0 
+                reInitOther(gameInFront)
+            }
+
+            return;
+        }
+        cards.forEach(innerCard => innerCard.classList.remove("cardActive"));
+        card.classList.add("cardActive");
+
+        if(gameInFront.currentPlayer.color.toLowerCase() == wantedColor.toLowerCase() && gameInFront.flowControl.states[0].state == 1){
+            gameInFront.flowControl.states[0].state = 2
+            gameInFront.flowControl.states[1].state = 1  
+            reInitOther(gameInFront) 
+        }
 
       avCards.forEach(avCard => {
         if(avCard.id === card.id){
@@ -232,7 +244,7 @@ function renderHand(n, handCards) {
         // let valueArray = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
         let value = valueArray[i];
 
-        let card = genCard(value, symbol, "card", handCards[i].id); //CHECK THIS LATER
+        let card = genCard(value, symbol, "card", handCards[i].id);
         const left = (i * cardWidth * (1 - overlap)) / totalWidth * 100;
         
         card.style.left = `${left}%`;
@@ -253,18 +265,19 @@ function playerHandInit(gameInFrontend) {
     eventListenersInit()
 
 }
+let cardToLayDown = 1;
 function renderAblage(cardsLayed){
-
     var len = cardsLayed.length
-    renderAblage(cardsLayed[(len-1)]);
-    renderAblage(cardsLayed[(len-2)])
-    renderAblage(cardsLayed[(len-3)])
+    console.log(len)
+    cardToLayDown = 1
+    for (let i = 0; i < len; i++) {
+        renderAblagee(cardsLayed[i]);
+    }
 }
 
-//Ablagestapel init
-let cardToLayDown = 1;
 
-function renderAblage(ablageCard) {
+function renderAblagee(ablageCard) {
+    //console.log(ablageCard)
     if(ablageCard.length == 0) return
     let symbol = ablageCard.suit.symbol;
     let value = ablageCard.value;
