@@ -1,5 +1,7 @@
 let handSpace = document.getElementById("hand");
 let avCards;
+let activeCardId = null;
+let activeCardIndex = null;
 //Anzahl Handkarten
 
 function eventListenersInit() {
@@ -14,6 +16,8 @@ function eventListenersInit() {
 
   cards.forEach(card => {
     card.addEventListener("click", () => {
+        activeCardId = null;
+        activeCardIndex = null;
         if (card.classList.contains("cardActive")) {
             card.classList.remove("cardActive");
             infoBox.style.display = "none";
@@ -28,6 +32,8 @@ function eventListenersInit() {
         }
         cards.forEach(innerCard => innerCard.classList.remove("cardActive"));
         card.classList.add("cardActive");
+        activeCardId = card.id;
+        activeCardIndex = card.dataset.index;
 
         if(gameInFront.currentPlayer.color.toLowerCase() == wantedColor.toLowerCase() && gameInFront.flowControl.states[0].state == 1){
             gameInFront.flowControl.states[0].state = 2
@@ -188,10 +194,12 @@ function genCardContent(value, suit) {
     return content;
 }
 // ily
-function genCard(role, symbol, cssClass, cardId){   
+function genCard(role, symbol, cssClass, cardId, index){   
     let card = document.createElement("div");
     card.classList.add(cssClass);
     card.id = cardId
+    card.dataset.index = index;
+
     card.innerHTML = `
         <div class="cardTop">
             <div class="cardCorner">
@@ -244,7 +252,7 @@ function renderHand(n, handCards) {
         // let valueArray = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
         let value = valueArray[i];
 
-        let card = genCard(value, symbol, "card", handCards[i].id);
+        let card = genCard(value, symbol, "card", handCards[i].id, i);
         const left = (i * cardWidth * (1 - overlap)) / totalWidth * 100;
         
         card.style.left = `${left}%`;

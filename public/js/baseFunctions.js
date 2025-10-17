@@ -63,6 +63,7 @@ function wantLayCard(cardIndex, col){
     const card = gameInFront.currentPlayer.deck.cards[cardIndex];
     const cardId = card ? card.id : null;
     socket.emit('play_card', {gameId: gameInFront.gameId, cardId: cardId, cardIndex: cardIndex, playerId: gameInFront.currentPlayer.playerid})
+    //create eventListeners for Spheres of col
 }
 function wantThrowCard(cardIndex, col){
     if((col.toLowerCase() !== gameInFront.currentPlayer.color.toLowerCase())){
@@ -72,4 +73,28 @@ function wantThrowCard(cardIndex, col){
     const card = gameInFront.currentPlayer.deck.cards[cardIndex];
     const cardId = card ? card.id : null;
     socket.emit('throw_card', {gameId: gameInFront.gameId, cardId: cardId, cardIndex: cardIndex, playerId: gameInFront.currentPlayer.playerid})
+}
+
+function layCardTrigger(){
+    if(!(document.getElementById('step2').classList.contains('flowStepActive' + gameInFront.currentPlayer.color[0].toUpperCase() + gameInFront.currentPlayer.color.substring(1)))){
+        showAndAutoHide('warning-div', 'Keine Karte ausgewählt!', 3000);
+        return
+    }
+    if(activeCardId === null || activeCardIndex === null){
+        showAndAutoHide('warning-div', 'Internal frontend Errro', 3000);
+        return
+    }
+    wantLayCard(activeCardIndex, gameInFront.currentPlayer.color)
+}
+
+function throwCardTrigger(){
+    if(!(document.getElementById('step2').classList.contains('flowStepActive' + gameInFront.currentPlayer.color[0].toUpperCase() + gameInFront.currentPlayer.color.substring(1)))){
+        showAndAutoHide('warning-div', 'Keine Karte ausgewählt!', 3000);
+        return
+    }
+    if(activeCardId === null || activeCardIndex === null){
+        showAndAutoHide('warning-div', 'Internal frontend Errro', 3000);
+        return
+    }
+    wantThrowCard(activeCardIndex, gameInFront.currentPlayer.color)
 }

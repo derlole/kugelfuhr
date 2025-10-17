@@ -7,6 +7,7 @@ class Player {
     this.playedCard = null;
     this.color = color;
     this.deck = new Deck(true);
+    this.deckContainingThisMove = new Deck(true);
     this.ownedSpheres = [new Sphere(color, 1),new Sphere(color, 2),new Sphere(color, 3),new Sphere(color, 4)]
     if (color == "red"){
         this.partnerColor = "yellow"
