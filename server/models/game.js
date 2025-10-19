@@ -151,7 +151,11 @@ class Game {
         }
     }
     executeKillBumpDestroySendHomeTurnLightOffKnockOffMurderAssasinateSlaughterSlaySphere(desFieldId){
-        const point = this.field.points.find(p => p.pointId === desFieldId);
+        const point = this.field.points.find(p => p.pointId == desFieldId);
+        if(!point) {
+            console.log(desFieldId, this.field.points[0])
+            return {exec: false, message: 'Internal Server Error'}  
+        } 
         if(!point.isSphereOn) return {exec: true, message: ''}
         const playerOn = this.players.find(pl => pl.color.toLowerCase() === point.sphereColorOn.toLowerCase())
         const sphereOn = playerOn.ownedSpheres.find(s => s.position === desFieldId)

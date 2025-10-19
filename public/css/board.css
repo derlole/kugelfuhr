@@ -376,6 +376,17 @@ body {
   margin: 0;
 }
 
+/*BITTI BITTI UEBERARBEITEN*/
+.sphereSelectionPossible {
+  cursor: pointer;
+}
+
+.sphereSelected {
+  outline: 4px solid orange;
+  outline-offset: 2px;
+}
+
+/*BITTI BITTI UEBERARBEITEN*/
 .hidden {
   display: none !important;
 }/*# sourceMappingURL=board.css.map */

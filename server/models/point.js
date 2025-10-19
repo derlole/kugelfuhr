@@ -54,14 +54,19 @@ class Point {
             this.nextPointId = null
             this.prevPointId = null
             this.isHomeField = true
+            this.isSphereOn = true
             if (pointId < 20){
                 this.color = "red"
+                this.sphereColorOn = "red"
             }else if(pointId < 30){
                 this.color = "blue"
+                this.sphereColorOn = "blue"
             }else if(pointId < 40){
                 this.color = "yellow"
+                this.sphereColorOn = "yellow"
             }else if(pointId < 50){
                 this.color = "green"
+                this.sphereColorOn = "green"
             }
         }
         if (homeExitFields.includes(pointId)){

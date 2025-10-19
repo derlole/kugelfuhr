@@ -54,6 +54,10 @@ function reInit(string, newGame){
         case 'other':
             reInitOther(newGame);
             break;
+        case 'player_other':
+            reInitCards(newGame);
+            reInitOther(newGame);
+            break;
         default:
             // Unknown option
             break;

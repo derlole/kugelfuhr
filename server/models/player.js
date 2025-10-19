@@ -77,9 +77,6 @@ class Player {
   regeneratePlayerId(){
     this.playerid = this.name + "_" + this.color;
   }
-  // playerFree(){
-  //   return this.name == null
-  // }
   checkMoveSpheresSeven(game, moveProfiles){
     if(!(game.gameStatus == 1)){
       return {test: false, message: "Spiel nicht im Spielmodus"}
@@ -88,7 +85,7 @@ class Player {
       return {test: false, message: "Nicht am Zug"}
     }
     if(!(moveProfiles.color.toLowerCase() == this.color)){
-      return {test:false, message: "Falsche Kugelfarbe"} //theoretically not possible
+      return {test:false, message: "Falsche Kugelfarbe"} 
     }
     if (!(this.deck.cards.some(card => card.id === moveProfiles.cardId))) {
       return {test:false, message: "Karte nicht in der Hand des Spielers"};

@@ -196,6 +196,7 @@ class Sphere {
         // if (!(player.deck.cards.some(card => card.id === moveProfile.cardId))) {
         //     return {test:false, message: "Karte nicht in der Hand des Spielers"};
         // }
+        console.log(player.playedCard, moveProfile.cardId)
         if(!(player.playedCard == moveProfile.cardId)){
             return {test:false, message: "Diese Karte wurde gerade nicht gespielt"};
         }

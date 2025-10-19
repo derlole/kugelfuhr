@@ -26,7 +26,7 @@ module.exports = (io, socket) => {
         game.flowControl.state4.state = 2
         game.flowControl.state5.state = 1
         io.emit('backend_info', {message: 'Zug ausgeführt, Karte Abgeworfen',  code: 9999, gameIndex: game.gameId})
-        io.emit('new_game_state', {changeString: 'game', changedObject: player, newGame: game, init: 'all'})
+        io.emit('new_game_state', {changeString: 'game', changedObject: player, newGame: game, init: 'player_other'})
     })
     socket.on('play_card', (data) => {
         let game = global.games[data.gameId];
@@ -52,6 +52,30 @@ module.exports = (io, socket) => {
         game.flowControl.state3.state = 1
         //CHANGE TURN STATE 2,3 // CHECK THIS LATER
         io.emit('backend_info', {message: 'Zug ausgeführt, Karte gespielt',  code: 9999, gameIndex: game.gameId})
-        io.emit('new_game_state', {changeString: 'game', changedObject: player, newGame: game, init: 'all'})
+        io.emit('new_game_state', {changeString: 'game', changedObject: player, newGame: game, init: 'player_other'})
+    })
+    socket.on('requestStateChange', (data) => {
+        let game = global.games[data.gameId];
+        if(!game){
+            io.emit('backend_error', { message: 'Kein Spiel gefunden', code: 2100, gameIndex: game.gameId });
+            return;
+        }
+        if(data.states.state1 !== undefined){
+            game.flowControl.state1.state = data.states.state1
+        }
+        if(data.states.state2 !== undefined){
+            game.flowControl.state2.state = data.states.state2
+        }
+        if(data.states.state3 !== undefined){
+            game.flowControl.state3.state = data.states.state3
+        }
+        if(data.states.state4 !== undefined){
+            game.flowControl.state4.state = data.states.state4
+        }
+        if(data.states.state5 !== undefined){
+            game.flowControl.state5.state = data.states.state5
+        }
+        
+        io.emit('new_game_state', {changeString: 'game', changedObject: game, newGame: game, init: 'other'})
     })
 }
