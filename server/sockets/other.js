@@ -96,7 +96,7 @@ module.exports = (io, socket) => {
         }
         let allChangedSelected = true
         game.players.forEach(pl => {
-            if(pl.changingState == 1){
+            if(pl.changingState == 2){ // introduce this state
                 allChangedSelected = false
             }
         });
