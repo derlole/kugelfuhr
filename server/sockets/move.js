@@ -33,7 +33,7 @@ module.exports = (io, socket) => {
         game.flowControl.state4.state = 0
         game.flowControl.state5.state = 0
         io.emit('new_game_state', {changeString: 'flow', changedObject: null, newGame: game, init: 'other'})
-        io.emit('safe_state', {gameIndex: game.gameId}) // implemet safe state on client
+        //io.emit('safe_state', {gameIndex: game.gameId}) // implemet safe state on client
     }
     socket.on("move_sphere", (data) => {
 
@@ -115,8 +115,11 @@ module.exports = (io, socket) => {
             io.emit('backend_warning', { message: 'Ungültiger Zug ' + 'Grund: ' + test.message, code: 1610, gameIndex: game.gameId });
             return;
         }
+        console.log(test.killFields)
         test.killFields.forEach(f => {
+
             var execution = game.executeKillBumpDestroySendHomeTurnLightOffKnockOffMurderAssasinateSlaughterSlaySphere(f)
+            console.log(f, execution)
             if(!execution.exec){
                 io.emit('backend_error', { message: (execution.message + 'Folgefehler sind wahrscheinlich'), code: 1603, gameIndex: data.gameId });
             }

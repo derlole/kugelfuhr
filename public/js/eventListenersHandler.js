@@ -2,6 +2,10 @@ let fieldSelectedInState3 = null;
 let fieldSelectedInState4 = null;
 let fSIS34OSIndex = 0;
 let fieldsSlectedInStates34OnSeven = [[null, null],[null, null],[null, null],[null, null],[null, null],[null, null],[null, null]];
+function cleanupSevenArrays(){
+    fSIS34OSIndex = 0;
+    fieldsSlectedInStates34OnSeven = [[null, null],[null, null],[null, null],[null, null],[null, null],[null, null],[null, null]];
+}
 
 function sphereClickHandlerSeven(event, pointId){
     if(gameInFront.flowControl.state3.state == 1){

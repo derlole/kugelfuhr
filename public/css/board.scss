@@ -476,3 +476,48 @@ $matgrey: #b1b1b1;
 .hidden{
   display: none !important;
 }
+
+.exchangeBox{
+    position :absolute;
+    top : 50%;
+    left : 50%;
+    transform : translate(-50%, -50%);
+    background-color : $background;
+    border: 2px solid $border;
+    border-radius : 10px;
+    padding : 2em;
+    z-index : 30;
+}
+.bgRed{
+    background-color : $matred;
+}
+.bgBlue{
+    background-color : $matblue;
+}
+.bgYellow{
+    background-color : $matyellow;
+}
+.bgGreen{
+    background-color : $matgreen;
+}
+.borderRed{
+    border : 2px solid $red;
+}
+.borderBlue{
+    border : 2px solid $blue;
+}
+.borderYellow{
+    border : 2px solid $yellow;
+}
+.borderGreen{
+    border : 2px solid $green;
+}
+#exchangeCardsContainer{
+  width: 20em;
+  height: 20em;
+  margin: 1em 0;
+  border-radius: 10px;
+}
+.butPointer{
+  cursor: pointer;
+}

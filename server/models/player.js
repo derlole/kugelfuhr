@@ -1,13 +1,16 @@
-const { Deck } = require('./deck')
+const { Deck, Card } = require('./deck')
 const { Sphere } = require('./sphere')
 
 class Player {
   constructor(name, color) {
     this.name = name;
     this.playedCard = null;
+    this.changeCard = null;
     this.color = color;
     this.deck = new Deck(true);
     this.deckContainingThisMove = new Deck(true);
+    this.changingState = -1
+    this.changingCard = null
     this.ownedSpheres = [new Sphere(color, 1),new Sphere(color, 2),new Sphere(color, 3),new Sphere(color, 4)]
     if (color == "red"){
         this.partnerColor = "yellow"
@@ -64,6 +67,18 @@ class Player {
     var card = this.deck.cards.splice(index, 1)[0]
     this.playedCard = card.id
     destination.push(card)
+  }
+  cardForChange(cardIndex){
+    if (this.deck.length === 0) {
+      return false;
+    }
+    if (cardIndex < 0 || cardIndex >= this.deck.length) {
+      return false;
+    }
+    var card = this.deck.cards.splice(cardIndex, 1)[0]
+    this.changingCard = card
+    this.changingState = 1
+    return true
   }
   checkCardThrowable(cardId, cardIndex){ // implement
     return true

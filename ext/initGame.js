@@ -138,8 +138,7 @@ function genName() {
 function initDefaultGame(gameId, lifecycleId){
     let game = new Game(lifecycleId);
     //
-    // game.flowControl.state2.state = 1
-    // game.flowControl.state3.state = 2
+
     //
     game.name = genName()
     game = (global.games[gameId] = game)
@@ -179,7 +178,11 @@ function initGameWithGameConfig(gameConfig, gameId){
 function forcePlayableNoChecks(gameId){
     var game = global.games[gameId]
     game.round = 1
-    game.gameStatus = 1
+    game.player1red.changingState = 0
+    game.player2blue.changingState = 0
+    game.player3yellow.changingState = 0
+    game.player4green.changingState = 0
+    game.gameStatus = 5 // change state
     game.flowControl.state1.state = 1
 }
 

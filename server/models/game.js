@@ -6,6 +6,7 @@ gameStatus:
     3 = stoped
     4 = finished
     5 = swappingCards
+    6 = waitForPlayers
 */
 const { Player } = require('./player')
 const { Deck } = require('./deck')
@@ -45,7 +46,23 @@ class Game {
         
     }
 
-    // Runde beenden
+    isChangingFinished(){
+        var finished = true
+        this.players.forEach(player => {
+            if(player.changingState != 1){
+                finished = false
+            }
+        });
+        if(finished){
+            this.gameStatus = 1
+            this.players.forEach(player => {
+                player.changingState = -1
+                player.changingCard = null
+            });
+        }
+        return finished
+    }
+    
     endRound() {
         console.log(`Runde ${this.round} beendet. Gespielte Karten:`);
         this.playedCards.forEach(entry =>
@@ -53,7 +70,8 @@ class Game {
         );
 
         this.playedCards = [];
-        this.startingPlayer = this.currentPlayer;
+        //this.startingPlayer = returnNextPlayer(this.startingPlayer)
+        //this.startingPlayer = this.currentPlayer;
         this.round++;
     }
     addPlayer(name, color) {
@@ -153,6 +171,17 @@ class Game {
             return true
         }else{
             return false
+        }
+    }
+    returnNextPlayer(inp){
+        if(inp == this.player1red){
+            return this.player2blue
+        }else if(inp == this.player2blue){
+            return this.player3yellow
+        }else if(inp == this.player3yellow){
+            return this.player4green
+        }else if(inp == this.player4green){
+            return this.player1red
         }
     }
     executeKillBumpDestroySendHomeTurnLightOffKnockOffMurderAssasinateSlaughterSlaySphere(desFieldId){

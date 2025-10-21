@@ -389,4 +389,59 @@ body {
 /*BITTI BITTI UEBERARBEITEN*/
 .hidden {
   display: none !important;
+}
+
+.exchangeBox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffeac9;
+  border: 2px solid #9a8a6e;
+  border-radius: 10px;
+  padding: 2em;
+  z-index: 30;
+}
+
+.bgRed {
+  background-color: #ffa2a5;
+}
+
+.bgBlue {
+  background-color: #78cbff;
+}
+
+.bgYellow {
+  background-color: #fff07d;
+}
+
+.bgGreen {
+  background-color: #ccf983;
+}
+
+.borderRed {
+  border: 2px solid #ff595e;
+}
+
+.borderBlue {
+  border: 2px solid #1982c4;
+}
+
+.borderYellow {
+  border: 2px solid #ffca3a;
+}
+
+.borderGreen {
+  border: 2px solid #8ac926;
+}
+
+#exchangeCardsContainer {
+  width: 20em;
+  height: 20em;
+  margin: 1em 0;
+  border-radius: 10px;
+}
+
+.butPointer {
+  cursor: pointer;
 }/*# sourceMappingURL=board.css.map */

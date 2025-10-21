@@ -29,6 +29,16 @@ function reInitOther(newGame){
     displayPlayerNames(newGame.player1red.name, newGame.player2blue.name, newGame.player3yellow.name, newGame.player4green.name, wantedColor.toLowerCase())
     frameInit(newGame);
     initFlow(newGame);
+    generateExchangeBox();
+    const player = newGame.players.find(
+        player => player && player.color == wantedColor.toLowerCase()
+    );
+    console.log(player)
+    if(player.changingCard){
+        renderExchangeCard(genCard(player.changingCard.value, player.changingCard.suit.symbol, "ablageCard", player.changingCard.id));
+    }
+
+
 }
 function reInitAll(newGame){
     reInitField(newGame)

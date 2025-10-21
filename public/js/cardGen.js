@@ -2,6 +2,7 @@ let handSpace = document.getElementById("hand");
 let avCards;
 let activeCardId = null;
 let activeCardIndex = null;
+let playerChangeState = null
 //Anzahl Handkarten
 
 function eventListenersInit() {
@@ -13,11 +14,27 @@ function eventListenersInit() {
   infoBox.style.display = "none";
   document.body.appendChild(infoBox);
   let info = document.getElementById("cardInfoBox");
-
   cards.forEach(card => {
+    switch(wantedColor.toLowerCase()){
+        case 'red':
+            playerChangeState = gameInFront.players[0].changingState
+            break
+        case 'blue':
+            playerChangeState = gameInFront.players[1].changingState
+            break
+        case 'yellow':
+            playerChangeState = gameInFront.players[2].changingState
+            break
+        case 'green':
+            playerChangeState = gameInFront.players[3].changingState
+            break
+    }
     card.addEventListener("click", () => {
         activeCardId = null;
         activeCardIndex = null;
+
+        
+        
         if (card.classList.contains("cardActive")) {
             card.classList.remove("cardActive");
             infoBox.style.display = "none";
@@ -26,6 +43,9 @@ function eventListenersInit() {
                 gameInFront.flowControl.states[0].state = 1
                 gameInFront.flowControl.states[1].state = 0 
                 reInitOther(gameInFront)
+            }else if(gameInFront.gameStatus == 5 && playerChangeState == 1){
+                playerChangeState = 0
+                removeRenderExchangeCard();
             }
 
             return;
@@ -35,10 +55,13 @@ function eventListenersInit() {
         activeCardId = card.id;
         activeCardIndex = card.dataset.index;
 
-        if(gameInFront.currentPlayer.color.toLowerCase() == wantedColor.toLowerCase() && gameInFront.flowControl.states[0].state == 1){
+        if(gameInFront.currentPlayer.color.toLowerCase() == wantedColor.toLowerCase() && gameInFront.flowControl.states[0].state == 1 && gameInFront.gameStatus == 1){
             gameInFront.flowControl.states[0].state = 2
             gameInFront.flowControl.states[1].state = 1  
             reInitOther(gameInFront) 
+        }else if(gameInFront.gameStatus == 5){
+            playerChangeState = 1
+            renderExchangeCard(card);
         }
 
       avCards.forEach(avCard => {
@@ -313,4 +336,17 @@ function renderAblagee(ablageCard) {
     cardSpace.appendChild(card);
 
     cardToLayDown = cardToLayDown % 3 + 1;
+}
+
+function renderExchangeCard(exchangeCard){
+    document.getElementById('changeCardConfirm').classList.add('butPointer')
+    let cardSpace = document.getElementById("exchangeCardsContainer");
+    const copyCard = exchangeCard.cloneNode(true);
+    cardSpace.innerHTML = "";
+    cardSpace.appendChild(copyCard);
+}
+function removeRenderExchangeCard(){
+    document.getElementById('changeCardConfirm').classList.remove('butPointer')
+    let cardSpace = document.getElementById("exchangeCardsContainer");
+    cardSpace.innerHTML = "";
 }

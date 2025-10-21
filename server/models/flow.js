@@ -21,7 +21,7 @@ class FlowControl {
         this.state4 = new State(4, 'Ziel auswaehlen')
         this.state5 = new State(5, 'Bestaetigen')
         this.states = [this.state1, this.state2, this.state3, this.state4, this.state5]
-        this.state2.changeSubText('<button class="stepButton" onclick="layCardTrigger()">Karte ablegen</button><button class="stepButton" onclick="throwCardTrigger()">Karte abwerfen</button>')
+        this.state2.changeSubText('<div class="step3Btns"><button class="stepButton" onclick="layCardTrigger()">Karte ablegen</button><div class="margin1em"></div><button class="stepButton" onclick="throwCardTrigger()">Karte abwerfen</button></div>')
         this.state5.changeSubText('<button class="stepButton" onclick="checkoutTurn()">Bestätigen</button>')
     }
     resetStatesForNextPlayer(){

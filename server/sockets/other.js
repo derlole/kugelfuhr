@@ -78,4 +78,32 @@ module.exports = (io, socket) => {
         
         io.emit('new_game_state', {changeString: 'game', changedObject: game, newGame: game, init: 'other'})
     })
+    socket.on('confirm_exchange', (data) => {
+        let game = global.games[data.gameId]
+        if(!game){
+            io.emit('backend_error', { message: 'Kein Spiel gefunden', code: 2110, gameIndex: game.gameId });
+            return;
+        }
+        const player = game.players.find(
+            player => player && player.color == data.col.toLowerCase()
+        );
+        if(!player){
+            return io.emit('backend_error', { message: 'Spieler nicht gefunden', code: 1531, gameIndex: game.gameId });
+        }
+        var changing = player.cardForChange()
+        if(!changing){
+            io.emit('backend_warning', { message: 'Etwas nicht terminierbares ist geschehen', code: 2222, gameIndex: game.gameId });
+        }
+        let allChangedSelected = true
+        game.players.forEach(pl => {
+            if(pl.changingState == 1){
+                allChangedSelected = false
+            }
+        });
+        if(allChangedSelected){
+            // changeGameStateFromChangingToRunning()
+        }
+        io.emit('backend_info', {message: 'Zug ausgeführt, Karte getauscht',  code: 9999, gameIndex: game.gameId})
+        io.emit('new_game_state', {changeString: 'game', changedObject: game, newGame: game, init: 'all'})
+    })
 }

@@ -133,17 +133,20 @@ function checkoutTurn(){
 
     if(gameInFront.flowControl.state5.state !== 1){
         showAndAutoHide('warning-div', 'Du kannst deinen Zug noch nicht beenden!, Code: 3003', 3000);
+        socket.emit('requestStateChange', {gameId: gameInFront.gameId, states: {state1: 1, state2: 0, state3: 0, state4: 0, state5: 0}});
         return
     }
     if(gameInFront.currentPlayer.playedCard === null){
-        showAndAutoHide('error-div', 'hdwgh? (NoPlayedCard), Code: 3004', 3000);
+        showAndAutoHide('error-div', 'hdwgh? (NoPlayedCard), Code: 3004', 30000);
+        socket.emit('requestStateChange', {gameId: gameInFront.gameId, states: {state1: 2, state2: 2, state3: 2, state4: 2, state5: 2}});
         return
     }
     const foundCard = gameInFront.playedCards.find(
         card => card.id === gameInFront.currentPlayer.playedCard
     );
     if (!foundCard) {
-        showAndAutoHide('error-div', 'hdwgh? (NoPlayedCardFound), Code: 3005', 3000);
+        showAndAutoHide('error-div', 'hdwgh? (NoPlayedCardFound), Code: 3005', 30000);
+        socket.emit('requestStateChange', {gameId: gameInFront.gameId, states: {state1: 2, state2: 2, state3: 2, state4: 2, state5: 2}});
         return
     }
     if(cardThrown){
@@ -162,6 +165,8 @@ function checkoutTurn(){
         });
         if(!allSelected){
             showAndAutoHide('warning-div', 'Du hast nicht alle Bewegungen für die 7 ausgewählt!, Code: 3006', 3000);
+            socket.emit('requestStateChange', {gameId: gameInFront.gameId, states: {state1: 2, state2: 2, state3: 1, state4: 0, state5: 0}});
+            cleanupSevenArrays();
             return
         }
 
@@ -186,6 +191,7 @@ function checkoutTurn(){
 
         if(fieldSelectedInState3 === null || fieldSelectedInState4 === null){
             showAndAutoHide('warning-div', 'Du hast nicht beide Kugeln für den Tausch ausgewählt!, Code: 3007', 3000);
+            socket.emit('requestStateChange', {gameId: gameInFront.gameId, states: {state1: 2, state2: 2, state3: 1, state4: 0, state5: 0}});
             return
         }
         const ownSphereId = getSphereIdAtPoint(fieldSelectedInState3);
@@ -194,6 +200,7 @@ function checkoutTurn(){
         const foreignColor = getSphereColorAtPoint(fieldSelectedInState4);
         if(!foreignColor || !ownColor || !ownSphereId || !foreignSphereId){
             showAndAutoHide('warning-div', 'Fehler beim Ermitteln der Kugeln für den Tausch!, Code: 3071', 3000);
+            socket.emit('requestStateChange', {gameId: gameInFront.gameId, states: {state1: 2, state2: 2, state3: 1, state4: 0, state5: 0}});
             return
         }
         wantSwapSphere(fieldSelectedInState3, fieldSelectedInState4, ownColor, foreignColor, ownSphereId, foreignSphereId, foundCard);
@@ -205,18 +212,30 @@ function checkoutTurn(){
 
         if(fieldSelectedInState3 === null || fieldSelectedInState4 === null){
             showAndAutoHide('warning-div', 'Du hast nicht beide Punkte für eine Bewegung ausgewählt!, Code: 3008', 3000);
+            socket.emit('requestStateChange', {gameId: gameInFront.gameId, states: {state1: 2, state2: 2, state3: 1, state4: 0, state5: 0}});
             return
         }
         const sphereId = getSphereIdAtPoint(fieldSelectedInState3);
         if(!sphereId){
             showAndAutoHide('warning-div', 'Fehler beim Ermitteln der Kugel für die Bewegung!, Code: 3081', 3000);
+            socket.emit('requestStateChange', {gameId: gameInFront.gameId, states: {state1: 2, state2: 2, state3: 1, state4: 0, state5: 0}});
             return
         }
-        console.log('WANTS MOVE SPHERE WITH', fieldSelectedInState3, fieldSelectedInState4, gameInFront.currentPlayer.color, sphereId, foundCard);
+        //console.log('WANTS MOVE SPHERE WITH', fieldSelectedInState3, fieldSelectedInState4, gameInFront.currentPlayer.color, sphereId, foundCard);
         wantMoveSphere(fieldSelectedInState3, fieldSelectedInState4, gameInFront.currentPlayer.color, sphereId, foundCard);
 
         fieldSelectedInState3 = null;
         fieldSelectedInState4 = null;
         cleanupClassesFromAllSpheres();
     }
+}
+function confirmExchange(){
+    if(gameInFront.gameStatus != 5){
+        return showAndAutoHide('warning-div', 'Es werden gerade keine Karten getauscht, Code: 7000', 3000);
+    }
+    if(!activeCardIndex || !activeCardId){
+        return showAndAutoHide('warning-div', 'Karte nicht richtig ausgewählt, Code: 7001', 3000);
+    }
+    console.log(activeCardId, activeCardIndex, wantedColor)
+    socket.emit('confirm_exchange', { cardIndex: activeCardIndex, cardId: activeCardId, col: wantedColor, gameId: gameInFront.gameId})
 }

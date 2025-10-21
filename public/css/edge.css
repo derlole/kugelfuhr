@@ -224,7 +224,7 @@ h2 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 9999;
+  z-index: 20;
 }
 
 #playerTurn {
@@ -446,4 +446,22 @@ h2 {
   margin-right: 0.5em;
   font-family: "Barrio", system-ui;
   color: #9a8a6e;
+}
+
+.step3Btns {
+  display: flex;
+  flex-direction: row;
+}
+
+.margin1em {
+  margin-right: 0.5em;
+}
+
+#exchangeCard {
+  z-index: 1000;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }/*# sourceMappingURL=edge.css.map */
