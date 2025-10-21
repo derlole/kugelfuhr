@@ -59,6 +59,5 @@ socket.on('new_game_state', (data) => {
     if(!(data.newGame && ( data.newGame.gameId == gameInFront.gameId))) return
     gameInFront = data.newGame
     //console.log(data.newGame)
-    instanciateOrRemoveSphereEventListeners(gameInFront)
     reInit(data.init, gameInFront)
 })

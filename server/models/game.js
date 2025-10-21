@@ -37,9 +37,12 @@ class Game {
     }
 
     // Nächster Spieler
+    //ig this is not used delete?
     nextPlayer() {
         this.currentPlayer = (this.currentPlayer + 1) % this.players.length;
+        this.flowControl.resetStatesForNextPlayer();
         return this.currentPlayer;
+        
     }
 
     // Runde beenden
@@ -134,6 +137,8 @@ class Game {
         return null
     }
     nextPlayer(){
+        this.flowControl.resetStatesForNextPlayer();
+        this.currentPlayer.playedCard = null
         if(this.currentPlayer == this.player1red){
             this.currentPlayer = this.player2blue
             return true

@@ -38,6 +38,7 @@ function reInitAll(newGame){
 
 
 function reInit(string, newGame){
+    instanciateOrRemoveSphereEventListeners(gameInFront)
     switch (string) {
         case 'none':
             // No action needed

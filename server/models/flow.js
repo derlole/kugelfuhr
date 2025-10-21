@@ -24,6 +24,13 @@ class FlowControl {
         this.state2.changeSubText('<button class="stepButton" onclick="layCardTrigger()">Karte ablegen</button><button class="stepButton" onclick="throwCardTrigger()">Karte abwerfen</button>')
         this.state5.changeSubText('<button class="stepButton" onclick="checkoutTurn()">Bestätigen</button>')
     }
+    resetStatesForNextPlayer(){
+        this.state1.state = 1
+        this.state2.state = 0
+        this.state3.state = 0
+        this.state4.state = 0
+        this.state5.state = 0
+    }
 }
 
 module.exports = { FlowControl }

@@ -124,6 +124,8 @@ class Sphere {
             }else{
                 return {test: false, extra: "Du kannst mit dieser Karte nicht aus dem Haus gehen."};
             }
+        }else if(currentPosField.isHomeField){ //sphere is on home exit field
+            return {test: false, extra: "Du kannst nur auf deinem Haus-Herausgehfeld aus dem Hause herausgehen."};
         }
         if(destinationField.isFinishPoint && (destinationField.color.toLowerCase() == this.color.toLowerCase())){ //destination is finish point of same color
             let watchField = destinationField
@@ -140,6 +142,8 @@ class Sphere {
             }
             if(card.gameValue && card.gameValue.includes(walkDisctance)){
                 return {test: true, extra: ""};
+            }else{
+                return {test: false, extra: "Mit dieser Karte kannst du diese distanz nicht zuruecklegen."};
             }
         }else if(card.gameValue && card.gameValue.includes(-4)){
             let watchField = destinationField
@@ -156,6 +160,8 @@ class Sphere {
             }
             if(card.gameValue && card.gameValue.includes(walkDisctance)){
                 return {test: true, extra: ""};
+            }else{
+                return {test: false, extra: "Mit dieser Karte kannst du diese distanz nicht zuruecklegen."};
             }
         }else{
             let watchField = destinationField
@@ -173,6 +179,8 @@ class Sphere {
             }
             if(card.gameValue && card.gameValue.includes(walkDisctance)){
                 return {test: true, extra: ""};
+            }else{
+                return {test: false, extra: "Mit dieser Karte kannst du diese distanz nicht zuruecklegen."};
             }
         }
         return {test: false, extra: "unberuecksichtigter Extremfall"}
@@ -201,11 +209,11 @@ class Sphere {
             return {test:false, message: "Diese Karte wurde gerade nicht gespielt"};
         }
         var checkedMove = this.checkPath(game.field, moveProfile.destinationId, game.playedCards.find(card => card.id === moveProfile.cardId))
-
+        console.log(checkedMove)
         if(!(checkedMove.test)){
             return {test:false, message: "Ungültiger Zielpunkt für diese Karte, " + checkedMove.extra}
         }
-        console.log(this.color, this.sphereId, "moves from", this.position, "to", moveProfile.destinationId, "with", player.deck.cards.find(card => card.id === moveProfile.cardId))
+        console.log(this.color, this.sphereId, "moves from", this.position, "to", moveProfile.destinationId, "with", player.playedCard)
         if(!game.nextPlayer()){
             return {test:false, message: "Naechster Spieler konnte nicht ermittelt werden. " + checkedMove.extra}
         }
@@ -221,7 +229,8 @@ class Sphere {
         if(!(game.currentPlayer == ownPlayer)){
             return {test: false, message: "Nicht am Zug"}
         }
-        if(!(moveProfile.ownColor.toLowerCase() == this.color) || !(moveProfile.foreignColor !== foreignPlayer.color)){
+        console.log(moveProfile.ownColor.toLowerCase(), this.color, moveProfile.foreignColor.toLowerCase(), foreignPlayer.color)
+        if(!(moveProfile.ownColor.toLowerCase() == this.color) || !(moveProfile.foreignColor == foreignPlayer.color)){
             return {test:false, message: "Falsche Kugelfarbe (n)"} //theoretically not possible
         }
         if(!(moveProfile.ownSphereId == this.sphereId) || !(moveProfile.foreignSphereId == foreignSphere.sphereId)){

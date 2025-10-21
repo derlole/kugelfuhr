@@ -7,6 +7,7 @@ for (let i = 0; i < order.length; i++) {
         pointsToAddSomethingFuckingSortingToDontBeAnoying[idx].dataset.pointId = (1001 + i).toString();
     }
 }
+// basic error screen on connection problems
 const redDotTemp = document.querySelector('[data-point-id="1002"]');
 redDotTemp.classList.add("sphereRed");
 const redDotTemp2 = document.querySelector('[data-point-id="1003"]');

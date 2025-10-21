@@ -12,7 +12,7 @@ module.exports = (io, socket) => {
         const ownPlayerExists = !!ownPlayer
         const foreignPlayerExists = !!foreignPlayer
         if(!ownPlayerExists || !foreignPlayerExists){
-            io.emit('backend_error', { message: 'Spieler nicht gefunden', code: 1501, gameIndex: game.gameId });
+            io.emit('backend_error', { message: 'Spieler nicht gefunden', code: 1511, gameIndex: game.gameId });
             return {test: false, message: "Spieler nicht gefunden"};
         }
         return ownPlayer.ownedSpheres[(data.ownSphereId-1)].checkSwap(data, ownPlayer, foreignPlayer, game)
@@ -21,10 +21,19 @@ module.exports = (io, socket) => {
         const playerExists = !!player;
         if (!playerExists) {
         console.log('[SEVEN--]', playerExists)
-            io.emit('backend_error', { message: 'Spieler nicht gefunden', code: 1501, gameIndex: game.gameId });
+            io.emit('backend_error', { message: 'Spieler nicht gefunden', code: 1521, gameIndex: game.gameId });
             return {test: false, message: "Spieler nicht gefunden"};
         }
         return player.checkMoveSpheresSeven(game, data)
+    }
+    function sendSafeState(game){
+        game.flowControl.state1.state = 2
+        game.flowControl.state2.state = 2
+        game.flowControl.state3.state = 1
+        game.flowControl.state4.state = 0
+        game.flowControl.state5.state = 0
+        io.emit('new_game_state', {changeString: 'flow', changedObject: null, newGame: game, init: 'other'})
+        io.emit('safe_state', {gameIndex: game.gameId}) // implemet safe state on client
     }
     socket.on("move_sphere", (data) => {
 
@@ -33,11 +42,11 @@ module.exports = (io, socket) => {
             io.emit('backend_error', { message: 'Kein Spiel gefunden', code: 1500});
             return;
         }
+        sendSafeState(game)
         const player = game.players.find(
             player => player && player.playerid === data.playerId
         );
         let test = simulateMove(data, player, game)
-        console.log(test, game.gameId)
         if(!test.test){
             io.emit('backend_warning', { message: 'Ungültiger Zug ' + 'Grund: ' + test.message, code: 1600, gameIndex: game.gameId });
             return;
@@ -59,6 +68,7 @@ module.exports = (io, socket) => {
     socket.on("swap_sphere", (data) => {
         console.log(data)
         var game = global.games[data.gameId]
+        sendSafeState(game)
         if(!game){
             io.emit('backend_error', { message: 'Kein Spiel gefunden', code: 1500});
             return;
@@ -94,6 +104,7 @@ module.exports = (io, socket) => {
             io.emit('backend_error', { message: 'Kein Spiel gefunden', code: 1500});
             return;
         }
+        sendSafeState(game)
         const player = game.players.find(
             player => player && player.playerid === data.playerId
         );
@@ -101,7 +112,7 @@ module.exports = (io, socket) => {
         let test = simulateMoveSeven(data, player, game)
 
         if(!test.test){
-            io.emit('backend_warning', { message: 'Ungültiger Zug ' + 'Grund: ' + test.message, code: 1600, gameIndex: game.gameId });
+            io.emit('backend_warning', { message: 'Ungültiger Zug ' + 'Grund: ' + test.message, code: 1610, gameIndex: game.gameId });
             return;
         }
         test.killFields.forEach(f => {
@@ -121,12 +132,29 @@ module.exports = (io, socket) => {
             
         });
 
-
-
         io.emit('backend_info', { message: 'Zug ausgeführt, Kugel bewegt', code: 9999, gameIndex: data.gameId });
         //io.emit("sphere_moved", {data: data, dataInfo: {gameIndex: data.gameId}});
         io.emit('new_game_state', {changeString: 'sphere', changedObject: null, newGame: game, init: 'all'})
 
+    })
+    socket.on("end_turn_and_do_nothing", (data) => {
+        var game = global.games[data.gameId]
+        if (!game) {
+            io.emit('backend_error', { message: 'Kein Spiel gefunden', code: 1500});
+            return;
+        }
+        const player = game.players.find(
+            player => player && player.playerid === data.playerId
+        );
+        if(!(game.currentPlayer == player)){
+            io.emit('backend_warning', { message: 'Du bist nicht am Zug!', code: 3001, gameIndex: game.gameId });
+            return
+        }
+        if(!game.nextPlayer()){
+            io.emit('backend_error', { message: 'Zug wurde nicht beendet', code: 3011, gameIndex: data.gameId });
+        }
+        io.emit('backend_info', { message: 'Zug beendet', code: 9999, gameIndex: data.gameId });
+        io.emit('new_game_state', {changeString: 'game', changedObject: player, newGame: game, init: 'all'})
     })
 };
 

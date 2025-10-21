@@ -276,7 +276,6 @@ function playerHandInit(gameInFrontend) {
 let cardToLayDown = 1;
 function renderAblage(cardsLayed){
     var len = cardsLayed.length
-    console.log(len)
     cardToLayDown = 1
     for (let i = 0; i < len; i++) {
         renderAblagee(cardsLayed[i]);

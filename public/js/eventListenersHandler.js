@@ -1,21 +1,23 @@
 let fieldSelectedInState3 = null;
 let fieldSelectedInState4 = null;
-let fSIS34OSIndex = null;
+let fSIS34OSIndex = 0;
 let fieldsSlectedInStates34OnSeven = [[null, null],[null, null],[null, null],[null, null],[null, null],[null, null],[null, null]];
 
 function sphereClickHandlerSeven(event, pointId){
     if(gameInFront.flowControl.state3.state == 1){
         fieldsSlectedInStates34OnSeven[fSIS34OSIndex][0] = pointId;
+        console.log(event.currentTarget)
         event.currentTarget.classList.add('sphereSelected');
-        console.log('Spheres selected in State 3 for Seven:', fieldsSlectedInStates34OnSeven[fSIS34OSIndex][0]);
+        //console.log('Spheres selected in State 3 for Seven:', fieldsSlectedInStates34OnSeven[fSIS34OSIndex][0]);
         socket.emit('requestStateChange', {gameId: gameInFront.gameId, states: {state1: 2, state2: 2, state3: 2, state4: 1, state5: 0}});
         //request state change to state4
     }else if(gameInFront.flowControl.state4.state == 1){
         fieldsSlectedInStates34OnSeven[fSIS34OSIndex][1] = pointId;
         event.currentTarget.classList.add('sphereSelected');
-        console.log('Spheres selected in State 4 for Seven:', fieldsSlectedInStates34OnSeven[fSIS34OSIndex][1]);
+        //console.log('Spheres selected in State 4 for Seven:', fieldsSlectedInStates34OnSeven[fSIS34OSIndex][1]);
         socket.emit('requestStateChange', {gameId: gameInFront.gameId, states: {state1: 2, state2: 2, state3: 1, state4: 0, state5: 1}});
         //request state change to state35
+        fSIS34OSIndex += 1;
     }
 }
 const sphereClickHandler = (event) => {
@@ -38,7 +40,7 @@ const sphereClickHandler = (event) => {
             fieldSelectedInState3 = pointId;
             event.currentTarget.classList.add('sphereSelected');
         }
-        console.log('Spheres selected in State 3:', fieldSelectedInState3);
+        //console.log('Spheres selected in State 3:', fieldSelectedInState3);
         socket.emit('requestStateChange', {gameId: gameInFront.gameId, states: {state1: 2, state2: 2, state3: 2, state4: 1, state5: 0}});
         //request state change to state4
     }else if(gameInFront.flowControl.state4.state == 1){
@@ -46,7 +48,7 @@ const sphereClickHandler = (event) => {
             fieldSelectedInState4 = pointId;
             event.currentTarget.classList.add('sphereSelected');
         }
-        console.log('Spheres selected in State 4:', fieldSelectedInState4);
+        //console.log('Spheres selected in State 4:', fieldSelectedInState4);
         socket.emit('requestStateChange', {gameId: gameInFront.gameId, states: {state1: 2, state2: 2, state3: 2, state4: 2, state5: 1}});
         //request state change to state5
     }

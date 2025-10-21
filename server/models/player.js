@@ -62,6 +62,7 @@ class Player {
       return null;
     }
     var card = this.deck.cards.splice(index, 1)[0]
+    this.playedCard = card.id
     destination.push(card)
   }
   checkCardThrowable(cardId, cardIndex){ // implement
@@ -71,9 +72,6 @@ class Player {
     return true
   }
 
-  // handSize() {
-  //   return this.deck.length;
-  // }
   regeneratePlayerId(){
     this.playerid = this.name + "_" + this.color;
   }
@@ -87,10 +85,10 @@ class Player {
     if(!(moveProfiles.color.toLowerCase() == this.color)){
       return {test:false, message: "Falsche Kugelfarbe"} 
     }
-    if (!(this.deck.cards.some(card => card.id === moveProfiles.cardId))) {
+    if (!(this.playedCard == moveProfiles.cardId)) {
       return {test:false, message: "Karte nicht in der Hand des Spielers"};
     }
-    let anyError
+    let anyError = {test: true, extra: ""};
     let walkDisctance
     let killFields = []
     moveProfiles.spheres.forEach(sp => {
@@ -106,7 +104,7 @@ class Player {
       if(!currentPosField || !destinationField){
         return anyError = {test: false, extra: "Ungueltige Feld-ID."}
       }
-      var card = this.deck.cards.find(card => card.id === moveProfiles.cardId)
+      var card = game.playedCards.find(card => card.id === moveProfiles.cardId)
       if(!(card.gameValue[0] == 7)){
         return anyError = {test: false, extra: "Interner Routing error, bitte kontaktiere das DEV-Team!"} // here only seven is heandled
       }
@@ -142,7 +140,7 @@ class Player {
         }
       }
     });
-    if(!anyError.test){
+    if(anyError && !anyError.test){
       return {test:false, message: anyError.message}
     }
     if(walkDisctance > 7 ){
