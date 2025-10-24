@@ -77,7 +77,7 @@ class Player {
     }
     var card = this.deck.cards.splice(cardIndex, 1)[0]
     this.changingCard = card
-    this.changingState = 1
+    this.changingState = 2
     return true
   }
   checkCardThrowable(cardId, cardIndex){ // implement

@@ -90,18 +90,26 @@ module.exports = (io, socket) => {
         if(!player){
             return io.emit('backend_error', { message: 'Spieler nicht gefunden', code: 1531, gameIndex: game.gameId });
         }
-        var changing = player.cardForChange()
+        console.log(player.changingCard)
+        if(!(player.changingCard == null)){
+            io.emit('backend_warning', { message: 'Du hast bereits eine Karte getauscht', code: 2222, gameIndex: game.gameId });
+            return
+        }
+        var changing = player.cardForChange(data.cardIndex)
         if(!changing){
             io.emit('backend_warning', { message: 'Etwas nicht terminierbares ist geschehen', code: 2222, gameIndex: game.gameId });
         }
+
         let allChangedSelected = true
         game.players.forEach(pl => {
-            if(pl.changingState == 2){ // introduce this state
+            if(pl.changingState != 2){ // introduce this state
                 allChangedSelected = false
             }
         });
+        console.log(allChangedSelected)
         if(allChangedSelected){
-            // changeGameStateFromChangingToRunning()
+            game.changeCards()
+            game.goIntoMainState()
         }
         io.emit('backend_info', {message: 'Zug ausgeführt, Karte getauscht',  code: 9999, gameIndex: game.gameId})
         io.emit('new_game_state', {changeString: 'game', changedObject: game, newGame: game, init: 'all'})

@@ -46,9 +46,19 @@ function reInitAll(newGame){
     reInitOther(newGame)
 }
 
+function checkGameStateForFishes(state){
+    console.log(state)
+    var aq = document.getElementById('aq_par')
+    if(state == 6){
+        aq.classList.remove('hidden')
+    }else{
+        aq.classList.add('hidden')
+    }
+}
 
 function reInit(string, newGame){
     instanciateOrRemoveSphereEventListeners(gameInFront)
+    checkGameStateForFishes(newGame.gameStatus)
     switch (string) {
         case 'none':
             // No action needed

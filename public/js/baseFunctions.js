@@ -236,6 +236,9 @@ function confirmExchange(){
     if(!activeCardIndex || !activeCardId){
         return showAndAutoHide('warning-div', 'Karte nicht richtig ausgewählt, Code: 7001', 3000);
     }
-    console.log(activeCardId, activeCardIndex, wantedColor)
+    //console.log(activeCardId, activeCardIndex, wantedColor)
     socket.emit('confirm_exchange', { cardIndex: activeCardIndex, cardId: activeCardId, col: wantedColor, gameId: gameInFront.gameId})
+
+    activeCardId = null
+    activeCardIndex = null
 }

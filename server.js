@@ -55,7 +55,7 @@ global.lifecycle = Math.random().toString(36).substr(2, 9);
 // =================== Init of Testgame ===================
 initGlobals()
 initDefaultGame(0, global.lifecycle)
-forcePlayableNoChecks(0)
+//forcePlayableNoChecks(0)
 
 // ================== Socket.IO-Logik ==================
 io.on('connection', (socket) => {

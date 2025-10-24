@@ -151,13 +151,8 @@ function initDefaultGame(gameId, lifecycleId){
     game.player2blue.deck.removeUnnecessaryDeckInformation()
     game.player3yellow.deck.removeUnnecessaryDeckInformation()
     game.player4green.deck.removeUnnecessaryDeckInformation()
+    game.gameStatus = 6
 
-    for (let i = 0; i < 5; i++) {
-        game.player1red.drawCard(game.deck);
-        game.player2blue.drawCard(game.deck);
-        game.player3yellow.drawCard(game.deck);
-        game.player4green.drawCard(game.deck);
-    }
     return game
 }
 function initGlobals(){
@@ -177,12 +172,13 @@ function initGameWithGameConfig(gameConfig, gameId){
 }
 function forcePlayableNoChecks(gameId){
     var game = global.games[gameId]
-    game.round = 1
+    //game.round = 1
     game.player1red.changingState = 0
     game.player2blue.changingState = 0
     game.player3yellow.changingState = 0
     game.player4green.changingState = 0
-    game.gameStatus = 5 // change state
+    //game.goIntoChangingState()
+    //game.gameStatus = 5 // change state
     game.flowControl.state1.state = 1
 }
 

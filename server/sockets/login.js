@@ -35,6 +35,9 @@ module.exports = (io, socket) => {
             return;
         }
         var targetPlayer = game.addPlayer(data.name, data.color.toLowerCase())
+        if(game.startableGame){
+            game.initStartGame()
+        }
         
         if(!targetPlayer){
             io.emit('backend_warning', { message: 'Farbe bereits vergeben', code: 1400, gameIndex: data.gameIndex });

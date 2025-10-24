@@ -45,7 +45,33 @@ class Game {
         return this.currentPlayer;
         
     }
+    goIntoChangingState(){ // 5
+        this.gameStatus = 5
+        this.flowControl.state1.state = 0
+        this.flowControl.state2.state = 0
+        this.flowControl.state3.state = 0
+        this.flowControl.state4.state = 0
+        this.flowControl.state5.state = 0   
+    }
+    changeCards(){
+        this.player3yellow.deck.cards = this.player3yellow.deck.cards.concat(this.player1red.changingCard)
+        this.player1red.deck.cards = this.player1red.deck.cards.concat(this.player3yellow.changingCard)
+        this.player2blue.deck.cards = this.player2blue.deck.cards.concat(this.player4green.changingCard)
+        this.player4green.deck.cards = this.player4green.deck.cards.concat(this.player2blue.changingCard)
 
+        this.player1red.changingCard = null
+        this.player2blue.changingCard = null
+        this.player3yellow.changingCard = null
+        this.player4green.changingCard = null
+    }
+    goIntoMainState(){ // 1
+        this.gameStatus = 1
+        this.flowControl.state1.state = 1
+        this.flowControl.state2.state = 0
+        this.flowControl.state3.state = 0
+        this.flowControl.state4.state = 0
+        this.flowControl.state5.state = 0
+    }
     isChangingFinished(){
         var finished = true
         this.players.forEach(player => {
@@ -127,6 +153,16 @@ class Game {
             this.startableGame = true
         }else{
             this.startableGame = false
+        }
+    }
+    initStartGame(){
+        this.round = 1
+        this.gameStatus = 5
+        for (let i = 0; i < 5; i++) {
+            this.player1red.drawCard(this.deck);
+            this.player2blue.drawCard(this.deck);
+            this.player3yellow.drawCard(this.deck);
+            this.player4green.drawCard(this.deck);
         }
     }
     rejoinPlayer(name, color){
