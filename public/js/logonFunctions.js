@@ -12,7 +12,6 @@ function setWantColor(col, element){
     element.classList.add("colorChoosen")
 }
 function setWantGame(gameNr, element){
-    //console.log(element)
     wantGameNr = gameNr 
 
     const options = element.parentElement.querySelectorAll('h4')
@@ -27,7 +26,6 @@ function devLogon(){
     wantedName = 'MyName'
 }
 function requestGameJoin(){
-    //console.log("station1",wantCol,wantGameNr, wantedName )
     //uncomment in real application
     //devLogon()
     if(!(wantCol) || wantGameNr == null){

@@ -73,7 +73,6 @@ socket.on('backend_offline', () => {
     showAndAutoHide('warning-div', 'Backend is offline', 2000);
 });
 socket.on('backend_warning', (msg) => {
-    console.log(msg.gameIndex)
     //if(!msg.gameIndex) return 
     if (Number(msg.gameIndex) !== Number(gameInFront.gameId)) return;
     console.warn('[SOCKETIO] Backend-Warnung:', msg);

@@ -106,7 +106,6 @@ class Sphere {
         return true
     } 
     checkPath(gameField, destinationId, card){
-        //console.log(card)
         let currentPosField = gameField.points[findPosInArray(gameField.points, this.position)]
         let destinationField = gameField.points[findPosInArray(gameField.points, destinationId)]
         if(!currentPosField || !destinationField){
@@ -167,7 +166,6 @@ class Sphere {
             let watchField = destinationField
             let walkDisctance = 0
             while (watchField.pointId !== currentPosField.pointId) {
-                //console.log(watchField.pointId);
                 if(!watchField.isPassable()){
                     return {test: false, extra: "Der angestrebte Pfad kann nicht bestritten werden."}
                 }
@@ -204,16 +202,15 @@ class Sphere {
         // if (!(player.deck.cards.some(card => card.id === moveProfile.cardId))) {
         //     return {test:false, message: "Karte nicht in der Hand des Spielers"};
         // }
-        console.log(player.playedCard, moveProfile.cardId)
         if(!(player.playedCard == moveProfile.cardId)){
             return {test:false, message: "Diese Karte wurde gerade nicht gespielt"};
         }
+
         var checkedMove = this.checkPath(game.field, moveProfile.destinationId, game.playedCards.find(card => card.id === moveProfile.cardId))
-        console.log(checkedMove)
         if(!(checkedMove.test)){
             return {test:false, message: "Ungültiger Zielpunkt für diese Karte, " + checkedMove.extra}
         }
-        console.log(this.color, this.sphereId, "moves from", this.position, "to", moveProfile.destinationId, "with", player.playedCard)
+
         if(!game.nextPlayer()){
             return {test:false, message: "Naechster Spieler konnte nicht ermittelt werden. " + checkedMove.extra}
         }
@@ -229,7 +226,7 @@ class Sphere {
         if(!(game.currentPlayer == ownPlayer)){
             return {test: false, message: "Nicht am Zug"}
         }
-        console.log(moveProfile.ownColor.toLowerCase(), this.color, moveProfile.foreignColor.toLowerCase(), foreignPlayer.color)
+        
         if(!(moveProfile.ownColor.toLowerCase() == this.color) || !(moveProfile.foreignColor == foreignPlayer.color)){
             return {test:false, message: "Falsche Kugelfarbe (n)"} //theoretically not possible
         }

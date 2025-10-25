@@ -25,7 +25,7 @@ async function getGame(){
     }
 }
 function finalRegistry(){
-    console.log(joinMethod)
+    console.log('[JOINMETH] ' + joinMethod)
     if((!wantedColor)||(!joinedGame)||(!wantedName)){
         showAndAutoHide('error-div', `Error-Message: Ein unbehandelter Frontend error wurde erkannt, Error-code: 4444`, 7000);
         return

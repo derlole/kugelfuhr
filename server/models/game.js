@@ -63,6 +63,10 @@ class Game {
         this.player2blue.changingCard = null
         this.player3yellow.changingCard = null
         this.player4green.changingCard = null
+        this.player1red.changingState = -1
+        this.player2blue.changingState = -1
+        this.player3yellow.changingState = -1
+        this.player4green.changingState = -1
     }
     goIntoMainState(){ // 1
         this.gameStatus = 1
@@ -88,17 +92,34 @@ class Game {
         }
         return finished
     }
-    
+    currentPlayerChange(i){
+        this.currentPlayer = this.players[i]
+        this.startingPlayer = this.players[i]
+    }
     endRound() {
-        console.log(`Runde ${this.round} beendet. Gespielte Karten:`);
-        this.playedCards.forEach(entry =>
-        console.log(`- ${entry.player}: ${entry.card.toString()}`)
-        );
-
-        this.playedCards = [];
-        //this.startingPlayer = returnNextPlayer(this.startingPlayer)
-        //this.startingPlayer = this.currentPlayer;
         this.round++;
+        this.roundSwapLog = [];
+        this.startingPlayer = this.returnNextPlayer(this.startingPlayer);
+        this.currentPlayer = this.startingPlayer;
+        this.goIntoChangingState();
+        if(this.deck.isEmpty()){
+            this.deck.reset();
+            this.playedCards = [];
+            //this.givingPlayer = this.returnNextPlayer(this.givingPlayer)
+            for (let i = 0; i < 5; i++) {
+                this.player1red.drawCard(this.deck);
+                this.player2blue.drawCard(this.deck);
+                this.player3yellow.drawCard(this.deck);
+                this.player4green.drawCard(this.deck);
+            }
+        }else{
+            for (let i = 0; i < 4; i++) {
+                this.player1red.drawCard(this.deck);
+                this.player2blue.drawCard(this.deck);
+                this.player3yellow.drawCard(this.deck);
+                this.player4green.drawCard(this.deck);
+            }
+        }
     }
     addPlayer(name, color) {
         if (color == "red" && this.player1red.name !== null) {
@@ -233,6 +254,15 @@ class Game {
         sphereOn.sendHome()
         point.removeSphere()
         return {exec: true, message: ''}
+    }
+    allPlayersHaveNoCards(){
+        let allNoCards = true
+        this.players.forEach(player => {
+            if(player.deck.isEmpty() == false){
+                allNoCards = false
+            }
+        });
+        return allNoCards
     }
 }
 module.exports = { Game };

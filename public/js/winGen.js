@@ -1,0 +1,1 @@
+document.getElementById("winGameName").innerText = "GameName hier"; //HIER FEHLT DER NAME DER SPIEL SESSION

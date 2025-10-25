@@ -9,10 +9,7 @@ function cleanupClassesFromAllSpheres(){
 function getSphereIdAtPoint(pointId){
     let sphere = null;
     gameInFront.players.forEach(player => {
-        //console.log(player)
-        //console.log(pointId)
         const sph = player.ownedSpheres.find(s => s.position == pointId);
-        //console.log(sph)
         if(sph){
             sphere = sph;
         }
@@ -55,6 +52,7 @@ function wantMoveSphere(pid, des, col, sphId, cardI){
     const cardId = card ? card.id : null;
 
     socket.emit('move_sphere', { pointId: pid, color: col, destinationId: des, cardId: cardId, playerId: gameInFront.currentPlayer.playerid, sphereId: sphId, gameId: gameInFront.gameId });
+    socket.emit('check_round_end_and_execute', {gameId: gameInFront.gameId })
 }
 function wantSwapSphere(pidY, pidF, colY, colF, sphIdY, sphIdF, cardI){
     if((colY.toLowerCase() !== gameInFront.currentPlayer.color.toLowerCase())){
@@ -65,6 +63,8 @@ function wantSwapSphere(pidY, pidF, colY, colF, sphIdY, sphIdF, cardI){
     const cardId = card ? card.id : null;
 
     socket.emit('swap_sphere', { ownPointId: pidY, foreignPointId: pidF, ownColor: colY, foreignColor: colF, ownSphereId: sphIdY, foreignSphereId: sphIdF, cardId: cardId, playerId: gameInFront.currentPlayer.playerid, gameId: gameInFront.gameId }) // eigentlich foriegn <3
+    socket.emit('check_round_end_and_execute', {gameId: gameInFront.gameId })
+
 }
 function wantMoveSpheresSeven(cardI, col, spheresMoveProfiles){
     if((col.toLowerCase() !== gameInFront.currentPlayer.color.toLowerCase())){
@@ -72,7 +72,7 @@ function wantMoveSpheresSeven(cardI, col, spheresMoveProfiles){
         return
     }
     let allFilled = true;
-    console.log(spheresMoveProfiles)
+    console.log("[SPMOVE-P] " + spheresMoveProfiles)
     spheresMoveProfiles.forEach(smp => {
         if(!(smp.sphereId) || !(smp.destinationId) || !(smp.pointId)){
             showAndAutoHide('warning-div', 'Deine angaben sind nicht vollstaendig', 4000);
@@ -83,6 +83,7 @@ function wantMoveSpheresSeven(cardI, col, spheresMoveProfiles){
     const card = cardI
     const cardId = card ? card.id : null;
     socket.emit('move_spheres_seven', {spheres: spheresMoveProfiles, gameId: gameInFront.gameId, playerId: gameInFront.currentPlayer.playerid, color: gameInFront.currentPlayer.color, cardId: cardId})
+    socket.emit('check_round_end_and_execute', {gameId: gameInFront.gameId })
 }
 function wantLayCard(cardIndex, col){
     if((col.toLowerCase() !== gameInFront.currentPlayer.color.toLowerCase())){
@@ -152,6 +153,8 @@ function checkoutTurn(){
     if(cardThrown){
         cardThrown = false
         socket.emit('end_turn_and_do_nothing', {gameId: gameInFront.gameId, playerId: gameInFront.currentPlayer.playerid})
+        socket.emit('check_round_end_and_execute', {gameId: gameInFront.gameId })
+
         return
     }
     if(foundCard.gameValue.includes(7)){
@@ -221,7 +224,6 @@ function checkoutTurn(){
             socket.emit('requestStateChange', {gameId: gameInFront.gameId, states: {state1: 2, state2: 2, state3: 1, state4: 0, state5: 0}});
             return
         }
-        //console.log('WANTS MOVE SPHERE WITH', fieldSelectedInState3, fieldSelectedInState4, gameInFront.currentPlayer.color, sphereId, foundCard);
         wantMoveSphere(fieldSelectedInState3, fieldSelectedInState4, gameInFront.currentPlayer.color, sphereId, foundCard);
 
         fieldSelectedInState3 = null;
@@ -236,7 +238,6 @@ function confirmExchange(){
     if(!activeCardIndex || !activeCardId){
         return showAndAutoHide('warning-div', 'Karte nicht richtig ausgewählt, Code: 7001', 3000);
     }
-    //console.log(activeCardId, activeCardIndex, wantedColor)
     socket.emit('confirm_exchange', { cardIndex: activeCardIndex, cardId: activeCardId, col: wantedColor, gameId: gameInFront.gameId})
 
     activeCardId = null

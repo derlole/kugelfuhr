@@ -18,7 +18,7 @@ module.exports = (io, socket) => {
             io.emit('backend_warning', { message: 'Karte nicht Abwerfbar, es kann noch gespielt werden', code: 2200, gameIndex: game.gameId });
             return
         }
-        player.throwCard(data.cardId, game.playedCards)
+        player.throwCard(data.cardIndex, game.playedCards)
         //CHANGE TURN STATE 2,3,4,5 // CHECK THIS LATER
         game.flowControl.state1.state = 2
         game.flowControl.state2.state = 2
@@ -90,7 +90,7 @@ module.exports = (io, socket) => {
         if(!player){
             return io.emit('backend_error', { message: 'Spieler nicht gefunden', code: 1531, gameIndex: game.gameId });
         }
-        console.log(player.changingCard)
+
         if(!(player.changingCard == null)){
             io.emit('backend_warning', { message: 'Du hast bereits eine Karte getauscht', code: 2222, gameIndex: game.gameId });
             return
@@ -106,12 +106,27 @@ module.exports = (io, socket) => {
                 allChangedSelected = false
             }
         });
-        console.log(allChangedSelected)
+        
         if(allChangedSelected){
             game.changeCards()
             game.goIntoMainState()
         }
         io.emit('backend_info', {message: 'Zug ausgeführt, Karte getauscht',  code: 9999, gameIndex: game.gameId})
         io.emit('new_game_state', {changeString: 'game', changedObject: game, newGame: game, init: 'all'})
+    })
+    socket.on('check_round_end_and_execute', (data) => {
+        game = global.games[data.gameId]
+        if(!game){
+            io.emit('backend_error', { message: 'Kein Spiel gefunden', code: 2110, gameIndex: game.gameId });
+            return;
+        }
+        if(game.allPlayersHaveNoCards()){
+            game.endRound()
+            console.log('Runde beendet, alle Spieler haben keine Karten mehr')
+            io.emit('backend_info', {message: 'Runde beendet, alle Spieler haben keine Karten mehr',  code: 9999, gameIndex: game.gameId})
+            io.emit('new_game_state', {changeString: 'game', changedObject: game, newGame: game, init: 'all'})
+        }else{
+            return
+        }
     })
 }

@@ -33,7 +33,6 @@ function reInitOther(newGame){
     const player = newGame.players.find(
         player => player && player.color == wantedColor.toLowerCase()
     );
-    console.log(player)
     if(player.changingCard){
         renderExchangeCard(genCard(player.changingCard.value, player.changingCard.suit.symbol, "ablageCard", player.changingCard.id));
     }
@@ -47,7 +46,6 @@ function reInitAll(newGame){
 }
 
 function checkGameStateForFishes(state){
-    console.log(state)
     var aq = document.getElementById('aq_par')
     if(state == 6){
         aq.classList.remove('hidden')

@@ -428,10 +428,18 @@ h2 {
   transform: scale(1.1);
 }
 
+.step3Btns {
+  display: flex;
+  flex-direction: row;
+}
+
 .flowStepDone {
   color: #9a8a6e;
   text-decoration: line-through;
   transform: scale(0.98);
+}
+.flowStepDone button {
+  color: #9a8a6e;
 }
 .flowStepDone .stepInformation {
   width: 50%;
@@ -448,11 +456,6 @@ h2 {
   color: #9a8a6e;
 }
 
-.step3Btns {
-  display: flex;
-  flex-direction: row;
-}
-
 .margin1em {
   margin-right: 0.5em;
 }
@@ -464,4 +467,31 @@ h2 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.buttonBase, .buttonYellow, .buttonGreen, .buttonBlue, .buttonRed {
+  padding: 0.5em 1em;
+  border-radius: 10px;
+  font-family: Comfortaa;
+  transition: transform 0.5s ease, background-color 0.5s ease, border 0.5s ease;
+}
+
+.buttonRed {
+  background-color: #ffa2a5;
+  border: 2px solid #ff595e;
+}
+
+.buttonBlue {
+  background-color: #78cbff;
+  border: 2px solid #1982c4;
+}
+
+.buttonGreen {
+  background-color: #ccf983;
+  border: 2px solid #8ac926;
+}
+
+.buttonYellow {
+  background-color: #fff07d;
+  border: 2px solid #ffca3a;
 }/*# sourceMappingURL=edge.css.map */

@@ -287,7 +287,6 @@ function renderHand(n, handCards) {
 
 
 function playerHandInit(gameInFrontend) {
-    //console.log(gameInFrontend, wantedColor)
     var playertoRender = getPlayerFromGameAndColor(gameInFrontend, wantedColor) //wantedColor is from gamePagePlayervarInit.js and is more or less the global idetifier of the PlayerColor in the Frontend
     const handPlayer = playertoRender.deck.cards;
     const numCards = handPlayer.length;
@@ -307,7 +306,6 @@ function renderAblage(cardsLayed){
 
 
 function renderAblagee(ablageCard) {
-    //console.log(ablageCard)
     if(ablageCard.length == 0) return
     let symbol = ablageCard.suit.symbol;
     let value = ablageCard.value;
@@ -339,9 +337,16 @@ function renderAblagee(ablageCard) {
 }
 
 function renderExchangeCard(exchangeCard){
+    // exchangeCard.classList.remove('card')
+    // exchangeCard.classList.remove('cardActive')
+    // exchangeCard.classList.add('ablageCard')
     document.getElementById('changeCardConfirm').classList.add('butPointer')
     let cardSpace = document.getElementById("exchangeCardsContainer");
-    const copyCard = exchangeCard.cloneNode(true);
+    var copyCard = exchangeCard.cloneNode(true);
+    copyCard.classList.remove('card')
+    copyCard.classList.remove('cardActive')
+    copyCard.classList.add('ablageCard')
+    copyCard.style = ''
     cardSpace.innerHTML = "";
     cardSpace.appendChild(copyCard);
 }

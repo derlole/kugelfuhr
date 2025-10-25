@@ -80,6 +80,9 @@ class Deck {
       return suitA - suitB;
     });
   }
+  isEmpty(){
+    return this.cards.length === 0;
+  }
   removeUnnecessaryDeckInformation() {
     this.values = null;
     this.suits = null;

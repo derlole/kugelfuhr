@@ -191,10 +191,10 @@ for (let i = 0; i < 4; i++) {
   home.className = "home";
 
   for (let j = 0; j < 4; j++) {
-    let abteil = document.createElement("div");
+    //let abteil = document.createElement("div");
     let aktDot = document.createElement("div");
     aktDot.className = colors[i].toLowerCase() + "HomeDot";
-    abteil.classList.add("center");
+    aktDot.classList.add("centerHomeFields");
 
     switch(j){
       case 0:
@@ -214,8 +214,8 @@ for (let i = 0; i < 4; i++) {
         aktDot.dataset.pointId = nummerationIndex + 4;
         break;
     }
-    abteil.appendChild(aktDot);
-    home.appendChild(abteil);
+    //abteil.appendChild(aktDot);
+    home.appendChild(aktDot);
   }
 
   document.querySelector(".plate").appendChild(home);

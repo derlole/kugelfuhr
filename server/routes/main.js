@@ -91,6 +91,9 @@ module.exports = (io) => {
       res.redirect('/login');
     });
   });
+  router.get('/win', (req, res) => {
+    return res.render('win', {title: ":D"})
+  })
   router.get('/serverRestartError', (req, res) => {
     return res.render('restartError', {title: "sorry about that"})
   })

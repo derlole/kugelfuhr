@@ -66,7 +66,6 @@ module.exports = (io, socket) => {
         io.emit('new_game_state', {changeString: 'sphere', changedObject: player.ownedSpheres[(data.sphereId-1)], newGame: game, init: 'all'})
     });
     socket.on("swap_sphere", (data) => {
-        console.log(data)
         var game = global.games[data.gameId]
         sendSafeState(game)
         if(!game){

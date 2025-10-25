@@ -80,7 +80,8 @@ body {
   width: $d;
   height: $d;
   border-radius: 50%;
-  transform: translate(-50%, -50%);
+  cursor: pointer;
+
 }
 
 .dot {
@@ -134,19 +135,15 @@ body {
 }
 .greenHomeDot {
   @extend .greenDot;
-  transform: translate(-50%, -50%);
 }
 .redHomeDot {
   @extend .redDot;
-  transform: translate(-50%, -50%);
 }
 .blueHomeDot {
   @extend .blueDot;
-  transform: translate(-50%, -50%);
 }
 .yellowHomeDot {
   @extend .yellowDot;
-  transform: translate(-50%, -50%);
 }
 #homeGreen {
   top: 2em;
@@ -164,8 +161,8 @@ body {
 }
 
 #homeYellow {
-    top: 2em;
-    left: 2em;
+  top: 2em;
+  left: 2em;
 }
 .center {
   width: 100%;
@@ -177,7 +174,7 @@ body {
 
 .centerHomeFields{
   @extend .center;
-  transform: none !important;
+  transform: translate(50%, 50%);
 }
 .finish {
   position: absolute;

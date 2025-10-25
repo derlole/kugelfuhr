@@ -376,12 +376,20 @@ h2{
   @include flowStepActive($green, $matgreen, $darkgreen)
 }
 
+.step3Btns{
+  display: flex;
+  flex-direction: row;
+}
 
 .flowStepDone{
   @extend .flowStep;
   color: $border;
   text-decoration: line-through;
   transform: scale(0.98);
+
+  button{
+    color: $border; 
+  }
 
   .stepInformation{
     width: 50%;
@@ -397,10 +405,7 @@ h2{
     font-family: "Barrio", system-ui;
     color: $border;
   }
-}
-.step3Btns{
-  display: flex;
-  flex-direction: row;
+  
 }
 .margin1em{
   margin-right: 0.5em;
@@ -412,4 +417,31 @@ h2{
   top : 50%;
   left : 50%;
   transform: translate(-50%, -50%);
+}
+
+.buttonBase{
+  padding: 0.5em 1em;
+  border-radius: 10px;
+  font-family: Comfortaa;
+  transition: transform 0.5s ease, background-color 0.5s ease, border 0.5s ease;
+}
+.buttonRed{
+  @extend .buttonBase;
+  background-color: $matred;
+  border: 2px solid $red;
+}
+.buttonBlue{
+  @extend .buttonBase;
+  background-color: $matblue;
+  border: 2px solid $blue;
+}
+.buttonGreen{
+  @extend .buttonBase;
+  background-color: $matgreen;
+  border: 2px solid $green;
+}
+.buttonYellow{
+  @extend .buttonBase;
+  background-color: $matyellow;
+  border: 2px solid $yellow;
 }

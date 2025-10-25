@@ -1,4 +1,5 @@
 <div style="display: none;" id="playerVars"><%= data %></div>
+<script src="/js/eventListenersHandler.js"></script>
 <script src="/js/reInit.js"></script>
 <script src="/js/gamePagePlayervarInit.js"></script>
 <script src="/js/infoGen.js"></script>
@@ -10,7 +11,6 @@
     <script src="/js/genGlobalVarInfo.js"></script>
     <div class="left">
         <h1 class="title">Kugelfuhr</h1>
-        <!--Hier muss noch ein Richtiger Spielname rein, aber idk ob der schon generiert wird...-->
         <p>Spielbezeichnung: <%= gameName %></p>
         <div id="playerList" class="playerList">
             <h2>Spitmieler:</h2>
@@ -30,7 +30,6 @@
 
     <div class="plate">
         <div class="graph" id="graph"></div>
-        <!-- Spielername <= 12 Buchstaben wäre gut, glaub Zeilenumbruch würde doof aussehen-->
         <div class="playerTurn"><p id="playerTurn"></p>ist am Zug</div>
     </div>
 
@@ -50,7 +49,7 @@
     </div>
     <div class="hidden" id="aq_par" style="position: absolute; width: 100vw; height: 100vh;">
         <canvas id="aquarium" class="inactiveBody"></canvas>
-            <img id="sharkGif" class="hidden" src="/img/schnappishark.gif" style="position:absolute; height:auto;">
+            <img id="sharkGif" class="" src="/img/schnappishark.gif" style="position:absolute; height:auto;">
             <div class="inactiveCenter">
                 <h1>
                     Es sind nicht alle Spieler anwesend.<br>
@@ -62,7 +61,7 @@
 <script src="/js/fieldGen.js"></script>
 <script src="/js/cardGen.js"></script>
 <script src="/js/pointOrderFromRed.js"></script>
-<script src="/js/eventListenersHandler.js"></script>
+
 <script src="/js/socketio_base_com.js"></script>
 <script src="/js/fishGen.js"></script>
 <script src="/js/exchangeGen.js"></script>

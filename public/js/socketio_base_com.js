@@ -1,6 +1,5 @@
 
 socket.on('field_baseinit', (msg) => {
-    //console.log((gameInFront !== undefined && gameInFront !== null))
     console.log('[BASEINIT]', gameInFront)
     if(!(gameInFront == undefined)){
         if(( gameInFront.gameId !== msg.gameId)){
@@ -37,7 +36,6 @@ socket.on('sphere_moved', (data) => {
 });
 socket.on('spheres_swapped', (data) => {
     if(gameInFront.gameId !== data.dataInfo.gameIndex) return
-    console.log(data.data)
 
     ownPoint = dgebq(`[data-point-id="${data.data.ownPointId}"]`)
     foreignPoint = dgebq(`[data-point-id="${data.data.foreignPointId}"]`)
@@ -59,6 +57,5 @@ socket.on('new_game_state', (data) => {
     console.log('[newGS---]', data)
     if(!(data.newGame && ( data.newGame.gameId == gameInFront.gameId))) return
     gameInFront = data.newGame
-    //console.log(data.newGame)
     reInit(data.init, gameInFront)
 })

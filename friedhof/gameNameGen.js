@@ -131,5 +131,3 @@ function genName() {
     return capitalizeFirst(adjektiv + "e") + " " + capitalizeFirst(nomen.plural());
 }
 
-console.log(genName());
-

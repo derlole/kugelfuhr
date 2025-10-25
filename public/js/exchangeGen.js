@@ -33,7 +33,6 @@ function generateExchangeBox(){
     let player = document.createElement('p')
     for (let p of gameInFront.players){
         let color = p.color.toLowerCase();
-        console.log(color, partnerColor)
         if(color === partnerColor){
             player.innerText = `Du tauschst mit ${p.name} (${capitalizeFirst(partnerColor)})`
         }
