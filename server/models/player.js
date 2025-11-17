@@ -11,15 +11,20 @@ class Player {
     this.deckContainingThisMove = new Deck(true);
     this.changingState = -1
     this.changingCard = null
+    this.homeExitFieldId = null
     this.ownedSpheres = [new Sphere(color, 1),new Sphere(color, 2),new Sphere(color, 3),new Sphere(color, 4)]
     if (color == "red"){
         this.partnerColor = "yellow"
+        this.homeExitFieldId = 1001
     }else if(color == "yellow"){
         this.partnerColor = "red"
+        this.homeExitFieldId = 1026
     }else if(color == "blue"){
         this.partnerColor = "green"
+        this.homeExitFieldId = 1051
     }else if(color == "green"){
         this.partnerColor = "blue"
+        this.homeExitFieldId = 1076
     }
     this.playerid = this.name + "_" + this.color;
   }
@@ -80,8 +85,34 @@ class Player {
     this.changingState = 2
     return true
   }
-  checkCardThrowable(cardId, cardIndex){ // implement
-    return true
+checkCardThrowable(cardId, cardIndex, game) {
+    const cards = this.deck.cards;
+    const allGameValues = [];
+
+    for (const card of cards) {
+        if (Array.isArray(card.gameValue)) {
+            allGameValues.push(...card.gameValue);
+        } else {
+            allGameValues.push(card.gameValue);
+        }
+    }
+    console.log(allGameValues);
+    const filterdGameVals = new Set();
+
+    if(allGameValues.includes(0)) filterdGameVals.add(0);
+    if (allGameValues.includes(-4)) filterdGameVals.add(-4);
+
+    const positives = allGameValues.filter(n => n > 0);
+    if (positives.length > 0) {
+      filterdGameVals.add(Math.min(...positives));
+    }
+
+    if (allGameValues.includes(100)) filterdGameVals.add(100);
+
+    console.log(filterdGameVals)
+    this.simulationOfMovesWithMinimalMoves(filterdGameVals, game)
+
+    return true;
   }
   checkCardPlayable(cardId, cardIndex){ // implement
     return true
@@ -181,6 +212,51 @@ class Player {
       result = false
     })
     return result
+  }
+  simulationOfMovesWithMinimalMoves(testArr, game){
+    var test = false 
+    if (!test &&  testArr.has(0)){ // is there a card to go out of home
+      this.ownedSpheres.forEach(sp => {
+        if(sp.home && game.field,getPointById(this.homeExitFieldId).isFree()){
+          test = false
+        }
+      });
+      testArr.delete(0)
+    }
+
+    //VIBE CODE!!!!!
+    if (!test && testArr.has(-4)){ // is there a card to go backwards
+      var sphs = this.getSpheresGeneralMovable()
+      sphs = sphs.filter(sphere => !sphere.home);
+      sphs.forEach(sphere => {
+        var currentField = game.field.getPointById(sphere.position)
+        if(!currentField) return
+        var backField = game.field.getPointById(currentField.prevPointId)
+        if(!backField) return
+        if(backField.isPassable()){
+          test = true
+        }
+      });
+      testArr.delete(-4)
+    }
+    //VIBE CODE!!!!!
+
+    if (!test && testArr.has(100)){ // is there a card to go into swap
+      //swap check
+      testArr.delete(100)
+    }
+    if (testArr.size === 0) {
+      test = true
+    }
+    var sphs = this.getSpheresGeneralMovable()
+    sphs = sphs.filter(sphere => !sphere.home);
+    sphs.forEach(sphere => {
+      testArr.forEach(value => {
+        //move simualation
+      });
+    });
+
+    return test
   }
 }
 module.exports = { Player }

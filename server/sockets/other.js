@@ -13,7 +13,7 @@ module.exports = (io, socket) => {
             return //{test:false, message: "Karte nicht in der Hand des Spielers"};
         }
         const card = player.deck.cards[data.cardIndex]
-        var test = player.checkCardThrowable(data.cardId, data.cardIndex)
+        var test = player.checkCardThrowable(data.cardId, data.cardIndex, game)
         if(!test){
             io.emit('backend_warning', { message: 'Karte nicht Abwerfbar, es kann noch gespielt werden', code: 2200, gameIndex: game.gameId });
             return

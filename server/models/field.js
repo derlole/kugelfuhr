@@ -12,5 +12,8 @@ class Field {
             this.points.push(new Point(i))
         }
     }
+    getPointById(id){
+        return this.points.find(point => point.pointId === id);
+    }
 }
 module.exports = { Field }
